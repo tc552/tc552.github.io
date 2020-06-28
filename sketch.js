@@ -20,14 +20,13 @@ function keyPressed() {
 }
 
 function preload() {
-  imgScenario = loadImage('images/scenario/scenario2.png');
-  imgCharacter = loadImage('images/character/walking.png');
+  imgScenario = loadImage('images/scenario/background.png');
+  imgCharacter = loadImage('images/character/stanley.png');
   imgCharacterDead = loadImage('images/character/dead.png');
   imgCharacterWin = loadImage('images/character/finished.png');
   imgEnemyDwight = loadImage('images/enemies/dwight.png');
   imgEnemyMichael = loadImage('images/enemies/michael.png');
   imgEnemyFlyingMichael = loadImage('images/enemies/flying_michael.png');
-  imgGameOver = loadImage('images/assets/game-over.png');
   imgFirstAid = loadImage('images/assets/first-aid.png');
   imgFirstAidResponder = loadImage('images/assets/first-aid-responder.png');
   imgPretzel = loadImage('images/assets/pretzel.gif');
