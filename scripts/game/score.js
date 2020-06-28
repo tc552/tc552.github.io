@@ -12,7 +12,7 @@ class Score {
         stroke("#ffffff");
         strokeWeight(3);
         textSize(20);
-        text(this.n(this.scoreHour) + ":" + this.n(this.scoreMinute) + ":" + this.n(this.scoreSecond), width - 90, 30);
+        text(this.n(this.scoreHour) + "h" + this.n(this.scoreMinute), width - 80, 30);
         
         textAlign(LEFT);
         text(this.pretzels + "/" + pretzelQuantity + " pretzels", 320, 30);

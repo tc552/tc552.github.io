@@ -1,14 +1,23 @@
+let click = true;
+
+function touchStarted() {
+  click = false;
+  event.code = 'Touch';
+  character.jump();
+}
+
+function mousePressed() {
+  if (click) {
+    character.jump();
+  }
+}
+
 function keyPressed() {
   if (key === 'ArrowUp') {
     console.log("pulou");
     character.jump();
     // jumpTheme.play();
   }
-}
-
-function mousePressed() {
-  console.log("mouse");
-  character.jump();
 }
 
 function preload() {
