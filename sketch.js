@@ -23,6 +23,10 @@ function keyPressed() {
   }
 }
 
+function touchStarted() {
+  character.jump();
+}
+
 function setup() {
   createCanvas(640, 360);
   resetGame(sceneMenu);
