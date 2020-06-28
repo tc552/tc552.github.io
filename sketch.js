@@ -237,11 +237,14 @@ function drawEnd() {
   rect(width * 1/6, height * 1/6, width * 2/3, height * 2/3);
 
   let title;
+  let subtitle;
   if (isGameOver) {
     title = "Game Over!"
+    subtitle = "No pretzels for you.";
   }
   else if (isGameFinished) {
-    title = "Day Finished!"
+    title = "Day Finished!";
+    subtitle = "Go home and enjoy your pretzels.";
   }
 
   textAlign(CENTER);
@@ -252,6 +255,13 @@ function drawEnd() {
   textStyle(BOLD);
   textSize(32);
   text(title, width/2, height * 1/6 + 60);
+
+  textAlign(LEFT);
+  textSize(12);
+  fill("#000")
+  noStroke();
+
+  text(subtitle, 140, height * 1/6 + 120);
 
   character.display();
 
