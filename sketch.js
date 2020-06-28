@@ -14,7 +14,6 @@ function mousePressed() {
 
 function keyPressed() {
   if (key === 'ArrowUp') {
-    console.log("pulou");
     character.jump();
     // jumpTheme.play();
   }
@@ -173,19 +172,54 @@ function resumeGame() {
 
 function drawMenu() {
   scenario.display();
-  fill("#000")
+  
+  fill(255,255,255,200);
+  noStroke();
+  rect(width * 1/6, height * 1/6, width * 2/3, height * 2/3);
+  
+  
+  // fill("#000")
+  // textFont('Comfortaa');
+  // stroke("#ffffff");
+  // strokeWeight(3);
+  // textStyle(BOLD);
+  // textSize(32);
+  // text("Stanley's Day At The Office", 50, 50);
+  
+  // textStyle(NORMAL);
+  
+  
+  let title = "Stanley's Day At The Office";
+  
+  textAlign(CENTER);
+  fill("#fff")
   textFont('Comfortaa');
-  stroke("#ffffff");
+  stroke("#000");
   strokeWeight(3);
   textStyle(BOLD);
-  textSize(32);
-  text("Stanley's Day At The Office", 50, 50);
+  textSize(24);
+  text(title, width/2, height * 1/6 + 60);
+
+  let previousHeight = height * 1/6 + 60;
+  let newHeight = previousHeight + 20;
+
+  textAlign(LEFT);
   textSize(12);
-  // textStyle(NORMAL);
-  text("Help Stanley get through the work day so he can go home at 5pm.", 50, 70);
-  text("Avoid getting too close to your boss and your co-workers, or your stress level will increase!", 50, 90);
-  text("You know, crossword puzzles make time go faster...", 50, 110);
-  text("Good luck and may all your days be pretzel day!", 50, 130);
+  // text("Help Stanley get through the work day so he can go home at 5pm.", 150, newHeight);
+  
+  previousHeight = newHeight;
+  newHeight = previousHeight + 20;
+
+  text("Avoid getting too close to your boss and your co-workers,\nor your stress level will increase!", 140, newHeight);
+  
+  previousHeight = newHeight;
+  newHeight = previousHeight + 40;
+  text("You know, crossword puzzles make time go faster...",  140, newHeight);
+  
+  previousHeight = newHeight;
+  newHeight = previousHeight + 25;
+  text("Good luck and may all your days be pretzel day!", 140, newHeight);
+  
   character.display();
 
   startButton.position(width/2, height/2);

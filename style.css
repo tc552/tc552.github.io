@@ -10,3 +10,7 @@ html, body {
 canvas {
   display: block;
 }
+
+button {
+  color: pink;
+}
