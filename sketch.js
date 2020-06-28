@@ -1,3 +1,5 @@
+let click = true;
+
 function preload() {
   imgScenario = loadImage('images/scenario/scenario2.png');
   imgCharacter = loadImage('images/character/walking.png');
@@ -18,12 +20,19 @@ function preload() {
 
 function keyPressed() {
   if (key === 'ArrowUp') {
+    console.log("pulou");
     character.jump();
     // jumpTheme.play();
   }
 }
 
+function mousePressed() {
+  console.log("mouse");
+  character.jump();
+}
+
 function touchStarted() {
+  console.log("touch");
   character.jump();
 }
 
