@@ -1,4 +1,15 @@
-let click = true;
+function keyPressed() {
+  if (key === 'ArrowUp') {
+    console.log("pulou");
+    character.jump();
+    // jumpTheme.play();
+  }
+}
+
+function mousePressed() {
+  console.log("mouse");
+  character.jump();
+}
 
 function preload() {
   imgScenario = loadImage('images/scenario/scenario2.png');
@@ -14,26 +25,8 @@ function preload() {
   imgPretzel = loadImage('images/assets/pretzel.gif');
   imgCrossword = loadImage('images/assets/crossword.png');
 
-  musicTheme = loadSound('sounds/theme.mp3');
-  jumpTheme = loadSound('sounds/parkour.mp3');
-}
-
-function keyPressed() {
-  if (key === 'ArrowUp') {
-    console.log("pulou");
-    character.jump();
-    // jumpTheme.play();
-  }
-}
-
-function mousePressed() {
-  console.log("mouse");
-  character.jump();
-}
-
-function touchStarted() {
-  console.log("touch");
-  character.jump();
+  // musicTheme = loadSound('sounds/theme.mp3');
+  // jumpTheme = loadSound('sounds/parkour.mp3');
 }
 
 function setup() {
@@ -104,7 +97,6 @@ function resetGame(scene) {
 
   frameRate(30);
 
-  // touchStarted();
   // musicTheme.play();
 }
 
@@ -378,6 +370,6 @@ function buildCrosswordsPositionMatrix() {
   crosswordsPositionMatrix.push([11000, 100]);
 }
 
-function touchStarted() {
-  getAudioContext().resume();
-}
+// function touchStarted() {
+//   getAudioContext().resume();
+// }
