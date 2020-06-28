@@ -12,5 +12,10 @@ canvas {
 }
 
 button {
-  color: pink;
+  font-family: 'Comfortaa';
+  font-weight: bolder;
+  color: white;
+  border-radius: 4px;
+  padding: 16px 24px;
+  background-color: black;
 }

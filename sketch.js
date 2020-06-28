@@ -192,20 +192,21 @@ function drawMenu() {
   let title = "Stanley's Day At The Office";
   
   textAlign(CENTER);
-  fill("#fff")
+  fill("#fff");
   textFont('Comfortaa');
   stroke("#000");
   strokeWeight(3);
   textStyle(BOLD);
   textSize(24);
-  text(title, width/2, height * 1/6 + 60);
+  text(title, width/2, height * 1/6 + 50);
 
-  let previousHeight = height * 1/6 + 60;
+  let previousHeight = height * 1/6 + 45;
   let newHeight = previousHeight + 20;
 
   textAlign(LEFT);
   textSize(12);
-  // text("Help Stanley get through the work day so he can go home at 5pm.", 150, newHeight);
+  fill("#000")
+  noStroke();
   
   previousHeight = newHeight;
   newHeight = previousHeight + 20;
@@ -222,7 +223,7 @@ function drawMenu() {
   
   character.display();
 
-  startButton.position(width/2, height/2);
+  startButton.position(width/2 - 40, height/2 + 50);
 
   startButton.mousePressed(() => {
     startButton.remove();
@@ -254,7 +255,7 @@ function drawEnd() {
 
   character.display();
 
-  resetButton.position(width/2, height/2);
+  resetButton.position(width/2 - 65, height/2 + 50);
 
   resetButton.mousePressed(() => {
     resetButton.remove();
