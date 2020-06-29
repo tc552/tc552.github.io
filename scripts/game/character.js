@@ -76,6 +76,7 @@ class Character extends Animation {
         this.characterHeight = this.originalWidth;
         this.spriteWidth = this.originalHeight;
         this.spriteHeight = this.originalWidth;
+        this.y = this.initialY + (this.originalHeight - this.originalWidth)
     }
 
     standUp() {
@@ -83,5 +84,6 @@ class Character extends Animation {
         this.characterHeight = this.originalHeight;
         this.spriteWidth = this.originalWidth;
         this.spriteHeight = this.originalHeight;
+        this.y = this.initialY;
     }
 }

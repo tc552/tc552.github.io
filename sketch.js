@@ -400,7 +400,7 @@ function buildPretzelsPositionMatrix() {
   for (let i = 0; i < pretzelQuantity - 1; i++) {
     lastPosition = lastPosition + (100 * Math.floor(random(1, 11)));
 
-    if (lastPosition === 5000 || lastPosition === 11000) {
+    if (lastPosition === 2000 || lastPosition === 11000) {
       lastPosition = lastPosition + (100 * Math.floor(random(1, 11)));
     }
     else if (lastPosition > mapLength) {
