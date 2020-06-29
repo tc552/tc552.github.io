@@ -43,7 +43,11 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(640, 360);
+  let myCanvas = createCanvas(canvasWidth, canvasHeight);
+  let canvasPositionX = (windowWidth - canvasWidth)/2;
+  let canvasPositionY = (windowHeight - canvasHeight)/2;
+
+  myCanvas.position(canvasPositionX, canvasPositionY);
   resetGame(sceneMenu);
 }
 
@@ -224,7 +228,9 @@ function drawMenu() {
   
   character.display();
 
-  startButton.position(width/2 - 40, height/2 + 50);
+  let canvasPositionX = (windowWidth - canvasWidth)/2;
+  let canvasPositionY = (windowHeight - canvasHeight)/2;
+  startButton.position(canvasPositionX + width/2 - 40, canvasPositionY + height/2 + 50);
 
   startButton.mousePressed(() => {
     startButton.remove();
@@ -266,7 +272,9 @@ function drawEnd() {
 
   character.display();
 
-  resetButton.position(width/2 - 65, height/2 + 50);
+  let canvasPositionX = (windowWidth - canvasWidth)/2;
+  let canvasPositionY = (windowHeight - canvasHeight)/2;
+  resetButton.position(canvasPositionX + width/2 - 65, canvasPositionY + height/2 + 50);
 
   resetButton.mousePressed(() => {
     resetButton.remove();

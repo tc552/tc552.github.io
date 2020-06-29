@@ -27,6 +27,10 @@ let powerUps = [];
 let pretzelsPositionMatrix = [];
 let crosswordsPositionMatrix = [];
 
+
+const canvasWidth = 640;
+const canvasHeight = 360;
+
 const pretzelYHigh = 100;
 const pretzelYLow = 260;
 const pretzelFirstXPostion = 500;
