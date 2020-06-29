@@ -100,11 +100,16 @@ function resetGame(scene) {
   score = new Score();
   life = new Life(imgFirstAid);
 
+  let canvasPositionX = (windowWidth - canvasWidth)/2;
+  let canvasPositionY = (windowHeight - canvasHeight)/2;
+
   if (currentScene === sceneMenu) {
     startButton = createButton('Start!');
+    startButton.position(canvasPositionX + width/2 - 40, canvasPositionY + height/2 + 50);
   }
   
   resetButton = createButton('Play again!');
+  resetButton.position(canvasPositionX + width/2 - 65, canvasPositionY + height/2 + 50);
   resetButton.hide();
 
   isGameStopped = false;
@@ -216,10 +221,6 @@ function drawMenu() {
   
   character.display();
 
-  let canvasPositionX = (windowWidth - canvasWidth)/2;
-  let canvasPositionY = (windowHeight - canvasHeight)/2;
-  startButton.position(canvasPositionX + width/2 - 40, canvasPositionY + height/2 + 50);
-
   startButton.mousePressed(() => {
     startButton.remove();
     currentScene = sceneGame;
@@ -259,10 +260,6 @@ function drawEnd() {
   text(subtitle, 140, height * 1/6 + 120);
 
   character.display();
-
-  let canvasPositionX = (windowWidth - canvasWidth)/2;
-  let canvasPositionY = (windowHeight - canvasHeight)/2;
-  resetButton.position(canvasPositionX + width/2 - 65, canvasPositionY + height/2 + 50);
 
   resetButton.mousePressed(() => {
     resetButton.remove();
