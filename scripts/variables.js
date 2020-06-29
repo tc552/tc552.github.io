@@ -53,7 +53,6 @@ const sceneEnd = 'END';
 let isGameStopped;
 let isGameOver;
 let isGameFinished;
-let hasCollided;
 
 const mapLength = 16000;
 

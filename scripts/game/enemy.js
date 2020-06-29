@@ -5,6 +5,7 @@ class Enemy extends Animation {
         this.originalSpeed = speed;
         this.speed = speed;
         this.delay = delay;
+        this.hasCollided = false;
     }
 
     move() {
