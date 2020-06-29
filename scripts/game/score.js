@@ -4,21 +4,26 @@ class Score {
         this.scoreMinute = 0;
         this.scoreSecond = 0;
         this.pretzels = 0;
-        this.img = imgPretzel;
+        this.imgPretzel = imgPretzel;
+        this.imgClock = imgClock;
     }
 
     display() {
+        image(this.imgPretzel, 320, 0, 50, 50);
+        textAlign(LEFT);
+        fill(161, 98, 44);
+        stroke("#ffffff");
+        strokeWeight(3);
+        textSize(20);
+        text(this.pretzels + "/" + pretzelQuantity, 370, 30);
+
+        image(this.imgClock, width - 115, 7, 30, 30);
         textAlign(LEFT);
         fill('#000000');
         stroke("#ffffff");
         strokeWeight(3);
         textSize(20);
         text(this.n(this.scoreHour) + "h" + this.n(this.scoreMinute), width - 80, 30);
-        
-        image(this.img, 320, 0, 50, 50);
-        textAlign(LEFT);
-        fill(161, 98, 44);
-        text(this.pretzels + "/" + pretzelQuantity, 370, 30);
     }
 
     increaseScore() {

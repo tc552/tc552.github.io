@@ -4,7 +4,7 @@ const highBpm = 70;
 const veryHighBpm = 85;
 const maxBpm = 100;
 const initialFirstAid = 1;
-const maxFirstAid = 2;
+const maxFirstAid = 1;
 const colorGreen = '#008000';
 const colorYellow = '#F9B100';
 const colorRed = '#8A0707';
@@ -19,7 +19,7 @@ class Life {
         this.maxFirstAid = maxFirstAid;
         this.firstAidHasDecreased = false;
 
-        this.imgFirstAidInitialX = 150;
+        this.imgFirstAidX = 150;
         this.imgFirstAidY = 10;
         this.imgFirstAidWidth = 30;
         this.imgFirstAidHeight = 25;
@@ -55,11 +55,18 @@ class Life {
         text(this.bpm, 70, 30);
         this.textSize = 20;
 
-        for (let i = 0; i < this.firstAid; i++) {
-            const imgMargin = i + 5;
-            const imgPosition = this.imgFirstAidInitialX + this.imgFirstAidWidth * (i + 1);
-            image(this.imgFirstAid, imgMargin + imgPosition, this.imgFirstAidY, this.imgFirstAidWidth, this.imgFirstAidHeight);
-        }
+        image(this.imgFirstAid, this.imgFirstAidX, this.imgFirstAidY, this.imgFirstAidWidth, this.imgFirstAidHeight);
+        fill(220, 66, 38);
+        stroke("#ffffff");
+        strokeWeight(3);
+        textSize(20);
+        text(this.firstAid + "/" + maxFirstAid, this.imgFirstAidX + 40, 30);
+
+        // for (let i = 0; i < this.firstAid; i++) {
+        //     const imgMargin = i + 5;
+        //     const imgPosition = this.imgFirstAidInitialX + this.imgFirstAidWidth * (i + 1);
+        //     image(this.imgFirstAid, imgMargin + imgPosition, this.imgFirstAidY, this.imgFirstAidWidth, this.imgFirstAidHeight);
+        // }
     }
 
     increaseBpm() {

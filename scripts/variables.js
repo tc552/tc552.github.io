@@ -14,6 +14,7 @@ let imgStressGreen;
 let imgStressYellow;
 let imgStressRed;
 let imgStressBomb;
+let imgClock;
 let scenario;
 let character;
 let firstAidResponder;

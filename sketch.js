@@ -35,6 +35,7 @@ function preload() {
   imgStressYellow = loadImage('images/assets/stress-02.png');
   imgStressRed = loadImage('images/assets/stress-03.png');
   imgStressBomb = loadImage('images/assets/stress-bomb-gif.gif');
+  imgClock = loadImage('images/assets/clock.png');
 
   // musicTheme = loadSound('sounds/theme.mp3');
   // jumpTheme = loadSound('sounds/parkour.mp3');
