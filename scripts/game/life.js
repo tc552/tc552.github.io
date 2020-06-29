@@ -1,6 +1,7 @@
 const initialBpm = 0;
-const intermediateBpm = 50;
-const highBpm = 80;
+const intermediateBpm = 40;
+const highBpm = 70;
+const veryHighBpm = 85;
 const maxBpm = 100;
 const initialFirstAid = 1;
 const maxFirstAid = 2;
@@ -22,23 +23,37 @@ class Life {
         this.imgFirstAidY = 10;
         this.imgFirstAidWidth = 30;
         this.imgFirstAidHeight = 25;
+
+        this.imgStress = imgStressGreen;
+
+        this.textSize = 20;
     }
     
     display() {
         textAlign(LEFT);
         
         if (this.bpm <= intermediateBpm) {
+            this.imgStress = imgStressGreen;
             fill(colorGreen);
         }
         else if (this.bpm <= highBpm) {
+            this.imgStress = imgStressYellow;
             fill(colorYellow);
         }
-        else {
+        else if (this.bpm <= veryHighBpm) {
+            this.imgStress = imgStressRed;
             fill(colorRed);
         }
+        else {
+            this.imgStress = imgStressBomb;
+            fill(colorRed);
+        }
+
+        image(this.imgStress, 20, 5);
         
-        textSize(20);
-        text("\u2764" + this.bpm, 20, 30);
+        textSize(this.textSize);
+        text(this.bpm, 70, 30);
+        this.textSize = 20;
 
         for (let i = 0; i < this.firstAid; i++) {
             const imgMargin = i + 5;
@@ -48,6 +63,7 @@ class Life {
     }
 
     increaseBpm() {
+        this.textSize = 30;
         if (this.bpm <= maxBpm){
             let bpmIncrease = Math.floor(Math.random() * 5) + 1;
             // let bpmIncrease = 1;

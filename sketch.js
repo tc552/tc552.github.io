@@ -31,6 +31,10 @@ function preload() {
   imgFirstAidResponder = loadImage('images/assets/first-aid-responder.png');
   imgPretzel = loadImage('images/assets/pretzel.gif');
   imgCrossword = loadImage('images/assets/crossword.png');
+  imgStressGreen = loadImage('images/assets/stress-01.png');
+  imgStressYellow = loadImage('images/assets/stress-02.png');
+  imgStressRed = loadImage('images/assets/stress-03.png');
+  imgStressBomb = loadImage('images/assets/stress-bomb-gif.gif');
 
   // musicTheme = loadSound('sounds/theme.mp3');
   // jumpTheme = loadSound('sounds/parkour.mp3');

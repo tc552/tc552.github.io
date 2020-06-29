@@ -4,6 +4,7 @@ class Score {
         this.scoreMinute = 0;
         this.scoreSecond = 0;
         this.pretzels = 0;
+        this.img = imgPretzel;
     }
 
     display() {
@@ -14,8 +15,10 @@ class Score {
         textSize(20);
         text(this.n(this.scoreHour) + "h" + this.n(this.scoreMinute), width - 80, 30);
         
+        image(this.img, 320, 0, 50, 50);
         textAlign(LEFT);
-        text(this.pretzels + "/" + pretzelQuantity + " pretzels", 320, 30);
+        fill(161, 98, 44);
+        text(this.pretzels + "/" + pretzelQuantity, 370, 30);
     }
 
     increaseScore() {
