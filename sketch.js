@@ -41,7 +41,6 @@ function preload() {
   imgClock = loadImage('images/assets/clock.png');
   imgClockBlinking = loadImage('images/assets/clock-blinking.gif');
 
-  // musicTheme = loadSound('sounds/theme.mp3');
   jumpTheme = loadSound('sounds/jump.wav');
   powerUpTheme = loadSound('sounds/powerup.wav');
   failTheme = loadSound('sounds/fail.mp3');
@@ -104,7 +103,7 @@ function resetGame(scene) {
     powerUps.push(newCrossword);
   })
 
-  firstAidResponder = new Enemy(firstAidResponderPositionMatrix, imgFirstAidResponder, width, 5, firstAidResponderWidth, firstAidResponderHeight, firstAidResponderWidth, firstAidResponderHeight, 10, 200);
+  firstAidResponder = new Enemy(firstAidResponderPositionMatrix, imgFirstAidResponder, width + 300, 5, firstAidResponderWidth, firstAidResponderHeight, firstAidResponderWidth, firstAidResponderHeight, 10, 200);
 
   enemies.push(enemyDwight);
   enemies.push(enemyMichael);
