@@ -6,6 +6,8 @@ class Score {
         this.pretzels = 0;
         this.imgPretzel = imgPretzel;
         this.imgClock = imgClock;
+        this.imgClockNormal = imgClock;
+        this.imgClockBlinking = imgClockBlinking;
     }
 
     display() {
@@ -16,6 +18,10 @@ class Score {
         strokeWeight(3);
         textSize(20);
         text(this.pretzels + "/" + pretzelQuantity, 370, 30);
+
+        if (this.scoreHour >= 16) {
+            this.imgClock = this.imgClockBlinking;
+        }
 
         image(this.imgClock, width - 115, 7, 30, 30);
         textAlign(LEFT);

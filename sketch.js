@@ -30,12 +30,13 @@ function preload() {
   imgFirstAid = loadImage('images/assets/first-aid.png');
   imgFirstAidResponder = loadImage('images/assets/first-aid-responder.png');
   imgPretzel = loadImage('images/assets/pretzel.gif');
-  imgCrossword = loadImage('images/assets/crossword.png');
-  imgStressGreen = loadImage('images/assets/stress-01.png');
-  imgStressYellow = loadImage('images/assets/stress-02.png');
-  imgStressRed = loadImage('images/assets/stress-03.png');
+  imgCrossword = loadImage('images/assets/crossword.gif');
+  imgStressGreen = loadImage('images/assets/stress-01.gif');
+  imgStressYellow = loadImage('images/assets/stress-02.gif');
+  imgStressRed = loadImage('images/assets/stress-03.gif');
   imgStressBomb = loadImage('images/assets/stress-bomb-gif.gif');
   imgClock = loadImage('images/assets/clock.png');
+  imgClockBlinking = loadImage('images/assets/clock-blinking.gif');
 
   // musicTheme = loadSound('sounds/theme.mp3');
   // jumpTheme = loadSound('sounds/parkour.mp3');
@@ -307,7 +308,7 @@ function drawGame() {
   character.display();
   character.applyGravity();
 
-  if (score.scoreHour >= 11) {
+  if (score.scoreHour >= 17) {
     // noLoop();
     stopGame(typeFinish);
     

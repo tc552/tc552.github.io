@@ -15,6 +15,7 @@ let imgStressYellow;
 let imgStressRed;
 let imgStressBomb;
 let imgClock;
+let imgClockBlinking;
 let scenario;
 let character;
 let firstAidResponder;
