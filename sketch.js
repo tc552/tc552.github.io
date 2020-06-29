@@ -45,9 +45,7 @@ function preload() {
 function setup() {
   let myCanvas = createCanvas(canvasWidth, canvasHeight);
   let canvasPositionX = (windowWidth - canvasWidth)/2;
-  let auxY = Math.min(windowWidth, windowHeight);
-
-  let canvasPositionY = (auxY - canvasHeight)/2;
+  let canvasPositionY = (windowHeight - canvasHeight)/2;
 
   myCanvas.position(canvasPositionX, canvasPositionY);
   resetGame(sceneMenu);
