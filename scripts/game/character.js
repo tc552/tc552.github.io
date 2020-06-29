@@ -4,6 +4,7 @@ class Character extends Animation {
 
         this.initialY = height - this.characterHeight - this.offsetY;
         this.y = this.initialY;
+        this.floor = this.initialY;
 
         this.gravity = 2;
         this.jumpSpeed = 0;
@@ -28,9 +29,9 @@ class Character extends Animation {
         this.y = this.y + this.jumpSpeed;
         this.jumpSpeed = this.jumpSpeed + this.gravity;
 
-        if (this.y > this.initialY)
+        if (this.y > this.floor)
         {
-            this.y = this.initialY;
+            this.y = this.floor;
             this.jumpCount = 0;
         }
 
@@ -76,7 +77,7 @@ class Character extends Animation {
         this.characterHeight = this.originalWidth;
         this.spriteWidth = this.originalHeight;
         this.spriteHeight = this.originalWidth;
-        this.y = this.initialY + (this.originalHeight - this.originalWidth)
+        this.floor = this.initialY + (this.originalHeight - this.originalWidth)
     }
 
     standUp() {
@@ -84,6 +85,6 @@ class Character extends Animation {
         this.characterHeight = this.originalHeight;
         this.spriteWidth = this.originalWidth;
         this.spriteHeight = this.originalHeight;
-        this.y = this.initialY;
+        this.floor = this.initialY;
     }
 }
