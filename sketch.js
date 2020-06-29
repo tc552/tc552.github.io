@@ -182,18 +182,6 @@ function drawMenu() {
   noStroke();
   rect(width * 1/6, height * 1/6, width * 2/3, height * 2/3);
   
-  
-  // fill("#000")
-  // textFont('Comfortaa');
-  // stroke("#ffffff");
-  // strokeWeight(3);
-  // textStyle(BOLD);
-  // textSize(32);
-  // text("Stanley's Day At The Office", 50, 50);
-  
-  // textStyle(NORMAL);
-  
-  
   let title = "Stanley's Day At The Office";
   
   textAlign(CENTER);
@@ -220,11 +208,11 @@ function drawMenu() {
   
   previousHeight = newHeight;
   newHeight = previousHeight + 40;
-  text("You know, crossword puzzles make time go faster...",  140, newHeight);
+  text("Also, crossword puzzles make time go faster...",  140, newHeight);
   
   previousHeight = newHeight;
   newHeight = previousHeight + 25;
-  text("Good luck and may all your days be pretzel day!", 140, newHeight);
+  text("Use ArrowUp or Click/Tap to jump.", 140, newHeight);
   
   character.display();
 
@@ -356,12 +344,12 @@ function drawGame() {
     else {
       firstAidResponder.display();
 
-      if (firstAidResponder.x > character.x || gameStoppedTimerCount > 130) {
+      if (firstAidResponder.x > character.x + 70 || gameStoppedTimerCount > 100) {
         firstAidResponder.animate();
         firstAidResponder.move();
       }
 
-      if (gameStoppedTimerCount > 150) {
+      if (gameStoppedTimerCount > 120) {
         resumeGame();
       }
     }
