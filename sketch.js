@@ -41,16 +41,17 @@ function preload() {
   imgClock = loadImage('images/assets/clock.png');
   imgClockBlinking = loadImage('images/assets/clock-blinking.gif');
 
-  // musicTheme = loadSound('sounds/theme.mp3');
   jumpTheme = loadSound('sounds/jump.wav');
   powerUpTheme = loadSound('sounds/powerup.wav');
   failTheme = loadSound('sounds/fail.mp3');
   deathTheme = loadSound('sounds/death.wav');
+  endTheme = loadSound('sounds/end.mp3');
   
   jumpTheme.setVolume(0.7);
   powerUpTheme.setVolume(0.1);
   failTheme.setVolume(0.7);
   deathTheme.setVolume(0.5);
+  endTheme.setVolume(0.5);
 }
 
 function setup() {
@@ -102,7 +103,7 @@ function resetGame(scene) {
     powerUps.push(newCrossword);
   })
 
-  firstAidResponder = new Enemy(firstAidResponderPositionMatrix, imgFirstAidResponder, width, 5, firstAidResponderWidth, firstAidResponderHeight, firstAidResponderWidth, firstAidResponderHeight, 10, 200);
+  firstAidResponder = new Enemy(firstAidResponderPositionMatrix, imgFirstAidResponder, width + 300, 5, firstAidResponderWidth, firstAidResponderHeight, firstAidResponderWidth, firstAidResponderHeight, 10, 200);
 
   enemies.push(enemyDwight);
   enemies.push(enemyMichael);
@@ -168,6 +169,11 @@ function stopGame(type) {
   }
   else if (type === typeFinish) {
     character.changeState(typeFinish);
+    
+    if (!isGameFinished){
+      endTheme.play();
+    }
+
     isGameFinished = true;
   }
   isGameStopped = true;

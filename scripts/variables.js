@@ -24,6 +24,7 @@ let jumpTheme;
 let powerUpTheme;
 let failTheme;
 let deathTheme;
+let endTheme;
 
 let enemies = [];
 let powerUps = [];
@@ -54,7 +55,7 @@ let isGameStopped;
 let isGameOver;
 let isGameFinished;
 
-const mapLength = 16000;
+const mapLength = 15000;
 
 let scenarioSpeed = 5;
 const imgScenarioWidth = 1280;
