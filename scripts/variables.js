@@ -21,6 +21,9 @@ let character;
 let firstAidResponder;
 let musicTheme;
 let jumpTheme;
+let powerUpTheme;
+let failTheme;
+let deathTheme;
 
 let enemies = [];
 let powerUps = [];
@@ -50,6 +53,7 @@ const sceneEnd = 'END';
 let isGameStopped;
 let isGameOver;
 let isGameFinished;
+let hasCollided;
 
 const mapLength = 16000;
 

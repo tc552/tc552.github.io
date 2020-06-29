@@ -36,6 +36,7 @@ class PowerUp {
     }
 
     getPicked() {
+        powerUpTheme.play();
         this.picked = true;
         this.visible = false;
     }

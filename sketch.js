@@ -39,7 +39,10 @@ function preload() {
   imgClockBlinking = loadImage('images/assets/clock-blinking.gif');
 
   // musicTheme = loadSound('sounds/theme.mp3');
-  // jumpTheme = loadSound('sounds/parkour.mp3');
+  jumpTheme = loadSound('sounds/jump.wav');
+  powerUpTheme = loadSound('sounds/powerup.wav');
+  failTheme = loadSound('sounds/fail.mp3');
+  deathTheme = loadSound('sounds/death.wav');
 }
 
 function setup() {
@@ -115,6 +118,7 @@ function resetGame(scene) {
   isGameStopped = false;
   isGameOver = false;
   isGameFinished = false;
+  hasCollided = false;
   resetButtonVisible = false;
 
   frameRate(30);
@@ -146,8 +150,6 @@ function stopGame(type) {
     enemy.stop();
   });
 
-  isGameStopped = true;
-  gameStoppedTimerCount++;
 
   if (type === typeDeath) {
     character.changeState(typeDeath);
@@ -161,6 +163,8 @@ function stopGame(type) {
     character.changeState(typeFinish);
     isGameFinished = true;
   }
+  isGameStopped = true;
+  gameStoppedTimerCount++;
 }
 
 function resumeGame() {
@@ -322,7 +326,16 @@ function drawGame() {
       enemy.move();
 
       if (character.isColliding(enemy) && !isGameStopped) {
+        if (!hasCollided) {
+          // failTheme.play();
+        }
+
         life.increaseBpm();
+
+        hasCollided = true;
+      }
+      else {
+        hasCollided = false;
       }
   });
   

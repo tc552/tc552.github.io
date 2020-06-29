@@ -20,6 +20,7 @@ class Character extends Animation {
 
     jump() {
         if (this.jumpCount < this.jumpLimit) {
+            jumpTheme.play();
             this.jumpSpeed = -30;
             this.jumpCount++;
         }
@@ -57,6 +58,9 @@ class Character extends Animation {
         this.currentFrame = 0;
 
         if (type === typeDeath) {
+            if (!isGameStopped) {
+                deathTheme.play();
+            }
             this.img = this.imgDead;
             this.lieDown();
         }
