@@ -144,12 +144,8 @@ function stopGame(type) {
     character.changeState(typeDeath);
 
     if (!life.firstAidHasDecreased) {
-      life.decreaseFirstAid();
+      isGameOver = life.decreaseFirstAid();
       life.firstAidHasDecreased = true;
-    }
-
-    if (life.firstAid < 0) {
-      isGameOver = true;
     }
   }
   else if (type === typeFinish) {

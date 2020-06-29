@@ -12,6 +12,9 @@ class Character extends Animation {
         this.originalImg = img;
         this.imgDead = imgDead;
         this.imgWin = imgWin;
+
+        this.originalWidth = this.characterWidth;
+        this.originalHeight = this.characterHeight;
     }
 
     jump() {
@@ -54,6 +57,7 @@ class Character extends Animation {
 
         if (type === typeDeath) {
             this.img = this.imgDead;
+            this.lieDown();
         }
         else if (type === typeFinish) {
             this.img = this.imgWin;
@@ -62,7 +66,22 @@ class Character extends Animation {
 
     restart() {
         this.img = this.originalImg;
+        this.standUp();
         this.jumpLimit = 2;
         this.animate();
+    }
+
+    lieDown() {
+        this.characterWidth = this.originalHeight;
+        this.characterHeight = this.originalWidth;
+        this.spriteWidth = this.originalHeight;
+        this.spriteHeight = this.originalWidth;
+    }
+
+    standUp() {
+        this.characterWidth = this.originalWidth;
+        this.characterHeight = this.originalHeight;
+        this.spriteWidth = this.originalWidth;
+        this.spriteHeight = this.originalHeight;
     }
 }

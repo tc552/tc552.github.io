@@ -19,7 +19,10 @@ class Score {
         textSize(20);
         text(this.pretzels + "/" + pretzelQuantity, 370, 30);
 
-        if (this.scoreHour >= 16) {
+        if (this.scoreHour < 16) {
+            this.imgClock = this.imgClockNormal;
+        }
+        else{
             this.imgClock = this.imgClockBlinking;
         }
 
