@@ -108,7 +108,9 @@ class Life {
     }
 
     decreaseFirstAid() {
-        this.firstAid--;
+        if (this.firstAid > 0) {
+            this.firstAid--;
+        }
     }
 
     resetFirstAid() {

@@ -425,7 +425,7 @@ function buildPretzelsPositionMatrix() {
 }
 
 function buildCrosswordsPositionMatrix() {
-  crosswordsPositionMatrix.push([1000, 100]);
+  crosswordsPositionMatrix.push([2000, 100]);
   crosswordsPositionMatrix.push([11000, 100]);
 }
 
