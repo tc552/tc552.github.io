@@ -10,6 +10,7 @@ let imgFirstAid;
 let imgFirstAidResponder;
 let imgPretzel;
 let imgCrossword;
+let imgCrosswordPowerUp;
 let imgStressGreen;
 let imgStressYellow;
 let imgStressRed;

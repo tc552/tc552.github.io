@@ -1,5 +1,5 @@
 class PowerUp {
-    constructor(img, x, y, speed, powerUpWidth, powerUpHeight, type) {
+    constructor(img, x, y, speed, powerUpWidth, powerUpHeight, type, imgSecondary = null) {
         this.img = img;
         this.x  = x;
         this.y = y;
@@ -11,6 +11,8 @@ class PowerUp {
 
         this.characterWidth = powerUpWidth;
         this.characterHeight = powerUpHeight;
+
+        this.imgSecondary = imgSecondary;
 
         this.visible = true;
         this.picked = false;
@@ -37,6 +39,12 @@ class PowerUp {
 
     getPicked() {
         this.picked = true;
-        this.visible = false;
+        
+        if (this.type === typeCrossword && this.imgSecondary != null && this.imgSecondary != undefined) {
+            this.img = this.imgSecondary;
+        }
+        else {
+            this.visible = false;
+        }
     }
 }

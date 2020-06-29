@@ -31,6 +31,7 @@ function preload() {
   imgFirstAidResponder = loadImage('images/assets/first-aid-responder.png');
   imgPretzel = loadImage('images/assets/pretzel.gif');
   imgCrossword = loadImage('images/assets/crossword.gif');
+  imgCrosswordPowerUp = loadImage('images/assets/crossword-powerup.png');
   imgStressGreen = loadImage('images/assets/stress-01.gif');
   imgStressYellow = loadImage('images/assets/stress-02.gif');
   imgStressRed = loadImage('images/assets/stress-03.gif');
@@ -87,7 +88,7 @@ function resetGame(scene) {
 
   buildCrosswordsPositionMatrix();
   crosswordsPositionMatrix.forEach(crosswordPosition => {
-    let newCrossword = new PowerUp(imgCrossword, crosswordPosition[0], crosswordPosition[1], scenarioSpeed, 90, 90, typeCrossword)
+    let newCrossword = new PowerUp(imgCrossword, crosswordPosition[0], crosswordPosition[1], scenarioSpeed, 90, 90, typeCrossword, imgCrosswordPowerUp)
     powerUps.push(newCrossword);
   })
 
