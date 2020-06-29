@@ -207,16 +207,16 @@ function drawMenu() {
   noStroke();
   
   previousHeight = newHeight;
-  newHeight = previousHeight + 20;
+  newHeight = previousHeight + 15;
 
   text("Avoid getting too close to your boss and your co-workers,\nor your stress level will increase!", 140, newHeight);
   
   previousHeight = newHeight;
-  newHeight = previousHeight + 40;
-  text("Also, crossword puzzles make time go faster...",  140, newHeight);
+  newHeight = previousHeight + 35;
+  text("Crossword puzzles reduce your stress and make time\ngo faster. Also, look up for delicious pretzels!",  140, newHeight);
   
   previousHeight = newHeight;
-  newHeight = previousHeight + 25;
+  newHeight = previousHeight + 40;
   text("Use ArrowUp or Click/Tap to jump.", 140, newHeight);
   
   character.display();
