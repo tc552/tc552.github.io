@@ -285,9 +285,6 @@ function drawEnd() {
 function drawGame() {
   scenario.display();
   scenario.move();
-
-  score.display();
-  life.display();
     
   powerUps.forEach(powerUp => {
     powerUp.display();
@@ -343,6 +340,9 @@ function drawGame() {
         life.increaseBpm();
       }
   });
+  
+  score.display();
+  life.display();
   
   if (life.bpm >= life.maxBpm) {
     stopGame(typeDeath);
