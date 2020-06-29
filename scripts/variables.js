@@ -24,6 +24,7 @@ let jumpTheme;
 let powerUpTheme;
 let failTheme;
 let deathTheme;
+let endTheme;
 
 let enemies = [];
 let powerUps = [];
