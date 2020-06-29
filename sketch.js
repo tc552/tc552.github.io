@@ -3,18 +3,21 @@ let click = true;
 function touchStarted() {
   click = false;
   event.code = 'Touch';
-  character.jump();
+  if (currentScene === sceneGame)
+    character.jump();
 }
 
 function mousePressed() {
   if (click) {
-    character.jump();
+    if (currentScene === sceneGame)
+      character.jump();
   }
 }
 
 function keyPressed() {
   if (key === 'ArrowUp') {
-    character.jump();
+    if (currentScene === sceneGame)
+      character.jump();
     // jumpTheme.play();
   }
 }
