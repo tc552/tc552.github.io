@@ -198,7 +198,7 @@ function drawMenu() {
   noStroke();
   rect(width * 1/6, height * 1/6, width * 2/3, height * 2/3);
   
-  let title = "Stanley Goes To The Office";
+  let title = "Stanley's Day At The Office";
   
   textAlign(CENTER);
   fill("#fff");
