@@ -55,11 +55,7 @@ function preload() {
 }
 
 function setup() {
-  let myCanvas = createCanvas(canvasWidth, canvasHeight);
-  let canvasPositionX = (windowWidth - canvasWidth)/2;
-  let canvasPositionY = (windowHeight - canvasHeight)/2;
-
-  myCanvas.position(canvasPositionX, canvasPositionY);
+  createCanvas(canvasWidth, canvasHeight);
   resetGame(sceneMenu);
 }
 
@@ -117,11 +113,11 @@ function resetGame(scene) {
 
   if (currentScene === sceneMenu) {
     startButton = createButton('Start!');
-    startButton.position(canvasPositionX + width/2 - 40, canvasPositionY + height/2 + 50);
+    startButton.addClass('startButton');
   }
   
   resetButton = createButton('Play again!');
-  resetButton.position(canvasPositionX + width/2 - 65, canvasPositionY + height/2 + 50);
+  resetButton.addClass('resetButton');
   resetButton.hide();
 
   isGameStopped = false;
@@ -130,8 +126,6 @@ function resetGame(scene) {
   resetButtonVisible = false;
 
   frameRate(30);
-
-  // musicTheme.play();
 }
 
 function draw() {

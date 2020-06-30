@@ -3,16 +3,19 @@
   src: url('fonts/Comfortaa-VariableFont_wght.ttf')  format('truetype')
 }
 
-@media screen and (min-width: 320px) and (max-width: 767px) and (orientation: portrait) {
-  html {
-    transform: rotate(-90deg);
-    transform-origin: left top;
-    width: 100vh;
-    height: 100vw;
-    overflow-x: hidden;
-    position: absolute;
-    top: 100%;
-    left: 0;
+@media screen and (orientation: portrait) {
+  canvas, button {
+    transform: rotate(-90deg) scale(2);
+  }
+  
+  .startButton {
+    top: calc(((100vh)/2) - 10px) !important;
+    left: calc(((100vw)/2) + 110px) !important;
+  }
+  
+  .resetButton {
+    top: calc(((100vh)/2) - 25px) !important;
+    left: calc(((100vw)/2) + 85px) !important;
   }
 }
 
@@ -20,11 +23,17 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
+body {
+  touch-action: manipulation;
+  background-color: black;
+}
+
 canvas {
   display: block;
-}
-body {
-  background-color: black;
+  position: absolute;
+  top: calc((100vh - 360px)/2);
+  left: calc((100vw - 640px)/2);
 }
 
 button {
@@ -34,4 +43,15 @@ button {
   border-radius: 4px;
   padding: 16px 24px;
   background-color: black;
+  position: absolute;
+}
+
+.startButton {
+  top: calc(((100vh)/2) + 50px);
+  left: calc(((100vw)/2) - 40px);
+}
+
+.resetButton {
+  top: calc(((100vh)/2) + 50px);
+  left: calc(((100vw)/2) - 65px);
 }
