@@ -4,15 +4,18 @@
 }
 
 @media screen and (orientation: portrait) {
-  canvas {
-    transform: rotate(-90deg);
-    transform-origin: left top;
-    width: 100vh !important;
-    height: 100vw !important;
-    overflow-x: hidden;
-    position: absolute;
-    top: 100% !important;
-    left: 0 !important;
+  canvas, button {
+    transform: rotate(-90deg) scale(2);
+  }
+  
+  .startButton {
+    top: calc(((100vh)/2) - 10px) !important;
+    left: calc(((100vw)/2) + 110px) !important;
+  }
+  
+  .resetButton {
+    top: calc(((100vh)/2) - 25px) !important;
+    left: calc(((100vw)/2) + 85px) !important;
   }
 }
 
@@ -28,6 +31,9 @@ body {
 
 canvas {
   display: block;
+  position: absolute;
+  top: calc((100vh - 360px)/2);
+  left: calc((100vw - 640px)/2);
 }
 
 button {
@@ -37,4 +43,15 @@ button {
   border-radius: 4px;
   padding: 16px 24px;
   background-color: black;
+  position: absolute;
+}
+
+.startButton {
+  top: calc(((100vh)/2) + 50px);
+  left: calc(((100vw)/2) - 40px);
+}
+
+.resetButton {
+  top: calc(((100vh)/2) + 50px);
+  left: calc(((100vw)/2) - 65px);
 }
