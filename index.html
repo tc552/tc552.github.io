@@ -41,5 +41,54 @@
         </form>
       </div>
     </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyDYQvyWW_Uh_OHMNkd6ik3qLkbCZIuMDGI",
+        authDomain: "savestanley-e5318.firebaseapp.com",
+        databaseURL: "https://savestanley-e5318.firebaseio.com",
+        projectId: "savestanley-e5318",
+        storageBucket: "savestanley-e5318.appspot.com",
+        messagingSenderId: "462705177549",
+        appId: "1:462705177549:web:ccd9837a5accba49cd0a84",
+        measurementId: "G-V6Y7TL5ETF"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      var db = firebase.firestore();
+
+      function addScore(newName, newScore) {
+        db.collection("scores").add({
+            name: newName,
+            score: newScore
+        })
+        .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+      }
+      
+      var testname = "Jim";
+      var testscore = 80;
+
+      function lala() {
+        addScore(testname,testscore);
+      }
+    </script>
+
   </body>
 </html>
