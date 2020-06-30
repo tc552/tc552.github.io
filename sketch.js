@@ -71,6 +71,7 @@ function clearGame() {
   life = null;
   startButton = null;
   resetButton = null;
+  exitFullScreenButton = null;
   mapTimerCount = 0;
   gameStoppedTimerCount = 0;
   mapIndex = 0;
@@ -108,9 +109,6 @@ function resetGame(scene) {
   score = new Score();
   life = new Life(imgFirstAid);
 
-  let canvasPositionX = (windowWidth - canvasWidth)/2;
-  let canvasPositionY = (windowHeight - canvasHeight)/2;
-
   if (currentScene === sceneMenu) {
     startButton = createButton('Start!');
     startButton.addClass('startButton');
@@ -119,6 +117,10 @@ function resetGame(scene) {
   resetButton = createButton('Play again!');
   resetButton.addClass('resetButton');
   resetButton.hide();
+
+  exitFullScreenButton = createButton('x');
+  exitFullScreenButton.addClass('exitFullScreenButton');
+  exitFullScreenButton.hide();
 
   isGameStopped = false;
   isGameOver = false;
@@ -235,6 +237,8 @@ function drawMenu() {
   startButton.mousePressed(() => {
     startButton.remove();
     currentScene = sceneGame;
+    document.body.requestFullscreen();
+    exitFullScreenButton.show();
   });
 }
 
@@ -276,9 +280,17 @@ function drawEnd() {
     resetButton.remove();
     resetGame(sceneGame);
   });
+
+  exitFullScreenButton.mousePressed(() => {
+    document.exitFullscreen();
+  })
 }
 
 function drawGame() {
+  exitFullScreenButton.mousePressed(() => {
+    document.exitFullscreen();
+  })
+
   scenario.display();
   scenario.move();
     
