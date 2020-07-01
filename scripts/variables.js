@@ -55,7 +55,7 @@ let isGameStopped;
 let isGameOver;
 let isGameFinished;
 
-const mapLength = 15000;
+const mapLength = 14000;
 
 let scenarioSpeed = 5;
 const imgScenarioWidth = 1280;
