@@ -1,7 +1,13 @@
 class Score {
     constructor() {
+        this.scoreDay = 1;
         this.scoreHour = 9;
         this.scoreMinute = 0;
+        this.totalPretzels = 0;
+        this.totalCrosswords = 0;
+        this.totalDaysAllPretzelsPicked = 0;
+        this.totalFirstAidOccurrences = 0;
+
         this.scoreSecond = 0;
         this.pretzels = 0;
         this.imgPretzel = imgPretzel;
@@ -66,6 +72,15 @@ class Score {
 
     increasePretzels() {
         this.pretzels++;
+        this.totalPretzels++;
+    }
+
+    increaseCrosswords() {
+        this.totalCrosswords++;
+    }
+
+    increaseFirstAidOccurrences() {
+        this.totalFirstAidOccurrences++;
     }
    
     n(n){

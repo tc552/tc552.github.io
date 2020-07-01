@@ -75,20 +75,20 @@
         scoreDay,
         scoreHour,
         scoreMinute,
+        totalPretzels,
         totalCrosswords,
         totalDaysAllPretzelsPicked,
-        totalFirstAidOccurrences,
-        totalPretzels
+        totalFirstAidOccurrences
         ) {
         db.collection("scores").add({
             name: name,
             scoreDay: scoreDay,
             scoreHour: scoreHour,
             scoreMinute: scoreMinute,
+            totalPretzels: totalPretzels,
             totalCrosswords: totalCrosswords,
             totalDaysAllPretzelsPicked: totalDaysAllPretzelsPicked,
-            totalFirstAidOccurrences: totalFirstAidOccurrences,
-            totalPretzels: totalPretzels
+            totalFirstAidOccurrences: totalFirstAidOccurrences
         })
         .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);

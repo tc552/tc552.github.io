@@ -40,6 +40,7 @@ const pretzelYLow = 260;
 const pretzelFirstXPostion = 500;
 const pretzelQuantity = 25;
 const crosswordFastForwardMinutes = 30;
+const crosswordStressReduction = 20;
 
 const typePretzel = 'PRETZEL';
 const typeCrossword = 'CROSSWORD';
