@@ -69,10 +69,25 @@
 
       var db = firebase.firestore();
 
-      function addScore(newName, newScore) {
+      function addScore(
+        name,
+        scoreDay,
+        scoreHour,
+        scoreMinute,
+        totalCrosswords,
+        totalDaysAllPretzelsPicked,
+        totalFirstAidOccurrences,
+        totalPretzels
+        ) {
         db.collection("scores").add({
-            name: newName,
-            score: newScore
+            name: name,
+            scoreDay: scoreDay,
+            scoreHour: scoreHour,
+            scoreMinute: scoreMinute,
+            totalCrosswords: totalCrosswords,
+            totalDaysAllPretzelsPicked: totalDaysAllPretzelsPicked,
+            totalFirstAidOccurrences: totalFirstAidOccurrences,
+            totalPretzels: totalPretzels
         })
         .then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
@@ -80,13 +95,6 @@
         .catch(function(error) {
             console.error("Error adding document: ", error);
         });
-      }
-      
-      var testname = "Jim";
-      var testscore = 80;
-
-      function lala() {
-        addScore(testname,testscore);
       }
     </script>
 
