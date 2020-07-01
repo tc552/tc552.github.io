@@ -26,6 +26,7 @@
     <script src="scripts/game/scenario.js?v2"></script>
     <script src="scripts/game/powerUp.js?v2"></script>
     <script src="scripts/game/score.js?v2"></script>
+    <script src="scripts/game/highScore.js?v2"></script>
     <script src="scripts/game/life.js?v2"></script>
     <script src="scripts/variables.js?v2"></script>
     <script src="sketch.js?v2"></script>
@@ -95,6 +96,42 @@
         .catch(function(error) {
             console.error("Error adding document: ", error);
         });
+      }
+
+      let highScores = [];
+
+      function readHighScores(quantity) {
+        db.collection("scores")
+          .orderBy("scoreDay", "desc")
+          .orderBy("scoreHour", "desc")
+          .orderBy("scoreMinute", "desc")
+          .orderBy("totalPretzels", "desc")
+          .orderBy("totalCrosswords", "desc")
+          .orderBy("totalDaysAllPretzelsPicked", "desc")
+          .orderBy("totalFirstAidOccurrences")
+          .limit(quantity)
+          .get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                let response = doc.data();
+                let highScore = new HighScore(
+                  response.name,
+                  response.scoreDay,
+                  response.scoreHour,
+                  response.scoreMinute,
+                  response.totalPretzels,
+                  response.totalCrosswords,
+                  response.totalDaysAllPretzelsPicked,
+                  response.totalFirstAidOccurrences,
+                );
+                
+                highScores.push(highScore);
+            });
+            
+            console.log(highScores)
+          })
+          .catch(function(error) {
+              console.log("Error getting documents: ", error);
+          });
       }
     </script>
 
