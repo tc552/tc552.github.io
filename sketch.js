@@ -72,6 +72,7 @@ function clearGame() {
   startButton = null;
   resetButton = null;
   sendScoreButton = null;
+  nameInput = null;
   mapTimerCount = 0;
   gameStoppedTimerCount = 0;
   mapIndex = 0;
@@ -122,6 +123,8 @@ function resetGame(scene) {
   resetButton.hide();
   
   sendScoreButton = createButton('Send score');
+  nameInput = createInput('');
+  nameInput.position(0, 70);
 
   isGameStopped = false;
   isGameOver = false;
@@ -258,7 +261,7 @@ function drawEnd() {
     
     sendScoreButton.mousePressed(() => {
       addScore(
-        "test",
+        nameInput.value(),
         score.scoreDay,
         score.scoreHour,
         score.scoreMinute,
