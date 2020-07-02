@@ -73,6 +73,7 @@ function clearGame() {
   resetButton = null;
   sendScoreButton = null;
   nameInput = null;
+  highScores = null;
   mapTimerCount = 0;
   gameStoppedTimerCount = 0;
   mapIndex = 0;
@@ -126,6 +127,26 @@ function resetGame(scene) {
   nameInput = createInput('');
   nameInput.position(0, 70);
 
+  function myTest(qty) {
+    readHighScoresFromDb(qty).then(function(result) {
+      highScores = result;
+
+      highScores.forEach(highScore => {
+        highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
+      });
+    })
+  }
+
+  myTest(5);
+
+  // highScores = readHighScoresFromDb(5);
+  
+  // highScores.forEach(highScore => {
+  //   highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
+  // });
+
+  // text(highScoresText);
+
   isGameStopped = false;
   isGameOver = false;
   isGameFinished = false;
@@ -138,6 +159,9 @@ function draw() {
   switch (currentScene) {
     case sceneMenu:
       drawMenu();
+      fill(255,255,255);
+      textSize(32);
+      text(highScoresText, 10, 120);
       break;
     case sceneGame:
       drawGame();
