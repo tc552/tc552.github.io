@@ -91,7 +91,13 @@ class Score {
         if (sumMinutes >= 60) {
             sumMinutes = sumMinutes - 60;
 
-            this.scoreHour++;
+            if (this.scoreHour === 16) {
+                sumMinutes = 59;
+                this.scoreSecond = 59;
+            }
+            else {
+                this.scoreHour++;
+            }
         }
 
         this.scoreMinute = sumMinutes;
