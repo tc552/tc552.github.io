@@ -86,27 +86,10 @@ function resetGame(scene) {
   scenario = new Scenario(imgScenario, scenarioSpeed, imgScenarioWidth);
   character = new Character(stanleyPositionMatrix, imgCharacter, stanleyOffsetX, stanleyOffsetY, stanleyWidth, stanleyHeight, stanleyWidth, stanleyHeight, imgCharacterDead, imgCharacterWin)
 
-  const enemyDwight = new Enemy(dwightPositionMatrix, imgEnemyDwight, width, 0, dwightWidth, dwightHeight, dwightWidth, dwightHeight, 8, 200)
-  const enemyMichael = new Enemy(michaelPositionMatrix, imgEnemyMichael, width * 1.5, 5, michaelWidth, michaelHeight, michaelWidth, michaelHeight, 12, 500)
-  const enemyFlyingMichael = new Enemy(flyingMichaelPositionMatrix, imgEnemyFlyingMichael, width * 1.8, 200, flyingMichaelWidth/1.5, flyingMichaelHeight/1.5, flyingMichaelWidth, michaelHeight, 15, 500)
-  
-  buildPretzelsPositionMatrix();
-  pretzelsPositionMatrix.forEach(pretzelPosition => {
-    let newPretzel = new PowerUp(imgPretzel, pretzelPosition[0], pretzelPosition[1], scenarioSpeed, 90, 90, typePretzel)
-    powerUps.push(newPretzel);
-  })
-
-  buildCrosswordsPositionMatrix();
-  crosswordsPositionMatrix.forEach(crosswordPosition => {
-    let newCrossword = new PowerUp(imgCrossword, crosswordPosition[0], crosswordPosition[1], scenarioSpeed, 90, 90, typeCrossword)
-    powerUps.push(newCrossword);
-  })
+  createEnemies();
+  createPowerUps();
 
   firstAidResponder = new Enemy(firstAidResponderPositionMatrix, imgFirstAidResponder, width + 300, 5, firstAidResponderWidth, firstAidResponderHeight, firstAidResponderWidth, firstAidResponderHeight, 10, 200);
-
-  enemies.push(enemyDwight);
-  enemies.push(enemyMichael);
-  enemies.push(enemyFlyingMichael);
 
   score = new Score();
   life = new Life(imgFirstAid);
@@ -158,6 +141,30 @@ function resetGame(scene) {
   frameRate(30);
 }
 
+function createPowerUps() {
+  buildPretzelsPositionMatrix();
+  pretzelsPositionMatrix.forEach(pretzelPosition => {
+    let newPretzel = new PowerUp(imgPretzel, pretzelPosition[0], pretzelPosition[1], scenarioSpeed, 90, 90, typePretzel)
+    powerUps.push(newPretzel);
+  })
+
+  buildCrosswordsPositionMatrix();
+  crosswordsPositionMatrix.forEach(crosswordPosition => {
+    let newCrossword = new PowerUp(imgCrossword, crosswordPosition[0], crosswordPosition[1], scenarioSpeed, 90, 90, typeCrossword)
+    powerUps.push(newCrossword);
+  })
+}
+
+function createEnemies() {
+  const enemyDwight = new Enemy(dwightPositionMatrix, imgEnemyDwight, width, 0, dwightWidth, dwightHeight, dwightWidth, dwightHeight, 8, 200);
+  const enemyMichael = new Enemy(michaelPositionMatrix, imgEnemyMichael, width * 1.5, 5, michaelWidth, michaelHeight, michaelWidth, michaelHeight, 12, 500);
+  const enemyFlyingMichael = new Enemy(flyingMichaelPositionMatrix, imgEnemyFlyingMichael, width * 1.8, 200, flyingMichaelWidth/1.5, flyingMichaelHeight/1.5, flyingMichaelWidth, michaelHeight, 15, 500);
+
+  enemies.push(enemyDwight);
+  enemies.push(enemyMichael);
+  enemies.push(enemyFlyingMichael);
+}
+
 function draw() {
   switch (currentScene) {
     case sceneMenu:
@@ -202,22 +209,31 @@ function stopGame(type) {
         score.increaseFirstAidOccurrences();
       }
     }
+
+    isGameStopped = true;
+    gameStoppedTimerCount++;
   }
   else if (type === typeLevelFinish) {
 
   }
-  else if (type === typeFinish) {
-    scenario.stop();
-    character.changeState(typeFinish);
+  // else if (type === typeFinish) {
+  //   scenario.stop();
+  //   character.changeState(typeFinish);
     
-    if (!isGameFinished){
-      endTheme.play();
-    }
+  //   if (!isGameFinished){
+  //     endTheme.play();
+  //   }
 
-    isGameFinished = true;
-  }
-  isGameStopped = true;
-  gameStoppedTimerCount++;
+  //   isGameFinished = true;
+  // }
+}
+
+function startNewLevel() {
+  powerUps = [];
+  createPowerUps();
+  
+  enemies = [];
+  createEnemies();
 }
 
 function resumeGame() {
@@ -341,6 +357,42 @@ function drawEnd() {
   });
 }
 
+function drawLevelEnd() {
+  fill(255,255,255,200);
+  noStroke();
+  rect(width * 1/6, height * 1/6, width * 2/3, height * 2/3);
+
+  let title;
+  let subtitle;
+  
+  
+  title = "Day " + score.scoreDay + " Finished!";
+  subtitle = "Total pretzels = " + score.totalPretzels;
+
+  textAlign(CENTER);
+  fill("#fff")
+  textFont('Comfortaa');
+  stroke("#000");
+  strokeWeight(3);
+  textStyle(BOLD);
+  textSize(32);
+  text(title, width/2, height * 1/6 + 60);
+
+  textAlign(LEFT);
+  textSize(12);
+  fill("#000")
+  noStroke();
+
+  text(subtitle, 140, height * 1/6 + 120);
+
+  character.display();
+  
+  if (score.scoreHour >= 9 && score.scoreHour < 17) {
+    currentScene = sceneGame;
+    startNewLevel();
+  }
+}
+
 function drawGame() {
   scenario.display();
   scenario.move();
@@ -371,7 +423,11 @@ function drawGame() {
 
   if (score.scoreHour >= 17) {
     // noLoop();
-    // stopGame(typeLevelFinish);
+    stopGame(typeLevelFinish);
+
+    if (typeLevelFinish) {
+      currentScene = sceneLevelEnd;
+    }
     
     // if (typeFinish) {
     //   if (gameStoppedTimerCount > 50) {
@@ -472,6 +528,8 @@ function drawGame() {
 }
 
 function buildPretzelsPositionMatrix() {
+  pretzelsPositionMatrix = [];
+
   let lastPosition = pretzelFirstXPostion;
   pretzelsPositionMatrix.push([lastPosition, pretzelYHigh]);
   for (let i = 0; i < pretzelQuantity - 1; i++) {
@@ -498,6 +556,8 @@ function buildPretzelsPositionMatrix() {
 }
 
 function buildCrosswordsPositionMatrix() {
+  crosswordsPositionMatrix = [];
+
   crosswordsPositionMatrix.push([2000, 100]);
   crosswordsPositionMatrix.push([11000, 100]);
 }
