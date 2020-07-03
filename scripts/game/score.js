@@ -17,6 +17,7 @@ class Score {
         this.timeStepSecond = 9;
         this.timeStepMinute = 1;
         this.timeStepHour = 1;
+        this.dayToBeIncremented = false;
     }
 
     display() {
@@ -62,9 +63,14 @@ class Score {
                     this.timeStepSecond = 9;
                     this.timeStepMinute = 1;
                 }
+
                 if (this.scoreHour > 23) {
-                    this.scoreDay++;
+                    this.dayToBeIncremented = true;;
                     this.scoreHour = 0;
+                }
+                else if (this.scoreHour === 9 && this.dayToBeIncremented === true) {
+                    this.scoreDay++;
+                    this.dayToBeIncremented = false;
                 }
             }
         }
