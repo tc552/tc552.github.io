@@ -70,6 +70,15 @@ class Score {
         }
     }
 
+    consolidateScore() {
+        if (this.pretzels > 0) {
+            if (frameCount % 2 === 0) {
+                this.pretzels--;
+                this.totalPretzels++;
+            }
+        }
+    }
+
     fastForward(minutes) {
         let sumMinutes = this.scoreMinute + minutes;
 
@@ -84,7 +93,6 @@ class Score {
 
     increasePretzels() {
         this.pretzels++;
-        this.totalPretzels++;
     }
 
     increaseCrosswords() {

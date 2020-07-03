@@ -378,12 +378,30 @@ function drawLevelEnd() {
   textSize(32);
   text(title, width/2, height * 1/6 + 60);
 
-  textAlign(LEFT);
-  textSize(12);
-  fill("#000")
-  noStroke();
+  // textAlign(LEFT);
+  // textSize(12);
+  // fill("#000")
+  // noStroke();
 
-  text(subtitle, 140, height * 1/6 + 120);
+  // text(subtitle, 140, height * 1/6 + 120);
+
+  image(score.imgPretzel, 140, height * 1/6 + 120, 50, 50);
+  textAlign(LEFT);
+  fill(161, 98, 44);
+  stroke("#ffffff");
+  strokeWeight(3);
+  textSize(20);
+  text(score.totalPretzels, 190, height * 1/6 + 150);
+
+  score.consolidateScore();
+
+  if (this.scoreHour < 16) {
+      this.imgClock = this.imgClockNormal;
+  }
+  else{
+      this.imgClock = this.imgClockBlinking;
+  }
+
 
   character.display();
   
