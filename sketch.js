@@ -124,8 +124,11 @@ function resetGame(scene) {
   resetButton.hide();
   
   sendScoreButton = createButton('Send score');
+  sendScoreButton.hide();
+
   nameInput = createInput('');
   nameInput.position(0, 70);
+  nameInput.hide();
 
   function myTest(qty) {
     readHighScoresFromDb(qty).then(function(result) {
@@ -159,12 +162,16 @@ function draw() {
   switch (currentScene) {
     case sceneMenu:
       drawMenu();
-      fill(255,255,255);
-      textSize(32);
-      text(highScoresText, 10, 120);
+      // fill(255,255,255);
+      // textSize(32);
+      // text(highScoresText, 10, 120);
       break;
     case sceneGame:
       drawGame();
+      break;
+    case sceneLevelEnd:
+      drawGame();
+      drawLevelEnd();
       break;
     case sceneEnd:
       drawGame();
@@ -174,7 +181,7 @@ function draw() {
 }
 
 function stopGame(type) {
-  scenario.stop();
+  // scenario.stop();
   powerUps.forEach(powerUp => {
     powerUp.stop();
   });
@@ -184,6 +191,7 @@ function stopGame(type) {
 
 
   if (type === typeDeath) {
+    scenario.stop();
     character.changeState(typeDeath);
 
     if (!life.firstAidHasDecreased) {
@@ -195,7 +203,11 @@ function stopGame(type) {
       }
     }
   }
+  else if (type === typeLevelFinish) {
+
+  }
   else if (type === typeFinish) {
+    scenario.stop();
     character.changeState(typeFinish);
     
     if (!isGameFinished){
@@ -283,6 +295,9 @@ function drawEnd() {
     title = "Game Over!"
     subtitle = "No pretzels for you.";
     
+    sendScoreButton.show();
+    nameInput.show();
+
     sendScoreButton.mousePressed(() => {
       addScore(
         nameInput.value(),
@@ -356,14 +371,14 @@ function drawGame() {
 
   if (score.scoreHour >= 17) {
     // noLoop();
-    stopGame(typeFinish);
+    // stopGame(typeLevelFinish);
     
-    if (typeFinish) {
-      if (gameStoppedTimerCount > 50) {
-        resetButton.show();
-        currentScene = sceneEnd;
-      }
-    }
+    // if (typeFinish) {
+    //   if (gameStoppedTimerCount > 50) {
+    //     resetButton.show();
+    //     currentScene = sceneEnd;
+    //   }
+    // }
   }
 
   if ((life.bpm < life.maxBpm) && !isGameStopped) {
@@ -386,7 +401,7 @@ function drawGame() {
           failTheme.play();
         }
 
-        life.increaseBpm();
+        // life.increaseBpm();
 
         enemy.hasCollided = true;
       }

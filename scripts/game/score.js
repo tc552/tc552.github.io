@@ -14,6 +14,9 @@ class Score {
         this.imgClock = imgClock;
         this.imgClockNormal = imgClock;
         this.imgClockBlinking = imgClockBlinking;
+        this.timeStepSecond = 9;
+        this.timeStepMinute = 1;
+        this.timeStepHour = 1;
     }
 
     display() {
@@ -42,17 +45,26 @@ class Score {
     }
 
     increaseScore() {
-        this.scoreSecond = this.scoreSecond + 9;
+        this.scoreSecond = this.scoreSecond + this.timeStepSecond;
         if (this.scoreSecond >= 60) {
-            this.scoreMinute++;
+            this.scoreMinute = this.scoreMinute + this.timeStepMinute;
             this.scoreSecond = 0;
 
             if (this.scoreMinute >= 60) {
-                this.scoreHour++;
+                this.scoreHour = this.scoreHour + this.timeStepHour;
                 this.scoreMinute = 0;
 
-                if (this.scoreHour > 17) {
-                    this.scoreHour = 9;
+                if (this.scoreHour >= 17 || this.scoreHour < 9) {
+                    this.timeStepSecond = 60;
+                    this.timeStepMinute = 7;
+                }
+                else {
+                    this.timeStepSecond = 9;
+                    this.timeStepMinute = 1;
+                }
+                if (this.scoreHour > 23) {
+                    this.scoreDay++;
+                    this.scoreHour = 0;
                 }
             }
         }

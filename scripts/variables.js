@@ -49,9 +49,11 @@ const typeCrossword = 'CROSSWORD';
 const typeFirstAid = 'FIRST_AID';
 const typeDeath = 'DEATH';
 const typeFinish = 'FINISH';
+const typeLevelFinish = 'LEVELFINISH';
 
 const sceneMenu = 'MENU';
 const sceneGame = 'GAME';
+const sceneLevelEnd = 'LEVELEND';
 const sceneEnd = 'END';
 
 let isGameStopped;
