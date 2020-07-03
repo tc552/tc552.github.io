@@ -71,6 +71,9 @@ function clearGame() {
   life = null;
   startButton = null;
   resetButton = null;
+  sendScoreButton = null;
+  nameInput = null;
+  highScores = null;
   mapTimerCount = 0;
   gameStoppedTimerCount = 0;
   mapIndex = 0;
@@ -119,6 +122,30 @@ function resetGame(scene) {
   resetButton = createButton('Play again!');
   resetButton.addClass('resetButton');
   resetButton.hide();
+  
+  sendScoreButton = createButton('Send score');
+  nameInput = createInput('');
+  nameInput.position(0, 70);
+
+  function myTest(qty) {
+    readHighScoresFromDb(qty).then(function(result) {
+      highScores = result;
+
+      highScores.forEach(highScore => {
+        highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
+      });
+    })
+  }
+
+  myTest(5);
+
+  // highScores = readHighScoresFromDb(5);
+  
+  // highScores.forEach(highScore => {
+  //   highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
+  // });
+
+  // text(highScoresText);
 
   isGameStopped = false;
   isGameOver = false;
@@ -132,6 +159,9 @@ function draw() {
   switch (currentScene) {
     case sceneMenu:
       drawMenu();
+      fill(255,255,255);
+      textSize(32);
+      text(highScoresText, 10, 120);
       break;
     case sceneGame:
       drawGame();
@@ -159,6 +189,10 @@ function stopGame(type) {
     if (!life.firstAidHasDecreased) {
       isGameOver = life.decreaseFirstAid();
       life.firstAidHasDecreased = true;
+      
+      if (!isGameOver) {
+        score.increaseFirstAidOccurrences();
+      }
     }
   }
   else if (type === typeFinish) {
@@ -248,6 +282,20 @@ function drawEnd() {
   if (isGameOver) {
     title = "Game Over!"
     subtitle = "No pretzels for you.";
+    
+    sendScoreButton.mousePressed(() => {
+      addScore(
+        nameInput.value(),
+        score.scoreDay,
+        score.scoreHour,
+        score.scoreMinute,
+        score.totalPretzels,
+        score.totalCrosswords,
+        score.totalDaysAllPretzelsPicked,
+        score.totalFirstAidOccurrences
+      );
+    });
+
   }
   else if (isGameFinished) {
     title = "Day Finished!";
@@ -293,12 +341,13 @@ function drawGame() {
         score.increasePretzels();
       }
       else if (powerUp.type === typeCrossword) {
-        life.decreaseBpm(20);
+        score.increaseCrosswords();
+        life.decreaseBpm(crosswordStressReduction);
         score.fastForward(crosswordFastForwardMinutes);
       }
-      else if (powerUp.type === typeFirstAid) {
-        life.increaseFirstAid();
-      }
+      // else if (powerUp.type === typeFirstAid) {
+      //   life.increaseFirstAid();
+      // }
     }
   });
 
