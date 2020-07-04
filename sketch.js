@@ -414,6 +414,7 @@ function drawLevelEnd() {
 
   score.consolidateScore();
 
+  life.decreaseBpm(100);
   character.display();
   
   if (isBusinessHours()) {

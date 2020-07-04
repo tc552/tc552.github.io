@@ -32,7 +32,7 @@ class Score {
         if (this.scoreHour === 16) {
             this.imgClock = this.imgClockBlinking;
         }
-        else{
+        else {
             this.imgClock = this.imgClockNormal;
         }
 
