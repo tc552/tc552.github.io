@@ -29,11 +29,11 @@ class Score {
         textSize(20);
         text(this.pretzels + "/" + pretzelQuantity, 370, 30);
 
-        if (this.scoreHour < 16) {
-            this.imgClock = this.imgClockNormal;
+        if (this.scoreHour === 16) {
+            this.imgClock = this.imgClockBlinking;
         }
         else{
-            this.imgClock = this.imgClockBlinking;
+            this.imgClock = this.imgClockNormal;
         }
 
         image(this.imgClock, width - 115, 7, 30, 30);
@@ -78,6 +78,8 @@ class Score {
 
     consolidateScore() {
         if (this.pretzels > 0) {
+
+
             if (frameCount % 2 === 0) {
                 this.pretzels--;
                 this.totalPretzels++;

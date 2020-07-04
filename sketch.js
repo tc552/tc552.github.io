@@ -414,14 +414,6 @@ function drawLevelEnd() {
 
   score.consolidateScore();
 
-  if (this.scoreHour < 16) {
-      this.imgClock = this.imgClockNormal;
-  }
-  else{
-      this.imgClock = this.imgClockBlinking;
-  }
-
-
   character.display();
   
   if (isBusinessHours()) {
