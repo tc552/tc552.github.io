@@ -449,7 +449,7 @@ function drawGame() {
       }
       else if (powerUp.type === typeCrossword) {
         score.increaseCrosswords();
-        life.decreaseBpm(crosswordStressReduction);
+        life.decreaseBpm();
         score.fastForward(crosswordFastForwardMinutes);
       }
       // else if (powerUp.type === typeFirstAid) {
