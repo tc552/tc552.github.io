@@ -105,6 +105,9 @@ function resetGame(scene) {
   resetButton = createButton('Play again!');
   resetButton.addClass('resetButton');
   resetButton.hide();
+
+  exitButton = createButton('Exit game');
+  exitButton.hide();
   
   sendScoreButton = createButton('Send score');
   sendScoreButton.hide();
@@ -300,6 +303,11 @@ function drawMenu() {
     startButton.remove();
     currentScene = sceneGame;
   });
+
+  exitButton.mousePressed(() => {
+    exitButton.remove();
+    resetGame(sceneMenu);
+  });
 }
 
 function drawEnd() {
@@ -416,6 +424,9 @@ function drawLevelEnd() {
 function drawGame() {
   scenario.display();
   scenario.move();
+
+  exitButton.position(20, 150);
+  exitButton.show();
     
   powerUps.forEach(powerUp => {
     powerUp.display();
