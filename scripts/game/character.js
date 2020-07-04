@@ -54,18 +54,21 @@ class Character extends Animation {
     }
 
     changeState(type) {
-        this.jumpLimit = 0;
-        this.currentFrame = 0;
-
         if (type === typeDeath) {
+            this.jumpLimit = 0;    
+            this.currentFrame = 0;
+
             if (!isGameStopped) {
                 deathTheme.play();
             }
             this.img = this.imgDead;
             this.lieDown();
         }
-        else if (type === typeFinish) {
+        else if (type === typeLevelFinish) {
             this.img = this.imgWin;
+        }
+        else if (type === typeNormal) {
+            this.img = this.originalImg;
         }
     }
 

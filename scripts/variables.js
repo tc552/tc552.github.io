@@ -50,6 +50,7 @@ const typeFirstAid = 'FIRST_AID';
 const typeDeath = 'DEATH';
 const typeFinish = 'FINISH';
 const typeLevelFinish = 'LEVELFINISH';
+const typeNormal = 'NORMAL';
 
 const sceneMenu = 'MENU';
 const sceneGame = 'GAME';

@@ -214,7 +214,7 @@ function stopGame(type) {
     gameStoppedTimerCount++;
   }
   else if (type === typeLevelFinish) {
-
+    character.changeState(typeLevelFinish);
   }
   // else if (type === typeFinish) {
   //   scenario.stop();
@@ -229,6 +229,8 @@ function stopGame(type) {
 }
 
 function startNewLevel() {
+  character.changeState(typeNormal);
+
   powerUps = [];
   createPowerUps();
   
@@ -443,9 +445,9 @@ function drawGame() {
     // noLoop();
     stopGame(typeLevelFinish);
 
-    if (typeLevelFinish) {
-      currentScene = sceneLevelEnd;
-    }
+    // if (typeLevelFinish) {
+    currentScene = sceneLevelEnd;
+    // }
     
     // if (typeFinish) {
     //   if (gameStoppedTimerCount > 50) {
