@@ -489,28 +489,28 @@ function drawGame() {
   enemies.filter(function (item) {
       return currentEnemiesIds.includes(enemies.indexOf(item));
     }).forEach(enemy => {
-      if (isBusinessHours()) {
-        let currentSpeed = currentEnemies.filter(function (item) {return item.enemyId === enemies.indexOf(enemy)})[0].speed;
-
-        enemy.setSpeed(currentSpeed); 
-      };
-      
       enemy.display();
       enemy.animate();
       enemy.move();
 
-      if (character.isColliding(enemy) && !isGameStopped) {
-        if (!enemy.hasCollided) {
-          failTheme.play();
+      if (isBusinessHours()) {
+        let currentSpeed = currentEnemies.filter(function (item) {return item.enemyId === enemies.indexOf(enemy)})[0].speed;
+
+        enemy.setSpeed(currentSpeed);
+
+        if (character.isColliding(enemy) && !isGameStopped) {
+          if (!enemy.hasCollided) {
+            failTheme.play();
+          }
+
+          life.increaseBpm();
+
+          enemy.hasCollided = true;
         }
-
-        // life.increaseBpm();
-
-        enemy.hasCollided = true;
-      }
-      else {
-        enemy.hasCollided = false;
-      }
+        else {
+          enemy.hasCollided = false;
+        }
+      };
   });
   
   score.display();
