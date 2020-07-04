@@ -8,6 +8,10 @@ class Enemy extends Animation {
         this.hasCollided = false;
     }
 
+    setSpeed(newValue) {
+        this.speed = newValue;
+    }
+
     move() {
         this.x = this.x - this.speed;
 
@@ -18,12 +22,12 @@ class Enemy extends Animation {
 
     stop() {
         if (this.x < -this.characterWidth) {
-            this.speed = 0;
+            this.setSpeed(0);
         }
     }
 
     restart() {
-        this.speed = this.originalSpeed;
+        this.setSpeed(this.originalSpeed);
         this.animate();
     }
 }

@@ -258,6 +258,15 @@ function resumeGame() {
   });
 }
 
+function isBusinessHours() {
+  if (score.scoreHour >= 9 && score.scoreHour < 17) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
 function drawMenu() {
   scenario.display();
   
@@ -415,7 +424,7 @@ function drawLevelEnd() {
 
   character.display();
   
-  if (score.scoreHour >= 9 && score.scoreHour < 17) {
+  if (isBusinessHours()) {
     currentScene = sceneGame;
     startNewLevel();
   }
@@ -474,11 +483,18 @@ function drawGame() {
   }
   
   let currentGameMap = gameMap[mapIndex];
-  let currentEnemiesIds = currentGameMap.enemies.map(function(item) {return item.enemyId});
+  let currentEnemies = currentGameMap.enemies;
+  let currentEnemiesIds = currentEnemies.map(function(item) {return item.enemyId});
 
   enemies.filter(function (item) {
       return currentEnemiesIds.includes(enemies.indexOf(item));
     }).forEach(enemy => {
+      if (isBusinessHours()) {
+        let currentSpeed = currentEnemies.filter(function (item) {return item.enemyId === enemies.indexOf(enemy)})[0].speed;
+
+        enemy.setSpeed(currentSpeed); 
+      };
+      
       enemy.display();
       enemy.animate();
       enemy.move();
