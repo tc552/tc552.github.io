@@ -30,30 +30,9 @@ class Life {
     }
     
     display() {
-        image(this.imgStress, 20, 5);
+        this.displayBpm();
 
-        if (this.bpm <= intermediateBpm) {
-            this.imgStress = imgStressGreen;
-            P5Style.bpmCountStyle(colorGreen, this.textSize);
-        }
-        else if (this.bpm <= highBpm) {
-            this.imgStress = imgStressYellow;
-            P5Style.bpmCountStyle(colorYellow, this.textSize);
-        }
-        else if (this.bpm <= veryHighBpm) {
-            this.imgStress = imgStressRed;
-            P5Style.bpmCountStyle(colorRed, this.textSize);
-        }
-        else {
-            this.imgStress = imgStressBomb;
-            P5Style.bpmCountStyle(colorRed, this.textSize);
-        }
-        text(this.bpm, 70, 30);
-        this.textSize = 20;
-
-        image(this.imgFirstAid, this.imgFirstAidX, this.imgFirstAidY, this.imgFirstAidWidth, this.imgFirstAidHeight);
-        P5Style.firstAidCountStyle();
-        text(this.firstAid + "/" + maxFirstAid, this.imgFirstAidX + 40, 30);
+        this.displayFirstAid();
 
         // for (let i = 0; i < this.firstAid; i++) {
         //     const imgMargin = i + 5;
@@ -117,5 +96,34 @@ class Life {
 
     resetFirstAid() {
         this.firstAid = initialFirstAid;
+    }
+
+    displayBpm() {
+        image(this.imgStress, 20, 5);
+
+        if (this.bpm <= intermediateBpm) {
+            this.imgStress = imgStressGreen;
+            P5Style.bpmCountStyle(colorGreen, this.textSize);
+        }
+        else if (this.bpm <= highBpm) {
+            this.imgStress = imgStressYellow;
+            P5Style.bpmCountStyle(colorYellow, this.textSize);
+        }
+        else if (this.bpm <= veryHighBpm) {
+            this.imgStress = imgStressRed;
+            P5Style.bpmCountStyle(colorRed, this.textSize);
+        }
+        else {
+            this.imgStress = imgStressBomb;
+            P5Style.bpmCountStyle(colorRed, this.textSize);
+        }
+        text(this.bpm, 70, 30);
+        this.textSize = 20;
+    }
+
+    displayFirstAid() {
+        image(this.imgFirstAid, this.imgFirstAidX, this.imgFirstAidY, this.imgFirstAidWidth, this.imgFirstAidHeight);
+        P5Style.firstAidCountStyle();
+        text(this.firstAid + "/" + maxFirstAid, this.imgFirstAidX + 40, 30);
     }
 }

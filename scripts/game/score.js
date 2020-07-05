@@ -24,10 +24,17 @@ class Score {
     }
 
     display() {
+        this.displayPretzelCount();
+        this.displayClock();
+    }
+
+    displayPretzelCount() {
         image(this.imgPretzel, 320, 0, 50, 50);
         P5Style.pretzelCountStyle();
         text(this.pretzels + "/" + pretzelQuantity, 370, 30);
+    }
 
+    displayClock() {
         if (this.scoreHour === 16) {
             this.imgClock = this.imgClockBlinking;
         }
