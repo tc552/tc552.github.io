@@ -49,9 +49,12 @@ const typeCrossword = 'CROSSWORD';
 const typeFirstAid = 'FIRST_AID';
 const typeDeath = 'DEATH';
 const typeFinish = 'FINISH';
+const typeLevelFinish = 'LEVELFINISH';
+const typeNormal = 'NORMAL';
 
 const sceneMenu = 'MENU';
 const sceneGame = 'GAME';
+const sceneLevelEnd = 'LEVELEND';
 const sceneEnd = 'END';
 
 let isGameStopped;
@@ -60,7 +63,7 @@ let isGameFinished;
 
 const mapLength = 14000;
 
-let scenarioSpeed = 5;
+let scenarioSpeed = 6;
 const imgScenarioWidth = 1280;
 
 let mapTimerCount = 0;
@@ -111,11 +114,11 @@ const gameMap = [
       },
       {
         enemyId: 1,
-        speed: 12
+        speed: 8
       },
       {
         enemyId: 2,
-        speed: 8
+        speed: 10
       }
     ],
     duration: 450

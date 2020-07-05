@@ -93,11 +93,16 @@ class Life {
     }
 
     decreaseBpm(quantity) {
-        if (this.bpm - quantity > 0) {
-            this.bpm = this.bpm - quantity;
+        if (quantity === null  || quantity === undefined) {
+            this.bpm = Math.floor(this.bpm/2);
         }
         else {
-            this.bpm = 0;
+            if (this.bpm - quantity > 0) {
+                this.bpm = this.bpm - quantity;
+            }
+            else {
+                this.bpm = 0;
+            }  
         }
     }
 

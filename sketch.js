@@ -86,27 +86,10 @@ function resetGame(scene) {
   scenario = new Scenario(imgScenario, scenarioSpeed, imgScenarioWidth);
   character = new Character(stanleyPositionMatrix, imgCharacter, stanleyOffsetX, stanleyOffsetY, stanleyWidth, stanleyHeight, stanleyWidth, stanleyHeight, imgCharacterDead, imgCharacterWin)
 
-  const enemyDwight = new Enemy(dwightPositionMatrix, imgEnemyDwight, width, 0, dwightWidth, dwightHeight, dwightWidth, dwightHeight, 8, 200)
-  const enemyMichael = new Enemy(michaelPositionMatrix, imgEnemyMichael, width * 1.5, 5, michaelWidth, michaelHeight, michaelWidth, michaelHeight, 12, 500)
-  const enemyFlyingMichael = new Enemy(flyingMichaelPositionMatrix, imgEnemyFlyingMichael, width * 1.8, 200, flyingMichaelWidth/1.5, flyingMichaelHeight/1.5, flyingMichaelWidth, michaelHeight, 15, 500)
-  
-  buildPretzelsPositionMatrix();
-  pretzelsPositionMatrix.forEach(pretzelPosition => {
-    let newPretzel = new PowerUp(imgPretzel, pretzelPosition[0], pretzelPosition[1], scenarioSpeed, 90, 90, typePretzel)
-    powerUps.push(newPretzel);
-  })
-
-  buildCrosswordsPositionMatrix();
-  crosswordsPositionMatrix.forEach(crosswordPosition => {
-    let newCrossword = new PowerUp(imgCrossword, crosswordPosition[0], crosswordPosition[1], scenarioSpeed, 90, 90, typeCrossword)
-    powerUps.push(newCrossword);
-  })
+  createEnemies();
+  createPowerUps();
 
   firstAidResponder = new Enemy(firstAidResponderPositionMatrix, imgFirstAidResponder, width + 300, 5, firstAidResponderWidth, firstAidResponderHeight, firstAidResponderWidth, firstAidResponderHeight, 10, 200);
-
-  enemies.push(enemyDwight);
-  enemies.push(enemyMichael);
-  enemies.push(enemyFlyingMichael);
 
   score = new Score();
   life = new Life(imgFirstAid);
@@ -122,10 +105,16 @@ function resetGame(scene) {
   resetButton = createButton('Play again!');
   resetButton.addClass('resetButton');
   resetButton.hide();
+
+  exitButton = createButton('Exit game');
+  exitButton.hide();
   
   sendScoreButton = createButton('Send score');
+  sendScoreButton.hide();
+
   nameInput = createInput('');
   nameInput.position(0, 70);
+  nameInput.hide();
 
   function myTest(qty) {
     readHighScoresFromDb(qty).then(function(result) {
@@ -155,16 +144,44 @@ function resetGame(scene) {
   frameRate(30);
 }
 
+function createPowerUps() {
+  buildPretzelsPositionMatrix();
+  pretzelsPositionMatrix.forEach(pretzelPosition => {
+    let newPretzel = new PowerUp(imgPretzel, pretzelPosition[0], pretzelPosition[1], scenarioSpeed, 90, 90, typePretzel)
+    powerUps.push(newPretzel);
+  })
+
+  buildCrosswordsPositionMatrix();
+  crosswordsPositionMatrix.forEach(crosswordPosition => {
+    let newCrossword = new PowerUp(imgCrossword, crosswordPosition[0], crosswordPosition[1], scenarioSpeed, 90, 90, typeCrossword)
+    powerUps.push(newCrossword);
+  })
+}
+
+function createEnemies() {
+  const enemyDwight = new Enemy(dwightPositionMatrix, imgEnemyDwight, width, 0, dwightWidth, dwightHeight, dwightWidth, dwightHeight, 8, 200);
+  const enemyMichael = new Enemy(michaelPositionMatrix, imgEnemyMichael, width * 1.5, 5, michaelWidth, michaelHeight, michaelWidth, michaelHeight, 12, 500);
+  const enemyFlyingMichael = new Enemy(flyingMichaelPositionMatrix, imgEnemyFlyingMichael, width * 1.8, 200, flyingMichaelWidth/1.5, flyingMichaelHeight/1.5, flyingMichaelWidth, michaelHeight, 15, 500);
+
+  enemies.push(enemyDwight);
+  enemies.push(enemyMichael);
+  enemies.push(enemyFlyingMichael);
+}
+
 function draw() {
   switch (currentScene) {
     case sceneMenu:
       drawMenu();
-      fill(255,255,255);
-      textSize(32);
-      text(highScoresText, 10, 120);
+      // fill(255,255,255);
+      // textSize(32);
+      // text(highScoresText, 10, 120);
       break;
     case sceneGame:
       drawGame();
+      break;
+    case sceneLevelEnd:
+      drawGame();
+      drawLevelEnd();
       break;
     case sceneEnd:
       drawGame();
@@ -174,7 +191,7 @@ function draw() {
 }
 
 function stopGame(type) {
-  scenario.stop();
+  // scenario.stop();
   powerUps.forEach(powerUp => {
     powerUp.stop();
   });
@@ -184,6 +201,7 @@ function stopGame(type) {
 
 
   if (type === typeDeath) {
+    scenario.stop();
     character.changeState(typeDeath);
 
     if (!life.firstAidHasDecreased) {
@@ -194,18 +212,33 @@ function stopGame(type) {
         score.increaseFirstAidOccurrences();
       }
     }
-  }
-  else if (type === typeFinish) {
-    character.changeState(typeFinish);
-    
-    if (!isGameFinished){
-      endTheme.play();
-    }
 
-    isGameFinished = true;
+    isGameStopped = true;
+    gameStoppedTimerCount++;
   }
-  isGameStopped = true;
-  gameStoppedTimerCount++;
+  else if (type === typeLevelFinish) {
+    character.changeState(typeLevelFinish);
+  }
+  // else if (type === typeFinish) {
+  //   scenario.stop();
+  //   character.changeState(typeFinish);
+    
+  //   if (!isGameFinished){
+  //     endTheme.play();
+  //   }
+
+  //   isGameFinished = true;
+  // }
+}
+
+function startNewLevel() {
+  character.changeState(typeNormal);
+
+  powerUps = [];
+  createPowerUps();
+  
+  enemies = [];
+  createEnemies();
 }
 
 function resumeGame() {
@@ -223,6 +256,15 @@ function resumeGame() {
   enemies.forEach(enemy => {
     enemy.restart();
   });
+}
+
+function isBusinessHours() {
+  if (score.scoreHour >= 9 && score.scoreHour < 17) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 function drawMenu() {
@@ -270,6 +312,11 @@ function drawMenu() {
     startButton.remove();
     currentScene = sceneGame;
   });
+
+  exitButton.mousePressed(() => {
+    exitButton.remove();
+    resetGame(sceneMenu);
+  });
 }
 
 function drawEnd() {
@@ -283,6 +330,9 @@ function drawEnd() {
     title = "Game Over!"
     subtitle = "No pretzels for you.";
     
+    sendScoreButton.show();
+    nameInput.show();
+
     sendScoreButton.mousePressed(() => {
       addScore(
         nameInput.value(),
@@ -326,9 +376,59 @@ function drawEnd() {
   });
 }
 
+function drawLevelEnd() {
+  fill(255,255,255,200);
+  noStroke();
+  rect(width * 1/6, height * 1/6, width * 2/3, height * 2/3);
+
+  let title;
+  let subtitle;
+  
+  
+  title = "Day " + score.scoreDay + " Finished!";
+  subtitle = "Total pretzels = " + score.totalPretzels;
+
+  textAlign(CENTER);
+  fill("#fff")
+  textFont('Comfortaa');
+  stroke("#000");
+  strokeWeight(3);
+  textStyle(BOLD);
+  textSize(32);
+  text(title, width/2, height * 1/6 + 60);
+
+  // textAlign(LEFT);
+  // textSize(12);
+  // fill("#000")
+  // noStroke();
+
+  // text(subtitle, 140, height * 1/6 + 120);
+
+  image(score.imgPretzel, 140, height * 1/6 + 120, 50, 50);
+  textAlign(LEFT);
+  fill(161, 98, 44);
+  stroke("#ffffff");
+  strokeWeight(3);
+  textSize(20);
+  text(score.totalPretzels, 190, height * 1/6 + 150);
+
+  score.consolidateScore();
+
+  life.decreaseBpm(100);
+  character.display();
+  
+  if (isBusinessHours()) {
+    currentScene = sceneGame;
+    startNewLevel();
+  }
+}
+
 function drawGame() {
   scenario.display();
   scenario.move();
+
+  exitButton.position(20, 150);
+  exitButton.show();
     
   powerUps.forEach(powerUp => {
     powerUp.display();
@@ -342,7 +442,7 @@ function drawGame() {
       }
       else if (powerUp.type === typeCrossword) {
         score.increaseCrosswords();
-        life.decreaseBpm(crosswordStressReduction);
+        life.decreaseBpm();
         score.fastForward(crosswordFastForwardMinutes);
       }
       // else if (powerUp.type === typeFirstAid) {
@@ -356,14 +456,18 @@ function drawGame() {
 
   if (score.scoreHour >= 17) {
     // noLoop();
-    stopGame(typeFinish);
+    stopGame(typeLevelFinish);
+
+    // if (typeLevelFinish) {
+    currentScene = sceneLevelEnd;
+    // }
     
-    if (typeFinish) {
-      if (gameStoppedTimerCount > 50) {
-        resetButton.show();
-        currentScene = sceneEnd;
-      }
-    }
+    // if (typeFinish) {
+    //   if (gameStoppedTimerCount > 50) {
+    //     resetButton.show();
+    //     currentScene = sceneEnd;
+    //   }
+    // }
   }
 
   if ((life.bpm < life.maxBpm) && !isGameStopped) {
@@ -372,7 +476,8 @@ function drawGame() {
   }
   
   let currentGameMap = gameMap[mapIndex];
-  let currentEnemiesIds = currentGameMap.enemies.map(function(item) {return item.enemyId});
+  let currentEnemies = currentGameMap.enemies;
+  let currentEnemiesIds = currentEnemies.map(function(item) {return item.enemyId});
 
   enemies.filter(function (item) {
       return currentEnemiesIds.includes(enemies.indexOf(item));
@@ -381,18 +486,24 @@ function drawGame() {
       enemy.animate();
       enemy.move();
 
-      if (character.isColliding(enemy) && !isGameStopped) {
-        if (!enemy.hasCollided) {
-          failTheme.play();
+      if (isBusinessHours()) {
+        let currentSpeed = currentEnemies.filter(function (item) {return item.enemyId === enemies.indexOf(enemy)})[0].speed;
+
+        enemy.setSpeed(currentSpeed);
+
+        if (character.isColliding(enemy) && !isGameStopped) {
+          if (!enemy.hasCollided) {
+            failTheme.play();
+          }
+
+          life.increaseBpm();
+
+          enemy.hasCollided = true;
         }
-
-        life.increaseBpm();
-
-        enemy.hasCollided = true;
-      }
-      else {
-        enemy.hasCollided = false;
-      }
+        else {
+          enemy.hasCollided = false;
+        }
+      };
   });
   
   score.display();
@@ -457,6 +568,8 @@ function drawGame() {
 }
 
 function buildPretzelsPositionMatrix() {
+  pretzelsPositionMatrix = [];
+
   let lastPosition = pretzelFirstXPostion;
   pretzelsPositionMatrix.push([lastPosition, pretzelYHigh]);
   for (let i = 0; i < pretzelQuantity - 1; i++) {
@@ -483,6 +596,8 @@ function buildPretzelsPositionMatrix() {
 }
 
 function buildCrosswordsPositionMatrix() {
+  crosswordsPositionMatrix = [];
+
   crosswordsPositionMatrix.push([2000, 100]);
   crosswordsPositionMatrix.push([11000, 100]);
 }

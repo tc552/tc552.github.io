@@ -14,6 +14,10 @@ class Score {
         this.imgClock = imgClock;
         this.imgClockNormal = imgClock;
         this.imgClockBlinking = imgClockBlinking;
+        this.timeStepSecond = 9;
+        this.timeStepMinute = 1;
+        this.timeStepHour = 1;
+        this.dayToBeIncremented = false;
     }
 
     display() {
@@ -25,11 +29,11 @@ class Score {
         textSize(20);
         text(this.pretzels + "/" + pretzelQuantity, 370, 30);
 
-        if (this.scoreHour < 16) {
-            this.imgClock = this.imgClockNormal;
-        }
-        else{
+        if (this.scoreHour === 16) {
             this.imgClock = this.imgClockBlinking;
+        }
+        else {
+            this.imgClock = this.imgClockNormal;
         }
 
         image(this.imgClock, width - 115, 7, 30, 30);
@@ -42,18 +46,43 @@ class Score {
     }
 
     increaseScore() {
-        this.scoreSecond = this.scoreSecond + 9;
+        this.scoreSecond = this.scoreSecond + this.timeStepSecond;
         if (this.scoreSecond >= 60) {
-            this.scoreMinute++;
+            this.scoreMinute = this.scoreMinute + this.timeStepMinute;
             this.scoreSecond = 0;
 
             if (this.scoreMinute >= 60) {
-                this.scoreHour++;
+                this.scoreHour = this.scoreHour + this.timeStepHour;
                 this.scoreMinute = 0;
 
-                if (this.scoreHour > 17) {
-                    this.scoreHour = 9;
+                if (this.scoreHour >= 17 || this.scoreHour < 9) {
+                    this.timeStepSecond = 60;
+                    this.timeStepMinute = 7;
                 }
+                else {
+                    this.timeStepSecond = 9;
+                    this.timeStepMinute = 1;
+                }
+
+                if (this.scoreHour > 23) {
+                    this.dayToBeIncremented = true;;
+                    this.scoreHour = 0;
+                }
+                else if (this.scoreHour === 9 && this.dayToBeIncremented === true) {
+                    this.scoreDay++;
+                    this.dayToBeIncremented = false;
+                }
+            }
+        }
+    }
+
+    consolidateScore() {
+        if (this.pretzels > 0) {
+
+
+            if (frameCount % 2 === 0) {
+                this.pretzels--;
+                this.totalPretzels++;
             }
         }
     }
@@ -64,7 +93,13 @@ class Score {
         if (sumMinutes >= 60) {
             sumMinutes = sumMinutes - 60;
 
-            this.scoreHour++;
+            if (this.scoreHour === 16) {
+                sumMinutes = 59;
+                this.scoreSecond = 59;
+            }
+            else {
+                this.scoreHour++;
+            }
         }
 
         this.scoreMinute = sumMinutes;
@@ -72,7 +107,6 @@ class Score {
 
     increasePretzels() {
         this.pretzels++;
-        this.totalPretzels++;
     }
 
     increaseCrosswords() {
