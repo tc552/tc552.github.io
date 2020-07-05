@@ -25,11 +25,7 @@ class Score {
 
     display() {
         image(this.imgPretzel, 320, 0, 50, 50);
-        textAlign(LEFT);
-        fill(161, 98, 44);
-        stroke("#ffffff");
-        strokeWeight(3);
-        textSize(20);
+        P5Style.pretzelCountStyle();
         text(this.pretzels + "/" + pretzelQuantity, 370, 30);
 
         if (this.scoreHour === 16) {
@@ -40,11 +36,7 @@ class Score {
         }
 
         image(this.imgClock, width - 115, 7, 30, 30);
-        textAlign(LEFT);
-        fill('#000000');
-        stroke("#ffffff");
-        strokeWeight(3);
-        textSize(20);
+        P5Style.clockCountStyle();
         text(this.n(this.scoreHour) + "h" + this.n(this.scoreMinute), width - 80, 30);
     }
 

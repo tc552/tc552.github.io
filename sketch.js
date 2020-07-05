@@ -281,26 +281,15 @@ function drawMenu() {
   
   let title = "Stanley's Day At The Office";
   
-  textAlign(CENTER);
-  fill("#fff");
-  textFont('Comfortaa');
-  stroke("#000");
-  strokeWeight(3);
-  textStyle(BOLD);
-  textSize(24);
+  P5Style.titleStyle();
   text(title, width/2, height * 1/6 + 50);
 
   let previousHeight = height * 1/6 + 45;
   let newHeight = previousHeight + 20;
 
-  textAlign(LEFT);
-  textSize(12);
-  fill("#000")
-  noStroke();
-  
+  P5Style.simpleTextStyle();
   previousHeight = newHeight;
   newHeight = previousHeight + 15;
-
   text("Avoid getting too close to your boss and your co-workers,\nor your stress level will increase!", 140, newHeight);
   
   previousHeight = newHeight;
@@ -357,20 +346,10 @@ function drawEnd() {
     subtitle = "Go home and enjoy your pretzels.";
   }
 
-  textAlign(CENTER);
-  fill("#fff")
-  textFont('Comfortaa');
-  stroke("#000");
-  strokeWeight(3);
-  textStyle(BOLD);
-  textSize(32);
+  P5Style.titleEndStyle();
   text(title, width/2, height * 1/6 + 60);
 
-  textAlign(LEFT);
-  textSize(12);
-  fill("#000")
-  noStroke();
-
+  P5Style.simpleTextStyle();
   text(subtitle, 140, height * 1/6 + 120);
 
   character.display();
@@ -393,13 +372,7 @@ function drawLevelEnd() {
   title = "Day " + score.scoreDay + " Finished!";
   subtitle = "Total pretzels = " + score.totalPretzels;
 
-  textAlign(CENTER);
-  fill("#fff")
-  textFont('Comfortaa');
-  stroke("#000");
-  strokeWeight(3);
-  textStyle(BOLD);
-  textSize(32);
+  P5Style.titleEndStyle();
   text(title, width/2, height * 1/6 + 60);
 
   // textAlign(LEFT);
@@ -410,11 +383,7 @@ function drawLevelEnd() {
   // text(subtitle, 140, height * 1/6 + 120);
 
   image(score.imgPretzel, 140, height * 1/6 + 120, 50, 50);
-  textAlign(LEFT);
-  fill(161, 98, 44);
-  stroke("#ffffff");
-  strokeWeight(3);
-  textSize(20);
+  P5Style.pretzelCountStyle();
   text(score.totalPretzels, 190, height * 1/6 + 150);
 
   life.decreaseBpm(100);

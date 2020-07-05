@@ -30,36 +30,29 @@ class Life {
     }
     
     display() {
-        textAlign(LEFT);
-        
+        image(this.imgStress, 20, 5);
+
         if (this.bpm <= intermediateBpm) {
             this.imgStress = imgStressGreen;
-            fill(colorGreen);
+            P5Style.bpmCountStyle(colorGreen, this.textSize);
         }
         else if (this.bpm <= highBpm) {
             this.imgStress = imgStressYellow;
-            fill(colorYellow);
+            P5Style.bpmCountStyle(colorYellow, this.textSize);
         }
         else if (this.bpm <= veryHighBpm) {
             this.imgStress = imgStressRed;
-            fill(colorRed);
+            P5Style.bpmCountStyle(colorRed, this.textSize);
         }
         else {
             this.imgStress = imgStressBomb;
-            fill(colorRed);
+            P5Style.bpmCountStyle(colorRed, this.textSize);
         }
-
-        image(this.imgStress, 20, 5);
-        
-        textSize(this.textSize);
         text(this.bpm, 70, 30);
         this.textSize = 20;
 
         image(this.imgFirstAid, this.imgFirstAidX, this.imgFirstAidY, this.imgFirstAidWidth, this.imgFirstAidHeight);
-        fill(220, 66, 38);
-        stroke("#ffffff");
-        strokeWeight(3);
-        textSize(20);
+        P5Style.firstAidCountStyle();
         text(this.firstAid + "/" + maxFirstAid, this.imgFirstAidX + 40, 30);
 
         // for (let i = 0; i < this.firstAid; i++) {
