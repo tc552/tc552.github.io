@@ -211,12 +211,16 @@ function stopGame(type) {
       if (!isGameOver) {
         score.increaseFirstAidOccurrences();
       }
+      else {
+        score.consolidateScore();
+      }
     }
 
     isGameStopped = true;
     gameStoppedTimerCount++;
   }
   else if (type === typeLevelFinish) {
+    score.consolidateScore();
     character.changeState(typeLevelFinish);
   }
   // else if (type === typeFinish) {
@@ -233,6 +237,7 @@ function stopGame(type) {
 
 function startNewLevel() {
   character.changeState(typeNormal);
+  score.scoreHasBeenConsolidated = false;
 
   powerUps = [];
   createPowerUps();
@@ -411,8 +416,6 @@ function drawLevelEnd() {
   strokeWeight(3);
   textSize(20);
   text(score.totalPretzels, 190, height * 1/6 + 150);
-
-  score.consolidateScore();
 
   life.decreaseBpm(100);
   character.display();

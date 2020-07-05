@@ -7,9 +7,11 @@ class Score {
         this.totalCrosswords = 0;
         this.totalDaysAllPretzelsPicked = 0;
         this.totalFirstAidOccurrences = 0;
+        this.totalScore = 0;
 
         this.scoreSecond = 0;
         this.pretzels = 0;
+        this.crosswords = 0;
         this.imgPretzel = imgPretzel;
         this.imgClock = imgClock;
         this.imgClockNormal = imgClock;
@@ -18,6 +20,7 @@ class Score {
         this.timeStepMinute = 1;
         this.timeStepHour = 1;
         this.dayToBeIncremented = false;
+        this.scoreHasBeenConsolidated = false;
     }
 
     display() {
@@ -77,6 +80,25 @@ class Score {
     }
 
     consolidateScore() {
+        console.log("scoreHour=" + this.scoreHour);
+        console.log("scoreMinute=" + this.scoreMinute);
+        console.log("pretzels=" + this.pretzels);
+        console.log("crosswords=" + this.crosswords);
+        if (!this.scoreHasBeenConsolidated) {
+            let scoreToIncrement = 0;
+            scoreToIncrement = scoreToIncrement + (((this.scoreHour - 9) * 60) + this.scoreMinute) * 10;
+            scoreToIncrement = scoreToIncrement + (this.pretzels * 150);
+            scoreToIncrement = scoreToIncrement + (this.crosswords * 400);
+
+            if (this.pretzels === pretzelQuantity) {
+                scoreToIncrement = scoreToIncrement + 500;
+            }
+
+            console.log("scoreToIncrement=" + scoreToIncrement);
+            this.totalScore = this.totalScore + scoreToIncrement;
+            this.scoreHasBeenConsolidated = true;
+        }
+
         if (this.pretzels > 0) {
 
 
