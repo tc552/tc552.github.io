@@ -106,6 +106,15 @@ class Score {
                 this.totalPretzels++;
             }
         }
+
+        if (this.crosswords > 0) {
+
+
+            if (frameCount % 2 === 0) {
+                this.crosswords--;
+                this.totalCrosswords++;
+            }
+        }
     }
 
     fastForward(minutes) {
@@ -131,7 +140,7 @@ class Score {
     }
 
     increaseCrosswords() {
-        this.totalCrosswords++;
+        this.crosswords++;
     }
 
     increaseFirstAidOccurrences() {
