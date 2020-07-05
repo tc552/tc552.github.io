@@ -21,6 +21,10 @@ class Score {
         this.timeStepHour = 1;
         this.dayToBeIncremented = false;
         this.scoreHasBeenConsolidated = false;
+
+        this.scoreIncrementTime = 0;
+        this.scoreIncrementPretzels = 0;
+        this.scoreIncrementCrosswords = 0;
     }
 
     display() {
@@ -59,7 +63,7 @@ class Score {
 
                 if (this.scoreHour >= 17 || this.scoreHour < 9) {
                     this.timeStepSecond = 60;
-                    this.timeStepMinute = 7;
+                    this.timeStepMinute = 3;
                 }
                 else {
                     this.timeStepSecond = 9;
@@ -79,36 +83,63 @@ class Score {
     }
 
     consolidateScore() {
-        console.log("scoreHour=" + this.scoreHour);
-        console.log("scoreMinute=" + this.scoreMinute);
-        console.log("pretzels=" + this.pretzels);
-        console.log("crosswords=" + this.crosswords);
         if (!this.scoreHasBeenConsolidated) {
-            let scoreToIncrement = 0;
-            scoreToIncrement = scoreToIncrement + (((this.scoreHour - 9) * 60) + this.scoreMinute) * 10;
-            scoreToIncrement = scoreToIncrement + (this.pretzels * 150);
-            scoreToIncrement = scoreToIncrement + (this.crosswords * 400);
-
-            if (this.pretzels === pretzelQuantity) {
-                scoreToIncrement = scoreToIncrement + 500;
+            if (this.scoreHour >= 17 || this.scoreHour < 9) {
+                this.scoreIncrementTime = 8 * 60 * 10;
+            }
+            else {
+                this.scoreIncrementTime = (((this.scoreHour - 9) * 60) + this.scoreMinute) * 10;       
             }
 
-            console.log("scoreToIncrement=" + scoreToIncrement);
-            this.totalScore = this.totalScore + scoreToIncrement;
+            this.scoreIncrementPretzels = this.pretzels * 150;
+            this.scoreIncrementCrosswords = this.crosswords * 400;
+            this.scoreIncrementAllPretzels = (this.pretzels === pretzelQuantity) ? 500 : 0;
+
             this.scoreHasBeenConsolidated = true;
         }
+    }
 
-        if (this.pretzels > 0) {
-            if (frameCount % 2 === 0) {
-                this.pretzels--;
-                this.totalPretzels++;
+    addTimeScoreToTotal() {
+        let incrementStep = 8 * 60 * 10 / 30;
+
+        if (this.scoreIncrementTime > 0) {
+            if (this.scoreIncrementTime - incrementStep > 0) {
+                this.totalScore = this.totalScore + incrementStep;
+                this.scoreIncrementTime = this.scoreIncrementTime - incrementStep;
+            }
+            else {
+                this.totalScore = this.totalScore + this.scoreIncrementTime;
+                this.scoreIncrementTime = 0;
             }
         }
+    }
 
-        if (this.crosswords > 0) {
-            if (frameCount % 2 === 0) {
-                this.crosswords--;
-                this.totalCrosswords++;
+    addPretzelScoreToTotal() {
+        let incrementStep = this.pretzels * pretzelScore / 30;
+
+        if (this.scoreIncrementPretzels > 0) {
+            if (this.scoreIncrementPretzels - incrementStep > 0) {
+                this.totalScore = this.totalScore + incrementStep;
+                this.scoreIncrementPretzels = this.scoreIncrementPretzels - incrementStep;
+            }
+            else {
+                this.totalScore = this.totalScore + this.scoreIncrementPretzels;
+                this.scoreIncrementPretzels = 0;
+            }
+        }
+    }
+
+    addCrosswordScoreToTotal() {
+        let incrementStep = this.crosswords * crosswordScore / 30;
+
+        if (this.scoreIncrementCrosswords > 0) {
+            if (this.scoreIncrementCrosswords - incrementStep > 0) {
+                this.totalScore = this.totalScore + incrementStep;
+                this.scoreIncrementCrosswords = this.scoreIncrementCrosswords - incrementStep;
+            }
+            else {
+                this.totalScore = this.totalScore + this.scoreIncrementCrosswords;
+                this.scoreIncrementCrosswords = 0;
             }
         }
     }
@@ -133,10 +164,12 @@ class Score {
 
     increasePretzels() {
         this.pretzels++;
+        this.totalPretzels++;
     }
 
     increaseCrosswords() {
         this.crosswords++;
+        this.totalCrosswords++;
     }
 
     increaseFirstAidOccurrences() {

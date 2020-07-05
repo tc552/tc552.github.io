@@ -66,8 +66,14 @@ const mapLength = 14000;
 let scenarioSpeed = 6;
 const imgScenarioWidth = 1280;
 
+const minuteScore = 10;
+const pretzelScore = 150;
+const crosswordScore = 450;
+const allPretzelsScore = 1000;
+
 let mapTimerCount = 0;
 let gameStoppedTimerCount = 0;
+let levelFinishedTimerCount = 0;
 let mapIndex = 0;
 let resetButtonVisible;
 

@@ -213,6 +213,7 @@ function stopGame(type) {
       }
       else {
         score.consolidateScore();
+        // score.sumScore();
       }
     }
 
@@ -220,7 +221,8 @@ function stopGame(type) {
     gameStoppedTimerCount++;
   }
   else if (type === typeLevelFinish) {
-    // score.consolidateScore();
+    score.consolidateScore();
+    // score.sumScore();
     character.changeState(typeLevelFinish);
   }
   // else if (type === typeFinish) {
@@ -238,6 +240,9 @@ function stopGame(type) {
 function startNewLevel() {
   character.changeState(typeNormal);
   score.scoreHasBeenConsolidated = false;
+  levelFinishedTimerCount = 0;
+  score.pretzels = 0;
+  score.crosswords = 0;
 
   powerUps = [];
   createPowerUps();
@@ -361,66 +366,18 @@ function drawEnd() {
 }
 
 function drawLevelEnd() {
+  levelFinishedTimerCount++;
+  
   fill(255,255,255,200);
   noStroke();
   rect(width * 1/6, height * 1/6, width * 2/3, height * 2/3);
 
   let title;
-  let subtitle;
+  // let subtitle;
   
   
   title = "Day " + score.scoreDay + " Finished!";
-  subtitle = "Total pretzels = " + score.totalPretzels;
-
-  P5Style.titleEndStyle();
-  text(title, width/2, height * 1/6 + 60);
-
-  // textAlign(LEFT);
-  // textSize(12);
-  // fill("#000")
-  // noStroke();
-
-  // text(subtitle, 140, height * 1/6 + 120);
-
-  image(imgPretzel, 140, height * 1/6 + 90, 50, 50);
-  P5Style.pretzelCountStyle();
-  text(score.pretzels, 190, height * 1/6 + 120);
-
-  image(imgCrossword, 140, height * 1/6 + 150, 50, 50);
-  P5Style.clockCountStyle();
-  text(score.crosswords, 190, height * 1/6 + 180);
-
-  image(imgClock, 140, height * 1/6 + 210, 50, 50);
-  P5Style.clockCountStyle();
-  text("17h00", 190, height * 1/6 + 240);
-
-  life.decreaseBpm(100);
-  character.display();
-  
-  if (isBusinessHours()) {
-    currentScene = sceneGame;
-    startNewLevel();
-  }
-}
-
-function drawGame() {
-  scenario.display();
-  scenario.move();
-
-
-
-
-
-  fill(255,255,255,200);
-  noStroke();
-  rect(width * 1/6, height * 1/6, width * 2/3, height * 2/3);
-
-  let title;
-  let subtitle;
-  
-  
-  title = "Day " + score.scoreDay + " Finished!";
-  subtitle = "Total pretzels = " + score.totalPretzels;
+  // subtitle = "Total pretzels = " + score.totalPretzels;
 
   P5Style.titleEndStyle();
   textSize(24);
@@ -436,18 +393,45 @@ function drawGame() {
   image(imgPretzel, 140, height * 1/6 + 60, 50, 50);
   P5Style.pretzelCountStyle();
   text(score.pretzels, 190, height * 1/6 + 90);
+  text(score.scoreIncrementPretzels, 380, height * 1/6 + 90);
 
   image(imgCrossword, 140, height * 1/6 + 95, 50, 50);
   P5Style.clockCountStyle();
   text(score.crosswords, 190, height * 1/6 + 130);
+  text(score.scoreIncrementCrosswords, 380, height * 1/6 + 130);
 
   image(imgClock, 150, height * 1/6 + 145, 30, 30);
   P5Style.clockCountStyle();
   text("17h00", 190, height * 1/6 + 170);
+  text(score.scoreIncrementTime, 380, height * 1/6 + 170);
 
 
+  text("Total score:", 190, height * 1/6 + 210);
+  text(score.totalScore, 380, height * 1/6 + 210);
 
 
+  if (levelFinishedTimerCount > 30) {
+    score.addTimeScoreToTotal();
+  }
+  if (levelFinishedTimerCount > 75) {
+    score.addPretzelScoreToTotal();
+  }
+  if (levelFinishedTimerCount > 120) {
+    score.addCrosswordScoreToTotal();
+  }
+
+  life.decreaseBpm(100);
+  character.display();
+  
+  if (isBusinessHours()) {
+    currentScene = sceneGame;
+    startNewLevel();
+  }
+}
+
+function drawGame() {
+  scenario.display();
+  scenario.move();
 
   exitButton.position(20, 150);
   exitButton.show();
