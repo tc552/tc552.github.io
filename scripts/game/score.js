@@ -99,8 +99,6 @@ class Score {
         }
 
         if (this.pretzels > 0) {
-
-
             if (frameCount % 2 === 0) {
                 this.pretzels--;
                 this.totalPretzels++;
@@ -108,8 +106,6 @@ class Score {
         }
 
         if (this.crosswords > 0) {
-
-
             if (frameCount % 2 === 0) {
                 this.crosswords--;
                 this.totalCrosswords++;
