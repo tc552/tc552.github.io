@@ -317,39 +317,43 @@ function drawMenu() {
 function drawEnd() {
   drawWhiteBoard();
 
-  let title;
-  let subtitle;
-  if (isGameOver) {
-    title = "Game Over!"
-    subtitle = "No pretzels for you.";
+  // let title;
+  // let subtitle;
+  // if (isGameOver) {
+  //   title = "Game Over!"
+  //   subtitle = "No pretzels for you.";
     
-    sendScoreButton.show();
-    nameInput.show();
+  //   sendScoreButton.show();
+  //   nameInput.show();
 
-    sendScoreButton.mousePressed(() => {
-      addScore(
-        nameInput.value(),
-        score.scoreDay,
-        score.scoreHour,
-        score.scoreMinute,
-        score.totalPretzels,
-        score.totalCrosswords,
-        score.totalDaysAllPretzelsPicked,
-        score.totalFirstAidOccurrences
-      );
-    });
+  //   sendScoreButton.mousePressed(() => {
+  //     addScore(
+  //       nameInput.value(),
+  //       score.scoreDay,
+  //       score.scoreHour,
+  //       score.scoreMinute,
+  //       score.totalPretzels,
+  //       score.totalCrosswords,
+  //       score.totalDaysAllPretzelsPicked,
+  //       score.totalFirstAidOccurrences
+  //     );
+  //   });
 
-  }
-  else if (isGameFinished) {
-    title = "Day Finished!";
-    subtitle = "Go home and enjoy your pretzels.";
-  }
+  // }
+  // else if (isGameFinished) {
+  //   title = "Day Finished!";
+  //   subtitle = "Go home and enjoy your pretzels.";
+  // }
 
-  P5Style.titleEndStyle();
-  text(title, width/2, height * 1/6 + 60);
+  let title = "Game Over!"
+  P5Style.titleStyle();
+  text(title, width/2, height * 1/6 + 35);
 
-  P5Style.simpleTextStyle();
-  text(subtitle, 140, height * 1/6 + 120);
+  // P5Style.simpleTextStyle();
+  // text(subtitle, 140, height * 1/6 + 120);
+  
+  drawScoreBoard();
+  animateScoreBoard();
 
   character.display();
 
@@ -365,7 +369,7 @@ function drawLevelEnd() {
 
   let title = "Day " + score.scoreDay + " Finished!";
   P5Style.titleStyle();
-  text(title, width/2, height * 1/6 + 45);
+  text(title, width/2, height * 1/6 + 35);
 
   drawScoreBoard();
   animateScoreBoard();
@@ -526,27 +530,36 @@ function drawGame() {
 function drawWhiteBoard() {
   fill(255,255,255,200);
   noStroke();
-  rect(width * 1/6, height * 1/6, width * 2/3, height * 2/3);
+  rect(width * 1/8, height * 1/8, width * 3/4, height * 3/4);
 }
 
 function drawScoreBoard() {
-  image(imgPretzel, 140, height * 1/6 + 60, 50, 50);
+  image(imgPretzel, 190, height * 1/6 + 55, 50, 50);
   P5Style.pretzelCountStyle();
-  text(score.pretzels, 190, height * 1/6 + 90);
-  text(score.scoreIncrementPretzels, 380, height * 1/6 + 90);
+  text(score.pretzels, 240, height * 1/6 + 85);
+  textAlign(RIGHT);
+  text(score.scoreIncrementPretzels, 430, height * 1/6 + 85);
 
-  image(imgCrossword, 140, height * 1/6 + 95, 50, 50);
+  image(imgCrossword, 190, height * 1/6 + 90, 50, 50);
   P5Style.clockCountStyle();
-  text(score.crosswords, 190, height * 1/6 + 130);
-  text(score.scoreIncrementCrosswords, 380, height * 1/6 + 130);
+  text(score.crosswords, 240, height * 1/6 + 125);
+  textAlign(RIGHT);
+  text(score.scoreIncrementCrosswords, 430, height * 1/6 + 125);
 
-  image(imgClock, 150, height * 1/6 + 145, 30, 30);
+  image(imgClock, 200, height * 1/6 + 140, 30, 30);
   P5Style.clockCountStyle();
-  text("17h00", 190, height * 1/6 + 170);
-  text(score.scoreIncrementTime, 380, height * 1/6 + 170);
+  text("17h00", 240, height * 1/6 + 165);
+  textAlign(RIGHT);
+  text(score.scoreIncrementTime, 430, height * 1/6 + 165);
 
+  fill(103, 130, 133);
+  noStroke();
+  rect(width * 1/4, height * 21/32, width * 1/2, height * 1/7, 10);
+  
+  P5Style.clockCountStyle();
   text("Total score:", 190, height * 1/6 + 210);
-  text(score.totalScore, 380, height * 1/6 + 210);
+  textAlign(RIGHT);
+  text(score.totalScore, 430, height * 1/6 + 210);
 }
 
 function animateScoreBoard() {
