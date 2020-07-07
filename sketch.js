@@ -112,8 +112,8 @@ function resetGame(scene) {
   resetButton.addClass('resetButton');
   resetButton.hide();
 
-  exitButton = createButton('Exit game');
-  exitButton.hide();
+  backToMenuButton = createButton('Back to menu');
+  backToMenuButton.hide();
   
   sendScoreButton = createButton('Send score');
   sendScoreButton.hide();
@@ -293,7 +293,7 @@ function drawMenu() {
   let title = "Stanley's Day At The Office";
   
   P5Style.titleStyle();
-  text(title, width/2, height * 1/6 + 50);
+  text(title, width/2, height * 1/6 + 35);
 
   let previousHeight = height * 1/6 + 45;
   let newHeight = previousHeight + 20;
@@ -315,16 +315,20 @@ function drawMenu() {
 
   startButton.mousePressed(() => {
     startButton.remove();
+    highScoresButton.remove();
     currentScene = sceneGame;
   });
 
   highScoresButton.mousePressed(() => {
     highScoresButton.remove();
+    startButton.remove();
+    backToMenuButton.position(20, 150);
+    backToMenuButton.show();
     currentScene = sceneHighScores;
   })
 
-  exitButton.mousePressed(() => {
-    exitButton.remove();
+  backToMenuButton.mousePressed(() => {
+    backToMenuButton.remove();
     resetGame(sceneMenu);
   });
 }
@@ -335,14 +339,19 @@ function drawHighScores() {
   
   let title = "High Scores";
   P5Style.titleStyle();
-  text(title, width/2, height * 1/6 + 50);
+  text(title, width/2, height * 1/6 + 35);
 
   P5Style.simpleTextStyle();
   let currentHeight = height * 1/6 + 80;
   highScores.forEach(highScore => {
-    text((highScores.indexOf(highScore) + 1) + ". " + highScore.name + "   " + highScore.totalScore, 240, currentHeight);
+    textAlign(LEFT);
+    text((highScores.indexOf(highScore) + 1) + ". " + highScore.name, 240, currentHeight);
+    textAlign(RIGHT);
+    text(highScore.totalScore, 400, currentHeight);
     currentHeight = currentHeight + 20;
   })
+
+  character.display();
 }
 
 function drawEnd() {
@@ -420,8 +429,8 @@ function drawGame() {
   scenario.display();
   scenario.move();
 
-  exitButton.position(20, 150);
-  exitButton.show();
+  backToMenuButton.position(20, 150);
+  backToMenuButton.show();
     
   powerUps.forEach(powerUp => {
     powerUp.display();

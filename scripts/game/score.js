@@ -85,15 +85,15 @@ class Score {
     consolidateScore() {
         if (!this.scoreHasBeenConsolidated) {
             if (this.scoreHour >= 17 || this.scoreHour < 9) {
-                this.scoreIncrementTime = 8 * 60 * 10;
+                this.scoreIncrementTime = 8 * 60 * minuteScore;
             }
             else {
-                this.scoreIncrementTime = (((this.scoreHour - 9) * 60) + this.scoreMinute) * 10;       
+                this.scoreIncrementTime = (((this.scoreHour - 9) * 60) + this.scoreMinute) * minuteScore;       
             }
 
-            this.scoreIncrementPretzels = this.pretzels * 150;
-            this.scoreIncrementCrosswords = this.crosswords * 400;
-            this.scoreIncrementAllPretzels = (this.pretzels === pretzelQuantity) ? 500 : 0;
+            this.scoreIncrementPretzels = this.pretzels * pretzelScore;
+            this.scoreIncrementCrosswords = this.crosswords * crosswordScore;
+            this.scoreIncrementAllPretzels = (this.pretzels === pretzelQuantity) ? allPretzelsScore : 0;
 
             this.scoreHasBeenConsolidated = true;
         }
