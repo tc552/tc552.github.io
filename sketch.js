@@ -568,9 +568,9 @@ function drawScoreBoard() {
   rect(width * 1/4, 240, width * 1/2, height * 1/7, 10);
   
   P5Style.clockCountStyle();
-  text("Total score:", 190, height * 1/6 + 210);
+  text("Total score:", 190, height * 1/6 + 215);
   textAlign(RIGHT);
-  text(score.totalScore, 430, height * 1/6 + 210);
+  text(score.totalScore, 430, height * 1/6 + 215);
 }
 
 function animateScoreBoard() {
