@@ -73,7 +73,7 @@ const allPretzelsScore = 1000;
 
 let mapTimerCount = 0;
 let gameStoppedTimerCount = 0;
-let levelFinishedTimerCount = 0;
+let scoreBoardTimerCount = 0;
 let mapIndex = 0;
 let resetButtonVisible;
 

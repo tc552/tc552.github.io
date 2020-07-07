@@ -76,6 +76,7 @@ function clearGame() {
   highScores = null;
   mapTimerCount = 0;
   gameStoppedTimerCount = 0;
+  scoreBoardTimerCount = 0;
   mapIndex = 0;
 }
 
@@ -238,7 +239,7 @@ function stopGame(type) {
 function startNewLevel() {
   character.changeState(typeNormal);
   score.scoreHasBeenConsolidated = false;
-  levelFinishedTimerCount = 0;
+  scoreBoardTimerCount = 0;
   score.pretzels = 0;
   score.crosswords = 0;
 
@@ -315,6 +316,7 @@ function drawMenu() {
 }
 
 function drawEnd() {
+  scoreBoardTimerCount++;
   drawWhiteBoard();
 
   // let title;
@@ -364,7 +366,7 @@ function drawEnd() {
 }
 
 function drawLevelEnd() {
-  levelFinishedTimerCount++;
+  scoreBoardTimerCount++;
   drawWhiteBoard();
 
   let title = "Day " + score.scoreDay + " Finished!";
@@ -474,7 +476,7 @@ function drawGame() {
 
     if (isGameOver) {
       if (gameStoppedTimerCount > 50) {
-        resetButton.show();
+        // resetButton.show();
         currentScene = sceneEnd;
       }
     }
@@ -534,27 +536,36 @@ function drawWhiteBoard() {
 }
 
 function drawScoreBoard() {
-  image(imgPretzel, 190, height * 1/6 + 55, 50, 50);
+  let clockTime;
+
+  if (isBusinessHours()) {
+    clockTime = score.n(score.scoreHour) + "h" + score.n(score.scoreMinute);
+  }
+  else {
+    clockTime = "17h00";
+  }
+
+  image(imgClock, 200, height * 1/6 + 55, 30, 30);
+  P5Style.clockCountStyle();
+  text(clockTime, 240, height * 1/6 + 80);
+  textAlign(RIGHT);
+  text(score.scoreIncrementTime, 430, height * 1/6 + 80);
+  
+  image(imgPretzel, 190, height * 1/6 + 90, 50, 50);
   P5Style.pretzelCountStyle();
-  text(score.pretzels, 240, height * 1/6 + 85);
+  text(score.pretzels, 240, height * 1/6 + 120);
   textAlign(RIGHT);
-  text(score.scoreIncrementPretzels, 430, height * 1/6 + 85);
+  text(score.scoreIncrementPretzels, 430, height * 1/6 + 120);
 
-  image(imgCrossword, 190, height * 1/6 + 90, 50, 50);
+  image(imgCrossword, 190, height * 1/6 + 125, 50, 50);
   P5Style.clockCountStyle();
-  text(score.crosswords, 240, height * 1/6 + 125);
+  text(score.crosswords, 240, height * 1/6 + 160);
   textAlign(RIGHT);
-  text(score.scoreIncrementCrosswords, 430, height * 1/6 + 125);
-
-  image(imgClock, 200, height * 1/6 + 140, 30, 30);
-  P5Style.clockCountStyle();
-  text("17h00", 240, height * 1/6 + 165);
-  textAlign(RIGHT);
-  text(score.scoreIncrementTime, 430, height * 1/6 + 165);
+  text(score.scoreIncrementCrosswords, 430, height * 1/6 + 160);
 
   fill(103, 130, 133);
   noStroke();
-  rect(width * 1/4, height * 21/32, width * 1/2, height * 1/7, 10);
+  rect(width * 1/4, 240, width * 1/2, height * 1/7, 10);
   
   P5Style.clockCountStyle();
   text("Total score:", 190, height * 1/6 + 210);
@@ -563,13 +574,13 @@ function drawScoreBoard() {
 }
 
 function animateScoreBoard() {
-  if (levelFinishedTimerCount > 30) {
+  if (scoreBoardTimerCount > 30) {
     score.addTimeScoreToTotal();
   }
-  if (levelFinishedTimerCount > 75) {
+  if (scoreBoardTimerCount > 75) {
     score.addPretzelScoreToTotal();
   }
-  if (levelFinishedTimerCount > 120) {
+  if (scoreBoardTimerCount > 120) {
     score.addCrosswordScoreToTotal();
   }
 }
