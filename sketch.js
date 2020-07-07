@@ -71,6 +71,7 @@ function clearGame() {
   life = null;
   startButton = null;
   resetButton = null;
+  highScoresButton = null;
   sendScoreButton = null;
   nameInput = null;
   highScores = null;
@@ -102,6 +103,10 @@ function resetGame(scene) {
     startButton = createButton('Start!');
     startButton.addClass('startButton');
   }
+
+  highScoresButton = createButton('High Scores');
+  highScoresButton.addClass('highScoresButton');
+  // highScoresButton.hide();
   
   resetButton = createButton('Play again!');
   resetButton.addClass('resetButton');
@@ -117,17 +122,17 @@ function resetGame(scene) {
   nameInput.position(0, 70);
   nameInput.hide();
 
-  function myTest(qty) {
+  function readHighScores(qty) {
     readHighScoresFromDb(qty).then(function(result) {
       highScores = result;
 
-      highScores.forEach(highScore => {
-        highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
-      });
+      // highScores.forEach(highScore => {
+      //   highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
+      // });
     })
   }
 
-  myTest(5);
+  readHighScores(5);
 
   // highScores = readHighScoresFromDb(5);
   
@@ -173,9 +178,13 @@ function draw() {
   switch (currentScene) {
     case sceneMenu:
       drawMenu();
+      // drawHighScores();
       // fill(255,255,255);
       // textSize(32);
       // text(highScoresText, 10, 120);
+      break;
+    case sceneHighScores:
+      drawHighScores();
       break;
     case sceneGame:
       drawGame();
@@ -309,10 +318,31 @@ function drawMenu() {
     currentScene = sceneGame;
   });
 
+  highScoresButton.mousePressed(() => {
+    highScoresButton.remove();
+    currentScene = sceneHighScores;
+  })
+
   exitButton.mousePressed(() => {
     exitButton.remove();
     resetGame(sceneMenu);
   });
+}
+
+function drawHighScores() {
+  scenario.display();
+  drawWhiteBoard();
+  
+  let title = "High Scores";
+  P5Style.titleStyle();
+  text(title, width/2, height * 1/6 + 50);
+
+  P5Style.simpleTextStyle();
+  let currentHeight = height * 1/6 + 80;
+  highScores.forEach(highScore => {
+    text((highScores.indexOf(highScore) + 1) + ". " + highScore.name + "   " + highScore.totalScore, 240, currentHeight);
+    currentHeight = currentHeight + 20;
+  })
 }
 
 function drawEnd() {
@@ -331,6 +361,7 @@ function drawEnd() {
   //   sendScoreButton.mousePressed(() => {
   //     addScore(
   //       nameInput.value(),
+  //       score.totalScore,
   //       score.scoreDay,
   //       score.scoreHour,
   //       score.scoreMinute,

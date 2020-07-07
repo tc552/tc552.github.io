@@ -1,6 +1,7 @@
 class HighScore {
-    constructor(name, scoreDay, scoreHour, scoreMinute, totalPretzels, totalCrosswords, totalDaysAllPretzelsPicked, totalFirstAidOccurrences) {
+    constructor(name, totalScore, scoreDay, scoreHour, scoreMinute, totalPretzels, totalCrosswords, totalDaysAllPretzelsPicked, totalFirstAidOccurrences) {
         this.name = name;
+        this.totalScore = totalScore;
         this.scoreDay = scoreDay;
         this.scoreHour = scoreHour;
         this.scoreMinute = scoreMinute;

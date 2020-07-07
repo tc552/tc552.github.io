@@ -73,6 +73,7 @@
 
       function addScore(
         name,
+        totalScore,
         scoreDay,
         scoreHour,
         scoreMinute,
@@ -83,6 +84,7 @@
         ) {
         db.collection("scores").add({
             name: name,
+            scoreDay: totalScore,
             scoreDay: scoreDay,
             scoreHour: scoreHour,
             scoreMinute: scoreMinute,
@@ -105,6 +107,7 @@
           let highScoresFromDb = [];
 
           db.collection("scores")
+          .orderBy("totalScore", "desc")
           .orderBy("scoreDay", "desc")
           .orderBy("scoreHour", "desc")
           .orderBy("scoreMinute", "desc")
@@ -118,6 +121,7 @@
                 let response = doc.data();
                 let highScore = new HighScore(
                   response.name,
+                  response.totalScore,
                   response.scoreDay,
                   response.scoreHour,
                   response.scoreMinute,

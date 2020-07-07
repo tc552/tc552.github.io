@@ -31,7 +31,7 @@ let powerUps = [];
 let pretzelsPositionMatrix = [];
 let crosswordsPositionMatrix = [];
 
-let highScoresText = '';
+// let highScoresText = '';
 let highScores = [];
 
 const canvasWidth = 640;
@@ -53,6 +53,7 @@ const typeLevelFinish = 'LEVELFINISH';
 const typeNormal = 'NORMAL';
 
 const sceneMenu = 'MENU';
+const sceneHighScores = 'HIGHSCORES';
 const sceneGame = 'GAME';
 const sceneLevelEnd = 'LEVELEND';
 const sceneEnd = 'END';
