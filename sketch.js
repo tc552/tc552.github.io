@@ -40,6 +40,7 @@ function preload() {
   imgStressBomb = loadImage('images/assets/stress-bomb-gif.gif');
   imgClock = loadImage('images/assets/clock.png');
   imgClockBlinking = loadImage('images/assets/clock-blinking.gif');
+  imgDay = loadImage('images/assets/day.png');
 
   jumpTheme = loadSound('sounds/jump.wav');
   powerUpTheme = loadSound('sounds/powerup.wav');

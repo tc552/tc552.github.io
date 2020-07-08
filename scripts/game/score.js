@@ -16,6 +16,7 @@ class Score {
         this.imgClock = imgClock;
         this.imgClockNormal = imgClock;
         this.imgClockBlinking = imgClockBlinking;
+        this.imgDay = imgDay;
         this.timeStepSecond = 9;
         this.timeStepMinute = 1;
         this.timeStepHour = 1;
@@ -33,12 +34,16 @@ class Score {
     }
 
     displayPretzelCount() {
-        image(this.imgPretzel, 320, 0, 50, 50);
+        image(this.imgPretzel, 300, 0, 50, 50);
         P5Style.pretzelCountStyle();
-        text(this.pretzels + "/" + pretzelQuantity, 370, 30);
+        text(this.pretzels + "/" + pretzelQuantity, 350, 30);
     }
 
     displayClock() {
+        P5Style.clockCountStyle();
+        image(this.imgDay, 450, 5, 30, 30);
+        text(this.scoreDay, 485, 30);
+
         if (this.scoreHour === 16) {
             this.imgClock = this.imgClockBlinking;
         }
@@ -47,7 +52,6 @@ class Score {
         }
 
         image(this.imgClock, width - 115, 7, 30, 30);
-        P5Style.clockCountStyle();
         text(this.n(this.scoreHour) + "h" + this.n(this.scoreMinute), width - 80, 30);
     }
 
