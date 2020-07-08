@@ -289,7 +289,7 @@ function isBusinessHours() {
 function drawMenu() {
   scenario.display();
   
-  drawWhiteBoard();
+  drawWhiteBoard(0);
   
   let title = "Stanley's Day At The Office";
   
@@ -336,7 +336,7 @@ function drawMenu() {
 
 function drawHighScores() {
   scenario.display();
-  drawWhiteBoard();
+  drawWhiteBoard(0);
   
   let title = "High Scores";
   P5Style.titleStyle();
@@ -357,7 +357,6 @@ function drawHighScores() {
 
 function drawEnd() {
   scoreBoardTimerCount++;
-  drawWhiteBoard();
 
   // let title;
   // let subtitle;
@@ -389,14 +388,17 @@ function drawEnd() {
   // }
 
   let title = "Game Over!"
-  P5Style.titleStyle();
-  text(title, width/2, height * 1/6 + 35);
+  // P5Style.titleStyle();
+  // text(title, width/2, height * 1/6 + 35);
 
   // P5Style.simpleTextStyle();
   // text(subtitle, 140, height * 1/6 + 120);
   
-  drawScoreBoard();
-  animateScoreBoard();
+  if (scoreBoardTimerCount < 250) {
+    drawWhiteBoard(0);
+    drawScoreBoard(title, 0);
+    animateScoreBoard();
+  }
 
   character.display();
 
@@ -408,13 +410,18 @@ function drawEnd() {
 
 function drawLevelEnd() {
   scoreBoardTimerCount++;
-  drawWhiteBoard();
-
+  
+  if (scoreBoardTimerCount < 220) {
+    offsetStep = 0;
+  }
+  else {
+    offsetStep = offsetStep - 15;
+  }
+  drawWhiteBoard(offsetStep);
   let title = "Day " + score.scoreDay + " Finished!";
-  P5Style.titleStyle();
-  text(title, width/2, height * 1/6 + 35);
-
-  drawScoreBoard();
+  // P5Style.titleStyle();
+  // text(title, width/2, height * 1/6 + 35);
+  drawScoreBoard(title, offsetStep);
   animateScoreBoard();
 
   life.decreaseBpm(100);
@@ -499,7 +506,7 @@ function drawGame() {
             failTheme.play();
           }
 
-          life.increaseBpm();
+          // life.increaseBpm();
 
           enemy.hasCollided = true;
         }
@@ -570,13 +577,16 @@ function drawGame() {
   }
 }
 
-function drawWhiteBoard() {
+function drawWhiteBoard(offsetX) {
   fill(255,255,255,200);
   noStroke();
-  rect(width * 1/8, height * 1/8, width * 3/4, height * 3/4);
+  rect(width * 1/8 + offsetX, height * 1/8, width * 3/4, height * 3/4);
 }
 
-function drawScoreBoard() {
+function drawScoreBoard(title, offsetX) {
+  P5Style.titleStyle();
+  text(title, width/2 + offsetX, height * 1/6 + 35);
+
   let clockTime;
 
   if (isBusinessHours()) {
@@ -586,32 +596,32 @@ function drawScoreBoard() {
     clockTime = "17h00";
   }
 
-  image(imgClock, 200, height * 1/6 + 55, 30, 30);
+  image(imgClock, 200 + offsetX, height * 1/6 + 55, 30, 30);
   P5Style.clockCountStyle();
-  text(clockTime, 240, height * 1/6 + 80);
+  text(clockTime, 240 + offsetX, height * 1/6 + 80);
   textAlign(RIGHT);
-  text(score.scoreIncrementTime, 430, height * 1/6 + 80);
+  text(score.scoreIncrementTime, 430 + offsetX, height * 1/6 + 80);
   
-  image(imgPretzel, 190, height * 1/6 + 90, 50, 50);
+  image(imgPretzel, 190 + offsetX, height * 1/6 + 90, 50, 50);
   P5Style.pretzelCountStyle();
-  text(score.pretzels, 240, height * 1/6 + 120);
+  text(score.pretzels, 240 + offsetX, height * 1/6 + 120);
   textAlign(RIGHT);
-  text(score.scoreIncrementPretzels, 430, height * 1/6 + 120);
+  text(score.scoreIncrementPretzels, 430 + offsetX, height * 1/6 + 120);
 
-  image(imgCrossword, 190, height * 1/6 + 125, 50, 50);
+  image(imgCrossword, 190 + offsetX, height * 1/6 + 125, 50, 50);
   P5Style.clockCountStyle();
-  text(score.crosswords, 240, height * 1/6 + 160);
+  text(score.crosswords, 240 + offsetX, height * 1/6 + 160);
   textAlign(RIGHT);
-  text(score.scoreIncrementCrosswords, 430, height * 1/6 + 160);
+  text(score.scoreIncrementCrosswords, 430 + offsetX, height * 1/6 + 160);
 
   fill(103, 130, 133);
   noStroke();
-  rect(width * 1/4, 240, width * 1/2, height * 1/7, 10);
+  rect(width * 1/4 + offsetX, 240, width * 1/2, height * 1/7, 10);
   
   P5Style.clockCountStyle();
-  text("Total score:", 190, height * 1/6 + 215);
+  text("Total score:", 190 + offsetX, height * 1/6 + 215);
   textAlign(RIGHT);
-  text(score.totalScore, 430, height * 1/6 + 215);
+  text(score.totalScore, 430 + offsetX, height * 1/6 + 215);
 }
 
 function animateScoreBoard() {
