@@ -62,6 +62,7 @@ const sceneEnd = 'END';
 let isGameStopped;
 let isGameOver;
 let isGameFinished;
+let isLevelFinished;
 
 const mapLength = 14000;
 

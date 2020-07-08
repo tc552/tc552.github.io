@@ -146,6 +146,7 @@ function resetGame(scene) {
   isGameStopped = false;
   isGameOver = false;
   isGameFinished = false;
+  isLevelFinished = false;
   resetButtonVisible = false;
 
   frameRate(30);
@@ -233,6 +234,11 @@ function stopGame(type) {
   else if (type === typeLevelFinish) {
     score.consolidateScore();
     character.changeState(typeLevelFinish);
+    
+    if (!isLevelFinished){
+      endTheme.play();
+    }
+    isLevelFinished = true;
   }
   // else if (type === typeFinish) {
   //   scenario.stop();
@@ -248,6 +254,7 @@ function stopGame(type) {
 
 function startNewLevel() {
   character.changeState(typeNormal);
+  isLevelFinished = false;
   score.scoreHasBeenConsolidated = false;
   scoreBoardTimerCount = 0;
   score.pretzels = 0;
@@ -419,9 +426,8 @@ function drawLevelEnd() {
   }
   drawWhiteBoard(offsetStep);
   let title = "Day " + score.scoreDay + " Finished!";
-  // P5Style.titleStyle();
-  // text(title, width/2, height * 1/6 + 35);
   drawScoreBoard(title, offsetStep);
+  
   animateScoreBoard();
   animateNewLevelCountdown();
 
