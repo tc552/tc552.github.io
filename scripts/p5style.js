@@ -17,7 +17,7 @@ P5Style.simpleTextStyle = function () {
     noStroke();
 }
 
-P5Style.titleEndStyle = function () {
+P5Style.titleLargeStyle = function () {
     textAlign(CENTER);
     fill("#fff")
     textFont('Comfortaa');

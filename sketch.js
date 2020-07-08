@@ -423,26 +423,10 @@ function drawLevelEnd() {
   // text(title, width/2, height * 1/6 + 35);
   drawScoreBoard(title, offsetStep);
   animateScoreBoard();
+  animateNewLevelCountdown();
 
   life.decreaseBpm(100);
   character.display();
-
-  if (score.scoreHour === 5) {
-    P5Style.titleStyle();
-    text("Day" + (score.scoreDay + 1) + " starting in...", width/2, height * 1/6 + 35);  
-  }
-  else if (score.scoreHour === 6) {
-    P5Style.titleStyle();
-      text("3...", width/2, height * 1/6 + 35);
-  }
-  else if (score.scoreHour === 7) {
-    P5Style.titleStyle();
-      text("2...", width/2, height * 1/6 + 35);
-  }
-  else if (score.scoreHour === 8) {
-    P5Style.titleStyle();
-      text("1...", width/2, height * 1/6 + 35);
-  }
   
   if (isBusinessHours()) {
     currentScene = sceneGame;
@@ -650,6 +634,22 @@ function animateScoreBoard() {
   }
   if (scoreBoardTimerCount > 120) {
     score.addCrosswordScoreToTotal();
+  }
+}
+
+function animateNewLevelCountdown() {
+  P5Style.titleLargeStyle();
+  if (score.scoreHour === 5) {
+    text("Day " + (score.scoreDay + 1) + " starting in...", width/2, height * 1/6 + 35);  
+  }
+  else if (score.scoreHour === 6) {
+    text("3...", width/2, height * 1/6 + 35);
+  }
+  else if (score.scoreHour === 7) {
+    text("2...", width/2, height * 1/6 + 35);
+  }
+  else if (score.scoreHour === 8) {
+    text("1...", width/2, height * 1/6 + 35);
   }
 }
 
