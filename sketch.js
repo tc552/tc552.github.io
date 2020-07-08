@@ -415,7 +415,7 @@ function drawLevelEnd() {
     offsetStep = 0;
   }
   else {
-    offsetStep = offsetStep - 15;
+    offsetStep = offsetStep - 20;
   }
   drawWhiteBoard(offsetStep);
   let title = "Day " + score.scoreDay + " Finished!";
@@ -426,6 +426,23 @@ function drawLevelEnd() {
 
   life.decreaseBpm(100);
   character.display();
+
+  if (score.scoreHour === 5) {
+    P5Style.titleStyle();
+    text("Day" + (score.scoreDay + 1) + " starting in...", width/2, height * 1/6 + 35);  
+  }
+  else if (score.scoreHour === 6) {
+    P5Style.titleStyle();
+      text("3...", width/2, height * 1/6 + 35);
+  }
+  else if (score.scoreHour === 7) {
+    P5Style.titleStyle();
+      text("2...", width/2, height * 1/6 + 35);
+  }
+  else if (score.scoreHour === 8) {
+    P5Style.titleStyle();
+      text("1...", width/2, height * 1/6 + 35);
+  }
   
   if (isBusinessHours()) {
     currentScene = sceneGame;
