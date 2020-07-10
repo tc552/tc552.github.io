@@ -16,6 +16,7 @@ let imgStressRed;
 let imgStressBomb;
 let imgClock;
 let imgClockBlinking;
+let imgDay;
 let scenario;
 let character;
 let firstAidResponder;
@@ -31,7 +32,7 @@ let powerUps = [];
 let pretzelsPositionMatrix = [];
 let crosswordsPositionMatrix = [];
 
-let highScoresText = '';
+// let highScoresText = '';
 let highScores = [];
 
 const canvasWidth = 640;
@@ -53,6 +54,7 @@ const typeLevelFinish = 'LEVELFINISH';
 const typeNormal = 'NORMAL';
 
 const sceneMenu = 'MENU';
+const sceneHighScores = 'HIGHSCORES';
 const sceneGame = 'GAME';
 const sceneLevelEnd = 'LEVELEND';
 const sceneEnd = 'END';
@@ -60,14 +62,21 @@ const sceneEnd = 'END';
 let isGameStopped;
 let isGameOver;
 let isGameFinished;
+let isLevelFinished;
 
 const mapLength = 14000;
 
 let scenarioSpeed = 6;
 const imgScenarioWidth = 1280;
 
+const minuteScore = 10;
+const pretzelScore = 150;
+const crosswordScore = 450;
+const allPretzelsScore = 1000;
+
 let mapTimerCount = 0;
 let gameStoppedTimerCount = 0;
+let scoreBoardTimerCount = 0;
 let mapIndex = 0;
 let resetButtonVisible;
 

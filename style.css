@@ -53,8 +53,13 @@ button {
 }
 
 .startButton {
-  top: calc(((100vh)/2) + 50px);
-  left: calc(((100vw)/2) - 40px);
+  top: calc(((100vh)/2) + 70px);
+  left: calc(((100vw)/2) + 130px);
+}
+
+.highScoresButton {
+  top: calc(((100vh)/2) + 70px);
+  left: calc(((100vw)/2) - 150px);
 }
 
 .resetButton {

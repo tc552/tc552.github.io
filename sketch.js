@@ -40,6 +40,7 @@ function preload() {
   imgStressBomb = loadImage('images/assets/stress-bomb-gif.gif');
   imgClock = loadImage('images/assets/clock.png');
   imgClockBlinking = loadImage('images/assets/clock-blinking.gif');
+  imgDay = loadImage('images/assets/day.png');
 
   jumpTheme = loadSound('sounds/jump.wav');
   powerUpTheme = loadSound('sounds/powerup.wav');
@@ -71,11 +72,13 @@ function clearGame() {
   life = null;
   startButton = null;
   resetButton = null;
+  highScoresButton = null;
   sendScoreButton = null;
   nameInput = null;
   highScores = null;
   mapTimerCount = 0;
   gameStoppedTimerCount = 0;
+  scoreBoardTimerCount = 0;
   mapIndex = 0;
 }
 
@@ -101,13 +104,17 @@ function resetGame(scene) {
     startButton = createButton('Start!');
     startButton.addClass('startButton');
   }
+
+  highScoresButton = createButton('High Scores');
+  highScoresButton.addClass('highScoresButton');
+  // highScoresButton.hide();
   
   resetButton = createButton('Play again!');
   resetButton.addClass('resetButton');
   resetButton.hide();
 
-  exitButton = createButton('Exit game');
-  exitButton.hide();
+  backToMenuButton = createButton('Back to menu');
+  backToMenuButton.hide();
   
   sendScoreButton = createButton('Send score');
   sendScoreButton.hide();
@@ -116,17 +123,17 @@ function resetGame(scene) {
   nameInput.position(0, 70);
   nameInput.hide();
 
-  function myTest(qty) {
+  function readHighScores(qty) {
     readHighScoresFromDb(qty).then(function(result) {
       highScores = result;
 
-      highScores.forEach(highScore => {
-        highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
-      });
+      // highScores.forEach(highScore => {
+      //   highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
+      // });
     })
   }
 
-  myTest(5);
+  readHighScores(5);
 
   // highScores = readHighScoresFromDb(5);
   
@@ -139,6 +146,7 @@ function resetGame(scene) {
   isGameStopped = false;
   isGameOver = false;
   isGameFinished = false;
+  isLevelFinished = false;
   resetButtonVisible = false;
 
   frameRate(30);
@@ -172,9 +180,13 @@ function draw() {
   switch (currentScene) {
     case sceneMenu:
       drawMenu();
+      // drawHighScores();
       // fill(255,255,255);
       // textSize(32);
       // text(highScoresText, 10, 120);
+      break;
+    case sceneHighScores:
+      drawHighScores();
       break;
     case sceneGame:
       drawGame();
@@ -211,13 +223,22 @@ function stopGame(type) {
       if (!isGameOver) {
         score.increaseFirstAidOccurrences();
       }
+      else {
+        score.consolidateScore();
+      }
     }
 
     isGameStopped = true;
     gameStoppedTimerCount++;
   }
   else if (type === typeLevelFinish) {
+    score.consolidateScore();
     character.changeState(typeLevelFinish);
+    
+    if (!isLevelFinished){
+      endTheme.play();
+    }
+    isLevelFinished = true;
   }
   // else if (type === typeFinish) {
   //   scenario.stop();
@@ -233,6 +254,11 @@ function stopGame(type) {
 
 function startNewLevel() {
   character.changeState(typeNormal);
+  isLevelFinished = false;
+  score.scoreHasBeenConsolidated = false;
+  scoreBoardTimerCount = 0;
+  score.pretzels = 0;
+  score.crosswords = 0;
 
   powerUps = [];
   createPowerUps();
@@ -270,32 +296,19 @@ function isBusinessHours() {
 function drawMenu() {
   scenario.display();
   
-  fill(255,255,255,200);
-  noStroke();
-  rect(width * 1/6, height * 1/6, width * 2/3, height * 2/3);
+  drawWhiteBoard(0);
   
   let title = "Stanley's Day At The Office";
   
-  textAlign(CENTER);
-  fill("#fff");
-  textFont('Comfortaa');
-  stroke("#000");
-  strokeWeight(3);
-  textStyle(BOLD);
-  textSize(24);
-  text(title, width/2, height * 1/6 + 50);
+  P5Style.titleStyle();
+  text(title, width/2, height * 1/6 + 35);
 
   let previousHeight = height * 1/6 + 45;
   let newHeight = previousHeight + 20;
 
-  textAlign(LEFT);
-  textSize(12);
-  fill("#000")
-  noStroke();
-  
+  P5Style.simpleTextStyle();
   previousHeight = newHeight;
   newHeight = previousHeight + 15;
-
   text("Avoid getting too close to your boss and your co-workers,\nor your stress level will increase!", 140, newHeight);
   
   previousHeight = newHeight;
@@ -310,63 +323,89 @@ function drawMenu() {
 
   startButton.mousePressed(() => {
     startButton.remove();
+    highScoresButton.remove();
     currentScene = sceneGame;
   });
 
-  exitButton.mousePressed(() => {
-    exitButton.remove();
+  highScoresButton.mousePressed(() => {
+    highScoresButton.remove();
+    startButton.remove();
+    backToMenuButton.position(20, 150);
+    backToMenuButton.show();
+    currentScene = sceneHighScores;
+  })
+
+  backToMenuButton.mousePressed(() => {
+    backToMenuButton.remove();
     resetGame(sceneMenu);
   });
 }
 
+function drawHighScores() {
+  scenario.display();
+  drawWhiteBoard(0);
+  
+  let title = "High Scores";
+  P5Style.titleStyle();
+  text(title, width/2, height * 1/6 + 35);
+
+  P5Style.simpleTextStyle();
+  let currentHeight = height * 1/6 + 80;
+  highScores.forEach(highScore => {
+    textAlign(LEFT);
+    text((highScores.indexOf(highScore) + 1) + ". " + highScore.name, 240, currentHeight);
+    textAlign(RIGHT);
+    text(highScore.totalScore, 400, currentHeight);
+    currentHeight = currentHeight + 20;
+  })
+
+  character.display();
+}
+
 function drawEnd() {
-  fill(255,255,255,200);
-  noStroke();
-  rect(width * 1/6, height * 1/6, width * 2/3, height * 2/3);
+  scoreBoardTimerCount++;
 
-  let title;
-  let subtitle;
-  if (isGameOver) {
-    title = "Game Over!"
-    subtitle = "No pretzels for you.";
+  // let title;
+  // let subtitle;
+  // if (isGameOver) {
+  //   title = "Game Over!"
+  //   subtitle = "No pretzels for you.";
     
-    sendScoreButton.show();
-    nameInput.show();
+  //   sendScoreButton.show();
+  //   nameInput.show();
 
-    sendScoreButton.mousePressed(() => {
-      addScore(
-        nameInput.value(),
-        score.scoreDay,
-        score.scoreHour,
-        score.scoreMinute,
-        score.totalPretzels,
-        score.totalCrosswords,
-        score.totalDaysAllPretzelsPicked,
-        score.totalFirstAidOccurrences
-      );
-    });
+  //   sendScoreButton.mousePressed(() => {
+  //     addScore(
+  //       nameInput.value(),
+  //       score.totalScore,
+  //       score.scoreDay,
+  //       score.scoreHour,
+  //       score.scoreMinute,
+  //       score.totalPretzels,
+  //       score.totalCrosswords,
+  //       score.totalDaysAllPretzelsPicked,
+  //       score.totalFirstAidOccurrences
+  //     );
+  //   });
 
+  // }
+  // else if (isGameFinished) {
+  //   title = "Day Finished!";
+  //   subtitle = "Go home and enjoy your pretzels.";
+  // }
+
+  let title = "Game Over!"
+  // P5Style.titleStyle();
+  // text(title, width/2, height * 1/6 + 35);
+
+  // P5Style.simpleTextStyle();
+  // text(subtitle, 140, height * 1/6 + 120);
+  
+  if (scoreBoardTimerCount < 250) {
+    drawWhiteBoard(0);
+    drawScoreBoard(title, 0);
+    animateScoreBoard();
   }
-  else if (isGameFinished) {
-    title = "Day Finished!";
-    subtitle = "Go home and enjoy your pretzels.";
-  }
-
-  textAlign(CENTER);
-  fill("#fff")
-  textFont('Comfortaa');
-  stroke("#000");
-  strokeWeight(3);
-  textStyle(BOLD);
-  textSize(32);
-  text(title, width/2, height * 1/6 + 60);
-
-  textAlign(LEFT);
-  textSize(12);
-  fill("#000")
-  noStroke();
-
-  text(subtitle, 140, height * 1/6 + 120);
 
   character.display();
 
@@ -377,42 +416,20 @@ function drawEnd() {
 }
 
 function drawLevelEnd() {
-  fill(255,255,255,200);
-  noStroke();
-  rect(width * 1/6, height * 1/6, width * 2/3, height * 2/3);
-
-  let title;
-  let subtitle;
+  scoreBoardTimerCount++;
   
+  if (scoreBoardTimerCount < 220) {
+    offsetStep = 0;
+  }
+  else {
+    offsetStep = offsetStep - 20;
+  }
+  drawWhiteBoard(offsetStep);
+  let title = "Day " + score.scoreDay + " Finished!";
+  drawScoreBoard(title, offsetStep);
   
-  title = "Day " + score.scoreDay + " Finished!";
-  subtitle = "Total pretzels = " + score.totalPretzels;
-
-  textAlign(CENTER);
-  fill("#fff")
-  textFont('Comfortaa');
-  stroke("#000");
-  strokeWeight(3);
-  textStyle(BOLD);
-  textSize(32);
-  text(title, width/2, height * 1/6 + 60);
-
-  // textAlign(LEFT);
-  // textSize(12);
-  // fill("#000")
-  // noStroke();
-
-  // text(subtitle, 140, height * 1/6 + 120);
-
-  image(score.imgPretzel, 140, height * 1/6 + 120, 50, 50);
-  textAlign(LEFT);
-  fill(161, 98, 44);
-  stroke("#ffffff");
-  strokeWeight(3);
-  textSize(20);
-  text(score.totalPretzels, 190, height * 1/6 + 150);
-
-  score.consolidateScore();
+  animateScoreBoard();
+  animateNewLevelCountdown();
 
   life.decreaseBpm(100);
   character.display();
@@ -427,8 +444,8 @@ function drawGame() {
   scenario.display();
   scenario.move();
 
-  exitButton.position(20, 150);
-  exitButton.show();
+  backToMenuButton.position(20, 150);
+  backToMenuButton.show();
     
   powerUps.forEach(powerUp => {
     powerUp.display();
@@ -496,7 +513,7 @@ function drawGame() {
             failTheme.play();
           }
 
-          life.increaseBpm();
+          // life.increaseBpm();
 
           enemy.hasCollided = true;
         }
@@ -514,7 +531,7 @@ function drawGame() {
 
     if (isGameOver) {
       if (gameStoppedTimerCount > 50) {
-        resetButton.show();
+        // resetButton.show();
         currentScene = sceneEnd;
       }
     }
@@ -564,6 +581,81 @@ function drawGame() {
     if (mapIndex >= gameMap.length) {
       mapIndex = 0;
     }
+  }
+}
+
+function drawWhiteBoard(offsetX) {
+  fill(255,255,255,200);
+  noStroke();
+  rect(width * 1/8 + offsetX, height * 1/8, width * 3/4, height * 3/4);
+}
+
+function drawScoreBoard(title, offsetX) {
+  P5Style.titleStyle();
+  text(title, width/2 + offsetX, height * 1/6 + 35);
+
+  let clockTime;
+
+  if (isBusinessHours()) {
+    clockTime = score.n(score.scoreHour) + "h" + score.n(score.scoreMinute);
+  }
+  else {
+    clockTime = "17h00";
+  }
+
+  image(imgClock, 200 + offsetX, height * 1/6 + 55, 30, 30);
+  P5Style.clockCountStyle();
+  text(clockTime, 240 + offsetX, height * 1/6 + 80);
+  textAlign(RIGHT);
+  text(score.scoreIncrementTime, 430 + offsetX, height * 1/6 + 80);
+  
+  image(imgPretzel, 190 + offsetX, height * 1/6 + 90, 50, 50);
+  P5Style.pretzelCountStyle();
+  text(score.pretzels, 240 + offsetX, height * 1/6 + 120);
+  textAlign(RIGHT);
+  text(score.scoreIncrementPretzels, 430 + offsetX, height * 1/6 + 120);
+
+  image(imgCrossword, 190 + offsetX, height * 1/6 + 125, 50, 50);
+  P5Style.clockCountStyle();
+  text(score.crosswords, 240 + offsetX, height * 1/6 + 160);
+  textAlign(RIGHT);
+  text(score.scoreIncrementCrosswords, 430 + offsetX, height * 1/6 + 160);
+
+  fill(103, 130, 133);
+  noStroke();
+  rect(width * 1/4 + offsetX, 240, width * 1/2, height * 1/7, 10);
+  
+  P5Style.clockCountStyle();
+  text("Total score:", 190 + offsetX, height * 1/6 + 215);
+  textAlign(RIGHT);
+  text(score.totalScore, 430 + offsetX, height * 1/6 + 215);
+}
+
+function animateScoreBoard() {
+  if (scoreBoardTimerCount > 30) {
+    score.addTimeScoreToTotal();
+  }
+  if (scoreBoardTimerCount > 75) {
+    score.addPretzelScoreToTotal();
+  }
+  if (scoreBoardTimerCount > 120) {
+    score.addCrosswordScoreToTotal();
+  }
+}
+
+function animateNewLevelCountdown() {
+  P5Style.titleLargeStyle();
+  if (score.scoreHour === 5) {
+    text("Day " + (score.scoreDay + 1) + " starting in...", width/2, height * 1/6 + 35);  
+  }
+  else if (score.scoreHour === 6) {
+    text("3...", width/2, height * 1/6 + 35);
+  }
+  else if (score.scoreHour === 7) {
+    text("2...", width/2, height * 1/6 + 35);
+  }
+  else if (score.scoreHour === 8) {
+    text("1...", width/2, height * 1/6 + 35);
   }
 }
 

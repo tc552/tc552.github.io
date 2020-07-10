@@ -8,7 +8,7 @@
 
     gtag('config', 'G-FSRN45JTYV');
   </script>
-  <title>Stanley Goes To The Office</title>
+  <title>Stanley's Day At The Office</title>
     <link rel="manifest" href="manifest.json">
     <script src="p5.min.js"></script>
     <script src="p5.sound.min.js"></script>
@@ -29,6 +29,7 @@
     <script src="scripts/game/highScore.js?v2"></script>
     <script src="scripts/game/life.js?v2"></script>
     <script src="scripts/variables.js?v2"></script>
+    <script src="scripts/p5style.js?v2"></script>
     <script src="sketch.js?v2"></script>
     
     <div class="donationOuterContainer">
@@ -72,6 +73,7 @@
 
       function addScore(
         name,
+        totalScore,
         scoreDay,
         scoreHour,
         scoreMinute,
@@ -82,6 +84,7 @@
         ) {
         db.collection("scores").add({
             name: name,
+            scoreDay: totalScore,
             scoreDay: scoreDay,
             scoreHour: scoreHour,
             scoreMinute: scoreMinute,
@@ -104,6 +107,7 @@
           let highScoresFromDb = [];
 
           db.collection("scores")
+          .orderBy("totalScore", "desc")
           .orderBy("scoreDay", "desc")
           .orderBy("scoreHour", "desc")
           .orderBy("scoreMinute", "desc")
@@ -117,6 +121,7 @@
                 let response = doc.data();
                 let highScore = new HighScore(
                   response.name,
+                  response.totalScore,
                   response.scoreDay,
                   response.scoreHour,
                   response.scoreMinute,
