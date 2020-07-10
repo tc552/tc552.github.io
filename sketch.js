@@ -641,8 +641,10 @@ function drawHighScoreInput(offsetX) {
 
   sendScoreButton.mousePressed(() => {
     let nameValue = nameInput.value();
-    nameInput.remove();
-    sendScoreButton.remove();
+    // nameInput.remove();
+    // sendScoreButton.remove();
+    nameInput.attribute('disabled', true);
+    sendScoreButton.attribute('disabled', true);
 
     addScore(
       nameValue,
