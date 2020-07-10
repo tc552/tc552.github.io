@@ -668,8 +668,12 @@ function drawHighScoreInput(offsetX) {
   sendScoreButton.show();
 
   sendScoreButton.mousePressed(() => {
+    let nameValue = nameInput.value();
+    nameInput.remove();
+    sendScoreButton.remove();
+
     addScore(
-      nameInput.value(),
+      nameValue,
       score.totalScore,
       score.scoreDay,
       score.scoreHour,
