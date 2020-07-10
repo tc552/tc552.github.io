@@ -117,10 +117,11 @@ function resetGame(scene) {
   backToMenuButton.hide();
   
   sendScoreButton = createButton('Send score');
+  sendScoreButton.addClass('sendScoreButton');
   sendScoreButton.hide();
 
-  nameInput = createInput('');
-  nameInput.position(0, 70);
+  nameInput = createInput().attribute('maxlength', 10);
+  nameInput.addClass('nameInput');
   nameInput.hide();
 
   function readHighScores(qty) {
@@ -401,10 +402,14 @@ function drawEnd() {
   // P5Style.simpleTextStyle();
   // text(subtitle, 140, height * 1/6 + 120);
   
-  if (scoreBoardTimerCount < 250) {
+  if (scoreBoardTimerCount < 200) {
     drawWhiteBoard(0);
     drawScoreBoard(title, 0);
     animateScoreBoard();
+  }
+  else {
+    drawWhiteBoard(0);
+    drawHighScoreInput(0);
   }
 
   character.display();
@@ -641,6 +646,40 @@ function animateScoreBoard() {
   if (scoreBoardTimerCount > 120) {
     score.addCrosswordScoreToTotal();
   }
+}
+
+function drawHighScoreInput(offsetX) {
+  P5Style.titleStyle();
+  text("New high score!", width/2 + offsetX, height * 1/6 + 35);
+
+  P5Style.clockCountStyle();
+  text("Total score:", 185 + offsetX, height * 1/6 + 90);
+  textAlign(RIGHT);
+  text(score.totalScore, 430 + offsetX, height * 1/6 + 90);
+
+  fill(103, 130, 133);
+  noStroke();
+  rect(width * 1/4 + offsetX, 177, width * 1/2, height * 1/7, 10);
+  
+  P5Style.clockCountStyle();
+  text("Your name:", 185 + offsetX, height * 1/6 + 150);
+  nameInput.show();
+
+  sendScoreButton.show();
+
+  sendScoreButton.mousePressed(() => {
+    addScore(
+      nameInput.value(),
+      score.totalScore,
+      score.scoreDay,
+      score.scoreHour,
+      score.scoreMinute,
+      score.totalPretzels,
+      score.totalCrosswords,
+      score.totalDaysAllPretzelsPicked,
+      score.totalFirstAidOccurrences
+    );
+  });
 }
 
 function animateNewLevelCountdown() {
