@@ -366,45 +366,17 @@ function drawHighScores() {
 function drawEnd() {
   scoreBoardTimerCount++;
 
-  // let title;
-  // let subtitle;
-  // if (isGameOver) {
-  //   title = "Game Over!"
-  //   subtitle = "No pretzels for you.";
-    
-  //   sendScoreButton.show();
-  //   nameInput.show();
-
-  //   sendScoreButton.mousePressed(() => {
-  //     addScore(
-  //       nameInput.value(),
-  //       score.totalScore,
-  //       score.scoreDay,
-  //       score.scoreHour,
-  //       score.scoreMinute,
-  //       score.totalPretzels,
-  //       score.totalCrosswords,
-  //       score.totalDaysAllPretzelsPicked,
-  //       score.totalFirstAidOccurrences
-  //     );
-  //   });
-
-  // }
-  // else if (isGameFinished) {
-  //   title = "Day Finished!";
-  //   subtitle = "Go home and enjoy your pretzels.";
-  // }
-
   let title = "Game Over!"
-  // P5Style.titleStyle();
-  // text(title, width/2, height * 1/6 + 35);
-
-  // P5Style.simpleTextStyle();
-  // text(subtitle, 140, height * 1/6 + 120);
   
   if (scoreBoardTimerCount < 200) {
-    drawWhiteBoard(0);
-    drawScoreBoard(title, 0);
+    if (scoreBoardTimerCount < 160) {
+      offsetStep = 0;
+    }
+    else {
+      offsetStep = offsetStep - 20;
+    }
+    drawWhiteBoard(offsetStep);
+    drawScoreBoard(title, offsetStep);
     animateScoreBoard();
   }
   else {
