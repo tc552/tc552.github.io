@@ -648,16 +648,21 @@ function drawHighScoreInput(offsetX) {
 
     addScore(
       nameValue,
-      score.totalScore,
-      score.scoreDay,
-      score.scoreHour,
-      score.scoreMinute,
-      score.totalPretzels,
-      score.totalCrosswords,
-      score.totalDaysAllPretzelsPicked,
-      score.totalFirstAidOccurrences
+      score
     );
   });
+
+  // function readHighScores(qty) {
+  //   readHighScoresFromDb(qty).then(function(result) {
+  //     highScores = result;
+
+  //     // highScores.forEach(highScore => {
+  //     //   highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
+  //     // });
+  //   })
+  // }
+
+  // readHighScores(5);
 }
 
 function animateNewLevelCountdown() {
