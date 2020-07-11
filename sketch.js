@@ -646,10 +646,22 @@ function drawHighScoreInput(offsetX) {
     nameInput.attribute('disabled', true);
     sendScoreButton.attribute('disabled', true);
 
-    addScore(
-      nameValue,
-      score
-    );
+    // addScore(
+    //   nameValue,
+    //   score
+    // );
+
+    function addNewScore(myName, myScore) {
+      addScoreToDb(myName, myScore).then(function(result) {
+        let myNewScore = result;
+        nameInput.remove();
+        sendScoreButton.remove();
+        
+        currentScene = sceneHighScores;
+      })
+    }
+    
+    addNewScore(nameValue, score);
   });
 
   // function readHighScores(qty) {

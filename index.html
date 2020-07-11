@@ -95,41 +95,25 @@
       }
 
 
-      var addScoreToDb = function (
-        name,
-        totalScore,
-        scoreDay,
-        scoreHour,
-        scoreMinute,
-        totalPretzels,
-        totalCrosswords,
-        totalDaysAllPretzelsPicked,
-        totalFirstAidOccurrences
-        ) {
-
+      var addScoreToDb = function (name, score) {
           var addScoreToDbPromise = new Promise(function(resolve, reject) {
 
             db.collection("scores").add({
                 name: name,
-                totalScore: totalScore,
-                scoreDay: scoreDay,
-                scoreHour: scoreHour,
-                scoreMinute: scoreMinute,
-                totalPretzels: totalPretzels,
-                totalCrosswords: totalCrosswords,
-                totalDaysAllPretzelsPicked: totalDaysAllPretzelsPicked,
-                totalFirstAidOccurrences: totalFirstAidOccurrences
+                totalScore: score.totalScore,
+                scoreDay: score.scoreDay,
+                scoreHour: score.scoreHour,
+                scoreMinute: score.scoreMinute,
+                totalPretzels: score.totalPretzels,
+                totalCrosswords: score.totalCrosswords,
+                totalDaysAllPretzelsPicked: score.totalDaysAllPretzelsPicked,
+                totalFirstAidOccurrences: score.totalFirstAidOccurrences
             })
             .then(function(docRef) {
-                resolve(addScoreToDbPromise);
                 console.log("Document written with ID: ", docRef.id);
-            })
-            .catch(function(error) {
-                console.error("Error adding document: ", error);
+                resolve(docRef);
             });
-            
           })
-
           return addScoreToDbPromise;
       }
 
