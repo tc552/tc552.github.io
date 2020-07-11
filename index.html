@@ -71,30 +71,6 @@
 
       var db = firebase.firestore();
 
-      function addScore(
-        name,
-        score
-        ) {
-        db.collection("scores").add({
-            name: name,
-            totalScore: score.totalScore,
-            scoreDay: score.scoreDay,
-            scoreHour: score.scoreHour,
-            scoreMinute: score.scoreMinute,
-            totalPretzels: score.totalPretzels,
-            totalCrosswords: score.totalCrosswords,
-            totalDaysAllPretzelsPicked: score.totalDaysAllPretzelsPicked,
-            totalFirstAidOccurrences: score.totalFirstAidOccurrences
-        })
-        .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-        });
-      }
-
-
       var addScoreToDb = function (name, score) {
           var addScoreToDbPromise = new Promise(function(resolve, reject) {
 

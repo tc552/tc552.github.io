@@ -124,26 +124,6 @@ function resetGame(scene) {
   nameInput.addClass('nameInput');
   nameInput.hide();
 
-  function readHighScores(qty) {
-    readHighScoresFromDb(qty).then(function(result) {
-      highScores = result;
-
-      // highScores.forEach(highScore => {
-      //   highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
-      // });
-    })
-  }
-
-  readHighScores(5);
-
-  // highScores = readHighScoresFromDb(5);
-  
-  // highScores.forEach(highScore => {
-  //   highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
-  // });
-
-  // text(highScoresText);
-
   isGameStopped = false;
   isGameOver = false;
   isGameFinished = false;
@@ -151,6 +131,13 @@ function resetGame(scene) {
   resetButtonVisible = false;
 
   frameRate(30);
+}
+
+function readHighScores(qty) {
+  readHighScoresFromDb(qty).then(function(result) {
+    highScores = result;
+    currentScene = sceneHighScores;
+  })
 }
 
 function createPowerUps() {
@@ -333,7 +320,7 @@ function drawMenu() {
     startButton.remove();
     backToMenuButton.position(20, 150);
     backToMenuButton.show();
-    currentScene = sceneHighScores;
+    readHighScores(5);
   })
 
   backToMenuButton.mousePressed(() => {
@@ -490,7 +477,7 @@ function drawGame() {
             failTheme.play();
           }
 
-          // life.increaseBpm();
+          life.increaseBpm();
 
           enemy.hasCollided = true;
         }
@@ -641,40 +628,21 @@ function drawHighScoreInput(offsetX) {
 
   sendScoreButton.mousePressed(() => {
     let nameValue = nameInput.value();
-    // nameInput.remove();
-    // sendScoreButton.remove();
     nameInput.attribute('disabled', true);
     sendScoreButton.attribute('disabled', true);
-
-    // addScore(
-    //   nameValue,
-    //   score
-    // );
 
     function addNewScore(myName, myScore) {
       addScoreToDb(myName, myScore).then(function(result) {
         let myNewScore = result;
         nameInput.remove();
         sendScoreButton.remove();
-        
-        currentScene = sceneHighScores;
+
+        readHighScores(5);
       })
     }
     
     addNewScore(nameValue, score);
   });
-
-  // function readHighScores(qty) {
-  //   readHighScoresFromDb(qty).then(function(result) {
-  //     highScores = result;
-
-  //     // highScores.forEach(highScore => {
-  //     //   highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
-  //     // });
-  //   })
-  // }
-
-  // readHighScores(5);
 }
 
 function animateNewLevelCountdown() {
