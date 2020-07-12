@@ -111,6 +111,7 @@
           .get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
                 let response = doc.data();
+                let docId = doc.id;
                 let highScore = new HighScore(
                   response.name,
                   response.totalScore,
@@ -121,6 +122,7 @@
                   response.totalCrosswords,
                   response.totalDaysAllPretzelsPicked,
                   response.totalFirstAidOccurrences,
+                  docId
                 );
                 
                 highScoresFromDb.push(highScore);

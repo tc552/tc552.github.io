@@ -17,6 +17,13 @@ P5Style.simpleTextStyle = function () {
     noStroke();
 }
 
+P5Style.redTextStyle = function () {
+    textAlign(LEFT);
+    textSize(12);
+    fill(220, 66, 38);
+    noStroke();
+}
+
 P5Style.titleLargeStyle = function () {
     textAlign(CENTER);
     fill("#fff")

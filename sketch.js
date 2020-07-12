@@ -48,11 +48,16 @@ function preload() {
   deathTheme = loadSound('sounds/death.wav');
   endTheme = loadSound('sounds/end.mp3');
   
-  jumpTheme.setVolume(0.7);
-  powerUpTheme.setVolume(0.1);
-  failTheme.setVolume(0.7);
-  deathTheme.setVolume(0.5);
-  endTheme.setVolume(0.5);
+  // jumpTheme.setVolume(0.7);
+  // powerUpTheme.setVolume(0.1);
+  // failTheme.setVolume(0.7);
+  // deathTheme.setVolume(0.5);
+  // endTheme.setVolume(0.5);
+  jumpTheme.setVolume(0);
+  powerUpTheme.setVolume(0);
+  failTheme.setVolume(0);
+  deathTheme.setVolume(0);
+  endTheme.setVolume(0);
 }
 
 function setup() {
@@ -337,9 +342,17 @@ function drawHighScores() {
   P5Style.titleStyle();
   text(title, width/2, height * 1/6 + 35);
 
-  P5Style.simpleTextStyle();
+  
   let currentHeight = height * 1/6 + 80;
   highScores.forEach(highScore => {
+
+    if (highScore.docId === lastScore.id) {
+      P5Style.redTextStyle();
+    }
+    else {
+      P5Style.simpleTextStyle();
+    }
+
     textAlign(LEFT);
     text((highScores.indexOf(highScore) + 1) + ". " + highScore.name, 240, currentHeight);
     textAlign(RIGHT);
@@ -633,7 +646,7 @@ function drawHighScoreInput(offsetX) {
 
     function addNewScore(myName, myScore) {
       addScoreToDb(myName, myScore).then(function(result) {
-        let myNewScore = result;
+        lastScore = result;
         nameInput.remove();
         sendScoreButton.remove();
 
