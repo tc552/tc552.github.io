@@ -18,7 +18,6 @@ function keyPressed() {
   if (key === 'ArrowUp') {
     if (currentScene === sceneGame)
       character.jump();
-    // jumpTheme.play();
   }
 }
 
@@ -199,7 +198,6 @@ function draw() {
 }
 
 function stopGame(type) {
-  // scenario.stop();
   powerUps.forEach(powerUp => {
     powerUp.stop();
   });
@@ -502,7 +500,6 @@ function drawGame() {
   character.applyGravity();
 
   if (score.scoreHour >= 17) {
-    // noLoop();
     stopGame(typeLevelFinish);
 
     // if (typeLevelFinish) {
