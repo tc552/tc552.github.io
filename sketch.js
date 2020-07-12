@@ -81,6 +81,7 @@ function clearGame() {
   sendScoreButton = null;
   nameInput = null;
   highScores = null;
+  lastScore = null;
   mapTimerCount = 0;
   gameStoppedTimerCount = 0;
   scoreBoardTimerCount = 0;
@@ -380,16 +381,13 @@ function drawHighScores() {
     text(0, 400, currentHeight);
   }
 
-  P5Style.redTextStyle();
-  currentHeight = currentHeight + 20;
-  textAlign(LEFT);
-  text("Your last score:", 240, currentHeight);
-  textAlign(RIGHT);
   if (lastScore != null) {
+    P5Style.redTextStyle();
+    currentHeight = currentHeight + 20;
+    textAlign(LEFT);
+    text("Your last score:", 240, currentHeight);
+    textAlign(RIGHT);
     text(lastScore.totalScore, 400, currentHeight);
-  }
-  else {
-    text(0, 400, currentHeight);
   }
   
 
