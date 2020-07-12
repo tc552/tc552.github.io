@@ -11,4 +11,8 @@ class HighScore {
         this.totalFirstAidOccurrences = totalFirstAidOccurrences;
         this.docId = docId;
     }
+    
+    setDocId(docId) {
+        this.docId = docId;
+    }
 }

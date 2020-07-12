@@ -35,6 +35,7 @@ let crosswordsPositionMatrix = [];
 // let highScoresText = '';
 let highScores = [];
 let lastScore;
+let currentUserHighScore;
 
 const canvasWidth = 640;
 const canvasHeight = 360;

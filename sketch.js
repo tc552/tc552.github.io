@@ -130,6 +130,8 @@ function resetGame(scene) {
   nameInput.hide();
 
   readHighScores(5, false);
+  let stringScore = localStorage.getItem('currentUserHighScore');
+  currentUserHighScore = JSON.parse(stringScore);
 
   isGameStopped = false;
   isGameOver = false;
@@ -648,11 +650,29 @@ function drawHighScoreInput(offsetX) {
     nameInput.attribute('disabled', true);
     sendScoreButton.attribute('disabled', true);
 
+    if (currentUserHighScore === null || score.totalScore > currentUserHighScore.totalScore) {
+      currentUserHighScore = new HighScore(
+        nameValue,
+        score.totalScore,
+        score.scoreDay,
+        score.scoreHour,
+        score.scoreMinute,
+        score.totalPretzels,
+        score.totalCrosswords,
+        score.totalDaysAllPretzelsPicked,
+        score.totalFirstAidOccurrences,
+        null
+      );
+    }
+
     function addNewScore(myName, myScore) {
       addScoreToDb(myName, myScore).then(function(result) {
         lastScore = result;
         nameInput.remove();
         sendScoreButton.remove();
+
+        currentUserHighScore.setDocId(result.id);
+        localStorage.setItem('currentUserHighScore', JSON.stringify(currentUserHighScore));
 
         readHighScores(5, true);
       })
