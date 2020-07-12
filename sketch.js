@@ -348,7 +348,7 @@ function drawHighScores() {
   let currentHeight = height * 1/6 + 80;
   highScores.forEach(highScore => {
 
-    if (lastScore != null && highScore.docId === lastScore.id) {
+    if (lastScore != null && highScore.docId === lastScore.docId) {
       P5Style.redTextStyle();
     }
     else {
@@ -362,7 +362,7 @@ function drawHighScores() {
     currentHeight = currentHeight + 20;
   })
 
-  if (lastScore != null && currentUserHighScore != null && lastScore.id === currentUserHighScore.docId) {
+  if (lastScore != null && currentUserHighScore != null && lastScore.docId === currentUserHighScore.docId) {
     P5Style.redTextStyle();
   }
   else {
@@ -379,6 +379,18 @@ function drawHighScores() {
   else {
     text(0, 400, currentHeight);
   }
+
+  P5Style.redTextStyle();
+  currentHeight = currentHeight + 20;
+  textAlign(LEFT);
+  text("Your last score:", 240, currentHeight);
+  textAlign(RIGHT);
+  if (lastScore != null) {
+    text(lastScore.totalScore, 400, currentHeight);
+  }
+  else {
+    text(0, 400, currentHeight);
+  }
   
 
 
@@ -391,8 +403,8 @@ function drawEnd() {
 
   let title = "Game Over!"
   
-  if (scoreBoardTimerCount < 200) {
-    if (scoreBoardTimerCount < 160) {
+  if (scoreBoardTimerCount < 210) {
+    if (scoreBoardTimerCount < 170) {
       offsetStep = 0;
     }
     else {
@@ -403,8 +415,28 @@ function drawEnd() {
     animateScoreBoard();
   }
   else {
-    drawWhiteBoard(0);
-    drawHighScoreInput(0);
+    if (lastScore == null || lastScore.docId == null) {
+      lastScore = new HighScore(
+        null,
+        score.totalScore,
+        score.scoreDay,
+        score.scoreHour,
+        score.scoreMinute,
+        score.totalPretzels,
+        score.totalCrosswords,
+        score.totalDaysAllPretzelsPicked,
+        score.totalFirstAidOccurrences,
+        null
+      );
+    }
+
+    if(currentUserHighScore == null || score.totalScore > currentUserHighScore.totalScore || score.totalScore > highScores[4].totalScore) {
+      drawWhiteBoard(0);
+      drawHighScoreInput(0);  
+    }
+    else {
+      readHighScores(5, true);
+    }
   }
 
   character.display();
@@ -667,7 +699,7 @@ function drawHighScoreInput(offsetX) {
     nameInput.attribute('disabled', true);
     sendScoreButton.attribute('disabled', true);
 
-    let updateUserHighScore = (currentUserHighScore === null || score.totalScore > currentUserHighScore.totalScore);
+    let updateUserHighScore = (currentUserHighScore == null || score.totalScore > currentUserHighScore.totalScore);
 
     if (updateUserHighScore) {
       currentUserHighScore = new HighScore(
@@ -686,10 +718,10 @@ function drawHighScoreInput(offsetX) {
 
     function addNewScore(myName, myScore) {
       addScoreToDb(myName, myScore).then(function(result) {
-        lastScore = result;
         nameInput.remove();
         sendScoreButton.remove();
 
+        lastScore.setDocId(result.id);
         if (updateUserHighScore) {
           currentUserHighScore.setDocId(result.id);
         }
