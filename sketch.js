@@ -129,6 +129,8 @@ function resetGame(scene) {
   nameInput.addClass('nameInput');
   nameInput.hide();
 
+  readHighScores(5, false);
+
   isGameStopped = false;
   isGameOver = false;
   isGameFinished = false;
@@ -138,10 +140,12 @@ function resetGame(scene) {
   frameRate(30);
 }
 
-function readHighScores(qty) {
+function readHighScores(qty, displayLeaderboard) {
   readHighScoresFromDb(qty).then(function(result) {
     highScores = result;
-    currentScene = sceneHighScores;
+    if (displayLeaderboard) {
+      currentScene = sceneHighScores;
+    }
   })
 }
 
@@ -325,7 +329,7 @@ function drawMenu() {
     startButton.remove();
     backToMenuButton.position(20, 150);
     backToMenuButton.show();
-    readHighScores(5);
+    readHighScores(5, true);
   })
 
   backToMenuButton.mousePressed(() => {
@@ -346,7 +350,7 @@ function drawHighScores() {
   let currentHeight = height * 1/6 + 80;
   highScores.forEach(highScore => {
 
-    if (highScore.docId === lastScore.id) {
+    if (lastScore != null && highScore.docId === lastScore.id) {
       P5Style.redTextStyle();
     }
     else {
@@ -650,7 +654,7 @@ function drawHighScoreInput(offsetX) {
         nameInput.remove();
         sendScoreButton.remove();
 
-        readHighScores(5);
+        readHighScores(5, true);
       })
     }
     
