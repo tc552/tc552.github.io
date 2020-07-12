@@ -179,10 +179,6 @@ function draw() {
   switch (currentScene) {
     case sceneMenu:
       drawMenu();
-      // drawHighScores();
-      // fill(255,255,255);
-      // textSize(32);
-      // text(highScoresText, 10, 120);
       break;
     case sceneHighScores:
       drawHighScores();
@@ -365,6 +361,27 @@ function drawHighScores() {
     text(highScore.totalScore, 400, currentHeight);
     currentHeight = currentHeight + 20;
   })
+
+  if (lastScore != null && currentUserHighScore != null && lastScore.id === currentUserHighScore.docId) {
+    P5Style.redTextStyle();
+  }
+  else {
+    P5Style.simpleTextStyle();
+  }
+
+  currentHeight = currentHeight + 20;
+  textAlign(LEFT);
+  text("Your high score:", 240, currentHeight);
+  textAlign(RIGHT);
+  if (currentUserHighScore != null) {
+    text(currentUserHighScore.totalScore, 400, currentHeight);
+  }
+  else {
+    text(0, 400, currentHeight);
+  }
+  
+
+
 
   character.display();
 }
@@ -650,7 +667,9 @@ function drawHighScoreInput(offsetX) {
     nameInput.attribute('disabled', true);
     sendScoreButton.attribute('disabled', true);
 
-    if (currentUserHighScore === null || score.totalScore > currentUserHighScore.totalScore) {
+    let updateUserHighScore = (currentUserHighScore === null || score.totalScore > currentUserHighScore.totalScore);
+
+    if (updateUserHighScore) {
       currentUserHighScore = new HighScore(
         nameValue,
         score.totalScore,
@@ -671,7 +690,10 @@ function drawHighScoreInput(offsetX) {
         nameInput.remove();
         sendScoreButton.remove();
 
-        currentUserHighScore.setDocId(result.id);
+        if (updateUserHighScore) {
+          currentUserHighScore.setDocId(result.id);
+        }
+        
         localStorage.setItem('currentUserHighScore', JSON.stringify(currentUserHighScore));
 
         readHighScores(5, true);
