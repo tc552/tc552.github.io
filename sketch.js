@@ -18,11 +18,11 @@ function keyPressed() {
   if (key === 'ArrowUp') {
     if (currentScene === sceneGame)
       character.jump();
-    // jumpTheme.play();
   }
 }
 
 function preload() {
+  imgButtonPlay = loadImage('images/buttons/play.png');
   imgScenario = loadImage('images/scenario/background.png');
   imgCharacter = loadImage('images/character/stanley.png');
   imgCharacterDead = loadImage('images/character/dead.png');
@@ -48,11 +48,16 @@ function preload() {
   deathTheme = loadSound('sounds/death.wav');
   endTheme = loadSound('sounds/end.mp3');
   
-  jumpTheme.setVolume(0.7);
-  powerUpTheme.setVolume(0.1);
-  failTheme.setVolume(0.7);
-  deathTheme.setVolume(0.5);
-  endTheme.setVolume(0.5);
+  // jumpTheme.setVolume(0.7);
+  // powerUpTheme.setVolume(0.1);
+  // failTheme.setVolume(0.7);
+  // deathTheme.setVolume(0.5);
+  // endTheme.setVolume(0.5);
+  jumpTheme.setVolume(0);
+  powerUpTheme.setVolume(0);
+  failTheme.setVolume(0);
+  deathTheme.setVolume(0);
+  endTheme.setVolume(0);
 }
 
 function setup() {
@@ -76,6 +81,7 @@ function clearGame() {
   sendScoreButton = null;
   nameInput = null;
   highScores = null;
+  lastScore = null;
   mapTimerCount = 0;
   gameStoppedTimerCount = 0;
   scoreBoardTimerCount = 0;
@@ -101,7 +107,7 @@ function resetGame(scene) {
   let canvasPositionY = (windowHeight - canvasHeight)/2;
 
   if (currentScene === sceneMenu) {
-    startButton = createButton('Start!');
+    startButton = createImg('images/buttons/play.png');
     startButton.addClass('startButton');
   }
 
@@ -117,31 +123,16 @@ function resetGame(scene) {
   backToMenuButton.hide();
   
   sendScoreButton = createButton('Send score');
+  sendScoreButton.addClass('sendScoreButton');
   sendScoreButton.hide();
 
-  nameInput = createInput('');
-  nameInput.position(0, 70);
+  nameInput = createInput().attribute('maxlength', 10);
+  nameInput.addClass('nameInput');
   nameInput.hide();
 
-  function readHighScores(qty) {
-    readHighScoresFromDb(qty).then(function(result) {
-      highScores = result;
-
-      // highScores.forEach(highScore => {
-      //   highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
-      // });
-    })
-  }
-
-  readHighScores(5);
-
-  // highScores = readHighScoresFromDb(5);
-  
-  // highScores.forEach(highScore => {
-  //   highScoresText = highScoresText + highScore.name + ": " + highScore.totalPretzels + "\n";
-  // });
-
-  // text(highScoresText);
+  readHighScores(5, false);
+  let stringScore = localStorage.getItem('currentUserHighScore');
+  currentUserHighScore = JSON.parse(stringScore);
 
   isGameStopped = false;
   isGameOver = false;
@@ -150,6 +141,15 @@ function resetGame(scene) {
   resetButtonVisible = false;
 
   frameRate(30);
+}
+
+function readHighScores(qty, displayLeaderboard) {
+  readHighScoresFromDb(qty).then(function(result) {
+    highScores = result;
+    if (displayLeaderboard) {
+      currentScene = sceneHighScores;
+    }
+  })
 }
 
 function createPowerUps() {
@@ -180,10 +180,6 @@ function draw() {
   switch (currentScene) {
     case sceneMenu:
       drawMenu();
-      // drawHighScores();
-      // fill(255,255,255);
-      // textSize(32);
-      // text(highScoresText, 10, 120);
       break;
     case sceneHighScores:
       drawHighScores();
@@ -203,7 +199,6 @@ function draw() {
 }
 
 function stopGame(type) {
-  // scenario.stop();
   powerUps.forEach(powerUp => {
     powerUp.stop();
   });
@@ -332,10 +327,13 @@ function drawMenu() {
     startButton.remove();
     backToMenuButton.position(20, 150);
     backToMenuButton.show();
-    currentScene = sceneHighScores;
+    readHighScores(5, true);
   })
 
   backToMenuButton.mousePressed(() => {
+    sendScoreButton.remove();
+    nameInput.remove();
+    resetButton.remove();
     backToMenuButton.remove();
     resetGame(sceneMenu);
   });
@@ -349,9 +347,17 @@ function drawHighScores() {
   P5Style.titleStyle();
   text(title, width/2, height * 1/6 + 35);
 
-  P5Style.simpleTextStyle();
+  
   let currentHeight = height * 1/6 + 80;
   highScores.forEach(highScore => {
+
+    if (lastScore != null && highScore.docId === lastScore.docId) {
+      P5Style.redTextStyle();
+    }
+    else {
+      P5Style.simpleTextStyle();
+    }
+
     textAlign(LEFT);
     text((highScores.indexOf(highScore) + 1) + ". " + highScore.name, 240, currentHeight);
     textAlign(RIGHT);
@@ -359,52 +365,78 @@ function drawHighScores() {
     currentHeight = currentHeight + 20;
   })
 
+  if (lastScore != null && currentUserHighScore != null && lastScore.docId === currentUserHighScore.docId) {
+    P5Style.redTextStyle();
+  }
+  else {
+    P5Style.simpleTextStyle();
+  }
+
+  currentHeight = currentHeight + 20;
+  textAlign(LEFT);
+  text("Your high score:", 240, currentHeight);
+  textAlign(RIGHT);
+  if (currentUserHighScore != null) {
+    text(currentUserHighScore.totalScore, 400, currentHeight);
+  }
+  else {
+    text(0, 400, currentHeight);
+  }
+
+  if (lastScore != null) {
+    P5Style.redTextStyle();
+    currentHeight = currentHeight + 20;
+    textAlign(LEFT);
+    text("Your last score:", 240, currentHeight);
+    textAlign(RIGHT);
+    text(lastScore.totalScore, 400, currentHeight);
+  }
+  
+
+
+
   character.display();
 }
 
 function drawEnd() {
   scoreBoardTimerCount++;
 
-  // let title;
-  // let subtitle;
-  // if (isGameOver) {
-  //   title = "Game Over!"
-  //   subtitle = "No pretzels for you.";
-    
-  //   sendScoreButton.show();
-  //   nameInput.show();
-
-  //   sendScoreButton.mousePressed(() => {
-  //     addScore(
-  //       nameInput.value(),
-  //       score.totalScore,
-  //       score.scoreDay,
-  //       score.scoreHour,
-  //       score.scoreMinute,
-  //       score.totalPretzels,
-  //       score.totalCrosswords,
-  //       score.totalDaysAllPretzelsPicked,
-  //       score.totalFirstAidOccurrences
-  //     );
-  //   });
-
-  // }
-  // else if (isGameFinished) {
-  //   title = "Day Finished!";
-  //   subtitle = "Go home and enjoy your pretzels.";
-  // }
-
   let title = "Game Over!"
-  // P5Style.titleStyle();
-  // text(title, width/2, height * 1/6 + 35);
-
-  // P5Style.simpleTextStyle();
-  // text(subtitle, 140, height * 1/6 + 120);
   
-  if (scoreBoardTimerCount < 250) {
-    drawWhiteBoard(0);
-    drawScoreBoard(title, 0);
+  if (scoreBoardTimerCount < 210) {
+    if (scoreBoardTimerCount < 170) {
+      offsetStep = 0;
+    }
+    else {
+      offsetStep = offsetStep - 20;
+    }
+    drawWhiteBoard(offsetStep);
+    drawScoreBoard(title, offsetStep);
     animateScoreBoard();
+  }
+  else {
+    if (lastScore == null || lastScore.docId == null) {
+      lastScore = new HighScore(
+        null,
+        score.totalScore,
+        score.scoreDay,
+        score.scoreHour,
+        score.scoreMinute,
+        score.totalPretzels,
+        score.totalCrosswords,
+        score.totalDaysAllPretzelsPicked,
+        score.totalFirstAidOccurrences,
+        null
+      );
+    }
+
+    if(currentUserHighScore == null || score.totalScore > currentUserHighScore.totalScore || score.totalScore > highScores[4].totalScore) {
+      drawWhiteBoard(0);
+      drawHighScoreInput(0);  
+    }
+    else {
+      readHighScores(5, true);
+    }
   }
 
   character.display();
@@ -472,7 +504,6 @@ function drawGame() {
   character.applyGravity();
 
   if (score.scoreHour >= 17) {
-    // noLoop();
     stopGame(typeLevelFinish);
 
     // if (typeLevelFinish) {
@@ -513,7 +544,7 @@ function drawGame() {
             failTheme.play();
           }
 
-          // life.increaseBpm();
+          life.increaseBpm();
 
           enemy.hasCollided = true;
         }
@@ -641,6 +672,67 @@ function animateScoreBoard() {
   if (scoreBoardTimerCount > 120) {
     score.addCrosswordScoreToTotal();
   }
+}
+
+function drawHighScoreInput(offsetX) {
+  P5Style.titleStyle();
+  text("New high score!", width/2 + offsetX, height * 1/6 + 35);
+
+  P5Style.clockCountStyle();
+  text("Total score:", 185 + offsetX, height * 1/6 + 90);
+  textAlign(RIGHT);
+  text(score.totalScore, 430 + offsetX, height * 1/6 + 90);
+
+  fill(103, 130, 133);
+  noStroke();
+  rect(width * 1/4 + offsetX, 177, width * 1/2, height * 1/7, 10);
+  
+  P5Style.clockCountStyle();
+  text("Your name:", 185 + offsetX, height * 1/6 + 150);
+  nameInput.show();
+
+  sendScoreButton.show();
+
+  sendScoreButton.mousePressed(() => {
+    let nameValue = nameInput.value();
+    nameInput.attribute('disabled', true);
+    sendScoreButton.attribute('disabled', true);
+
+    let updateUserHighScore = (currentUserHighScore == null || score.totalScore > currentUserHighScore.totalScore);
+
+    if (updateUserHighScore) {
+      currentUserHighScore = new HighScore(
+        nameValue,
+        score.totalScore,
+        score.scoreDay,
+        score.scoreHour,
+        score.scoreMinute,
+        score.totalPretzels,
+        score.totalCrosswords,
+        score.totalDaysAllPretzelsPicked,
+        score.totalFirstAidOccurrences,
+        null
+      );
+    }
+
+    function addNewScore(myName, myScore) {
+      addScoreToDb(myName, myScore).then(function(result) {
+        nameInput.remove();
+        sendScoreButton.remove();
+
+        lastScore.setDocId(result.id);
+        if (updateUserHighScore) {
+          currentUserHighScore.setDocId(result.id);
+        }
+        
+        localStorage.setItem('currentUserHighScore', JSON.stringify(currentUserHighScore));
+
+        readHighScores(5, true);
+      })
+    }
+    
+    addNewScore(nameValue, score);
+  });
 }
 
 function animateNewLevelCountdown() {
