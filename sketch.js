@@ -116,8 +116,24 @@ function resetGame(scene) {
 
   highScoresButton = createImg(imgButtonTrophy);
   highScoresButton.addClass('imgButton').addClass('highScoresButton');
+  highScoresButton.hide();
 
+  resetButton = createImg(imgButtonRestart);
+  resetButton.addClass('imgButton').addClass('resetButton');
+  resetButton.hide();
+
+  homeButton = createImg(imgButtonHome);
+  homeButton.addClass('imgButton').addClass('homeButton');
+  homeButton.hide();
   
+  sendScoreButton = createButton('Send score');
+  sendScoreButton.addClass('sendScoreButton');
+  sendScoreButton.hide();
+
+  nameInput = createInput().attribute('maxlength', 10);
+  nameInput.addClass('nameInput');
+  nameInput.hide();
+
   highScoresButton.mousePressed(() => {
     highScoresButton.remove();
     startButton.remove();
@@ -125,27 +141,15 @@ function resetGame(scene) {
     homeButton.show();
     readHighScores(5, true);
   })
-
-  // highScoresButton.hide();
-  
-  // resetButton = createButton('Play again!');
-  // resetButton.addClass('resetButton');
-  // resetButton.hide();
-  resetButton = createImg(imgButtonRestart);
-  resetButton.addClass('imgButton').addClass('resetButton');
-  resetButton.hide();
   
   resetButton.mousePressed(() => {
     resetButton.remove();
     homeButton.remove();
+    pauseButton.remove();
     highScoresButton.remove();
     resetGame(sceneGame);
     loop();
   });
-
-  homeButton = createImg(imgButtonHome);
-  homeButton.addClass('imgButton').addClass('homeButton');
-  homeButton.hide();
 
   homeButton.mousePressed(() => {
     sendScoreButton.remove();
@@ -156,14 +160,6 @@ function resetGame(scene) {
     resetGame(sceneMenu);
     loop();
   });
-  
-  sendScoreButton = createButton('Send score');
-  sendScoreButton.addClass('sendScoreButton');
-  sendScoreButton.hide();
-
-  nameInput = createInput().attribute('maxlength', 10);
-  nameInput.addClass('nameInput');
-  nameInput.hide();
 
   readHighScores(5, false);
   let stringScore = localStorage.getItem('currentUserHighScore');
@@ -364,6 +360,8 @@ function drawMenu() {
   previousHeight = newHeight;
   newHeight = previousHeight + 40;
   text("Use ArrowUp or Click/Tap to jump.", 140, newHeight);
+
+  highScoresButton.show();
   
   character.display();
 
