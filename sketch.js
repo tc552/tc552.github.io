@@ -116,15 +116,46 @@ function resetGame(scene) {
 
   highScoresButton = createImg(imgButtonTrophy);
   highScoresButton.addClass('imgButton').addClass('highScoresButton');
+
+  
+  highScoresButton.mousePressed(() => {
+    highScoresButton.remove();
+    startButton.remove();
+    homeButton.addClass('homeButtonFromScores');
+    homeButton.show();
+    readHighScores(5, true);
+  })
+
   // highScoresButton.hide();
   
-  resetButton = createButton('Play again!');
-  resetButton.addClass('resetButton');
+  // resetButton = createButton('Play again!');
+  // resetButton.addClass('resetButton');
+  // resetButton.hide();
+  resetButton = createImg(imgButtonRestart);
+  resetButton.addClass('imgButton').addClass('resetButton');
   resetButton.hide();
+  
+  resetButton.mousePressed(() => {
+    resetButton.remove();
+    homeButton.remove();
+    highScoresButton.remove();
+    resetGame(sceneGame);
+    loop();
+  });
 
   homeButton = createImg(imgButtonHome);
   homeButton.addClass('imgButton').addClass('homeButton');
   homeButton.hide();
+
+  homeButton.mousePressed(() => {
+    sendScoreButton.remove();
+    nameInput.remove();
+    resetButton.remove();
+    pauseButton.remove();
+    homeButton.remove();
+    resetGame(sceneMenu);
+    loop();
+  });
   
   sendScoreButton = createButton('Send score');
   sendScoreButton.addClass('sendScoreButton');
@@ -300,7 +331,10 @@ function drawPauseMenu() {
   // scenario.display();
   drawWhiteBoard(0);
   
+  homeButton.addClass('homeButtonFromPause');
   homeButton.show();
+
+  resetButton.show();
 
   noLoop();
 }
@@ -336,25 +370,27 @@ function drawMenu() {
   startButton.mousePressed(() => {
     startButton.remove();
     highScoresButton.remove();
-    currentScene = sceneGame;
+    // currentScene = sceneGame;
+    resetGame(sceneGame);
   });
 
-  highScoresButton.mousePressed(() => {
-    highScoresButton.remove();
-    startButton.remove();
-    homeButton.addClass('homeButtonFromScores');
-    homeButton.show();
-    readHighScores(5, true);
-  })
+  // highScoresButton.mousePressed(() => {
+  //   highScoresButton.remove();
+  //   startButton.remove();
+  //   homeButton.addClass('homeButtonFromScores');
+  //   homeButton.show();
+  //   readHighScores(5, true);
+  // })
 
-  homeButton.mousePressed(() => {
-    sendScoreButton.remove();
-    nameInput.remove();
-    resetButton.remove();
-    homeButton.remove();
-    resetGame(sceneMenu);
-    loop();
-  });
+  // homeButton.mousePressed(() => {
+  //   sendScoreButton.remove();
+  //   nameInput.remove();
+  //   resetButton.remove();
+  //   pauseButton.remove();
+  //   homeButton.remove();
+  //   resetGame(sceneMenu);
+  //   loop();
+  // });
 }
 
 function drawHighScores() {
@@ -464,6 +500,7 @@ function drawEnd() {
   resetButton.mousePressed(() => {
     resetButton.remove();
     resetGame(sceneGame);
+    loop();
   });
 }
 

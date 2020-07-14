@@ -92,6 +92,11 @@ button {
   left: calc(((100vw)/2) - 150px);
 }
 
+.homeButtonFromPause {
+  top: calc((100vh)/2);
+  left: calc(((100vw)/2) - 150px);
+}
+
 .highScoresButton {
   top: calc(((100vh)/2) + 70px);
   left: calc(((100vw)/2) - 150px);
