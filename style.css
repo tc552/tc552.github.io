@@ -89,7 +89,7 @@ button {
   /* top: calc(((100vh)/2) + 70px);
   left: calc(((100vw)/2) + 170px); */
   top: calc(((100vh)/2) + 70px);
-  left: calc(((100vw)/2) - 150px);
+  left: calc(((100vw)/2) + 110px);
 }
 
 .homeButtonFromPause {
@@ -105,6 +105,16 @@ button {
 .resetButton {
   top: calc(((100vh)/2) + 50px);
   left: calc(((100vw)/2) - 65px);
+}
+
+.resetButtonFromPause {
+  top: calc((100vh)/2);
+  left: calc(((100vw)/2) - 65px);
+}
+
+.resetButtonFromScores {
+  top: calc(((100vh)/2) + 70px);
+  left: calc(((100vw)/2) + 170px);
 }
 
 .sendScoreButton {

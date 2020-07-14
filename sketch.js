@@ -119,7 +119,7 @@ function resetGame(scene) {
   highScoresButton.hide();
 
   resetButton = createImg(imgButtonRestart);
-  resetButton.addClass('imgButton').addClass('resetButton');
+  resetButton.addClass('imgButton');
   resetButton.hide();
 
   homeButton = createImg(imgButtonHome);
@@ -184,6 +184,14 @@ function readHighScores(qty, displayLeaderboard) {
     highScores = result;
     if (displayLeaderboard) {
       currentScene = sceneHighScores;
+
+      if (isGameOver) {
+        homeButton.addClass('homeButtonFromScores')
+        homeButton.show();
+
+        resetButton.addClass('resetButtonFromScores')
+        resetButton.show();  
+      }
     }
   })
 }
@@ -335,6 +343,7 @@ function drawPauseMenu() {
   homeButton.addClass('homeButtonFromPause');
   homeButton.show();
 
+  resetButton.addClass('resetButtonFromPause');
   resetButton.show();
 
   noLoop();
@@ -504,12 +513,6 @@ function drawEnd() {
   }
 
   character.display();
-
-  resetButton.mousePressed(() => {
-    resetButton.remove();
-    resetGame(sceneGame);
-    loop();
-  });
 }
 
 function drawLevelEnd() {
