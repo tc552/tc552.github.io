@@ -118,6 +118,10 @@ function resetGame(scene) {
   highScoresButton.addClass('imgButton').addClass('highScoresButton');
   highScoresButton.hide();
 
+  resumeButton = createImg(imgButtonPlay);
+  resumeButton.addClass('imgButton');
+  resumeButton.hide();
+
   resetButton = createImg(imgButtonRestart);
   resetButton.addClass('imgButton');
   resetButton.hide();
@@ -141,9 +145,19 @@ function resetGame(scene) {
     homeButton.show();
     readHighScores(5, true);
   })
+
+  resumeButton.mousePressed(() => {
+    resetButton.hide();
+    resumeButton.hide();
+    homeButton.hide();
+
+    currentScene = sceneGame;
+    loop();
+  });
   
   resetButton.mousePressed(() => {
     resetButton.remove();
+    resumeButton.remove();
     homeButton.remove();
     pauseButton.remove();
     highScoresButton.remove();
@@ -156,6 +170,7 @@ function resetGame(scene) {
 
   homeButton.mousePressed(() => {
     resetButton.remove();
+    resumeButton.remove();
     homeButton.remove();
     pauseButton.remove();
     highScoresButton.remove();
@@ -186,11 +201,11 @@ function readHighScores(qty, displayLeaderboard) {
       currentScene = sceneHighScores;
 
       if (isGameOver) {
-        homeButton.addClass('homeButtonFromScores')
+        homeButton.removeClass('homeButtonFromPause').addClass('homeButtonFromScores')
         homeButton.show();
 
         resetButton.addClass('resetButtonFromScores')
-        resetButton.show();  
+        resetButton.show();
       }
     }
   })
@@ -283,16 +298,6 @@ function stopGame(type) {
     }
     isLevelFinished = true;
   }
-  // else if (type === typeFinish) {
-  //   scenario.stop();
-  //   character.changeState(typeFinish);
-    
-  //   if (!isGameFinished){
-  //     endTheme.play();
-  //   }
-
-  //   isGameFinished = true;
-  // }
 }
 
 function startNewLevel() {
@@ -337,14 +342,21 @@ function isBusinessHours() {
 }
 
 function drawPauseMenu() {
-  // scenario.display();
   drawWhiteBoard(0);
   
-  homeButton.addClass('homeButtonFromPause');
+  let title = "Game paused";
+  
+  P5Style.titleStyle();
+  text(title, width/2, height * 1/6 + 35);
+  
+  homeButton.removeClass('homeButtonFromScores').addClass('homeButtonFromPause');
   homeButton.show();
 
   resetButton.addClass('resetButtonFromPause');
   resetButton.show();
+
+  resumeButton.addClass('resumeButtonFromPause')
+  resumeButton.show();
 
   noLoop();
 }
@@ -382,32 +394,15 @@ function drawMenu() {
   startButton.mousePressed(() => {
     startButton.remove();
     resetButton.remove();
+    resumeButton.remove();
     homeButton.remove();
     pauseButton.remove();
     highScoresButton.remove();
     sendScoreButton.remove();
     nameInput.remove();
-    // currentScene = sceneGame;
+    
     resetGame(sceneGame);
   });
-
-  // highScoresButton.mousePressed(() => {
-  //   highScoresButton.remove();
-  //   startButton.remove();
-  //   homeButton.addClass('homeButtonFromScores');
-  //   homeButton.show();
-  //   readHighScores(5, true);
-  // })
-
-  // homeButton.mousePressed(() => {
-  //   sendScoreButton.remove();
-  //   nameInput.remove();
-  //   resetButton.remove();
-  //   pauseButton.remove();
-  //   homeButton.remove();
-  //   resetGame(sceneMenu);
-  //   loop();
-  // });
 }
 
 function drawHighScores() {
@@ -550,9 +545,6 @@ function drawGame() {
       currentScene = scenePause;
     });
   }
-
-  // homeButton.position(20, 150);
-  // homeButton.show();
     
   powerUps.forEach(powerUp => {
     powerUp.display();
@@ -569,9 +561,6 @@ function drawGame() {
         life.decreaseBpm();
         score.fastForward(crosswordFastForwardMinutes);
       }
-      // else if (powerUp.type === typeFirstAid) {
-      //   life.increaseFirstAid();
-      // }
     }
   });
 
@@ -581,16 +570,7 @@ function drawGame() {
   if (score.scoreHour >= 17) {
     stopGame(typeLevelFinish);
 
-    // if (typeLevelFinish) {
     currentScene = sceneLevelEnd;
-    // }
-    
-    // if (typeFinish) {
-    //   if (gameStoppedTimerCount > 50) {
-    //     resetButton.show();
-    //     currentScene = sceneEnd;
-    //   }
-    // }
   }
 
   if ((life.bpm < life.maxBpm) && !isGameStopped) {
@@ -637,7 +617,6 @@ function drawGame() {
 
     if (isGameOver) {
       if (gameStoppedTimerCount > 50) {
-        // resetButton.show();
         currentScene = sceneEnd;
       }
     }
