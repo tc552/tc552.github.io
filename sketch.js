@@ -147,16 +147,21 @@ function resetGame(scene) {
     homeButton.remove();
     pauseButton.remove();
     highScoresButton.remove();
+    sendScoreButton.remove();
+    nameInput.remove();
+
     resetGame(sceneGame);
     loop();
   });
 
   homeButton.mousePressed(() => {
+    resetButton.remove();
+    homeButton.remove();
+    pauseButton.remove();
+    highScoresButton.remove();
     sendScoreButton.remove();
     nameInput.remove();
-    resetButton.remove();
-    pauseButton.remove();
-    homeButton.remove();
+
     resetGame(sceneMenu);
     loop();
   });
@@ -367,7 +372,12 @@ function drawMenu() {
 
   startButton.mousePressed(() => {
     startButton.remove();
+    resetButton.remove();
+    homeButton.remove();
+    pauseButton.remove();
     highScoresButton.remove();
+    sendScoreButton.remove();
+    nameInput.remove();
     // currentScene = sceneGame;
     resetGame(sceneGame);
   });
