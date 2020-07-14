@@ -54,7 +54,21 @@ button {
 
 .startButton {
   top: calc(((100vh)/2) + 70px);
-  left: calc(((100vw)/2) + 130px);
+  left: calc(((100vw)/2) + 170px);
+  font-family: 'Comfortaa';
+  font-weight: bolder;
+  color: white;
+  border-radius: 4px;
+  padding: 10px 10px;
+  background-color: black;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+
+  border-width: 2px;
+  border-style: outset;
+  border-color: rgb(118, 118, 118);
+  border-image: initial;
 }
 
 .highScoresButton {

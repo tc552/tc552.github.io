@@ -1,3 +1,4 @@
+let imgButtonPlay;
 let imgScenario;
 let imgCharacter;
 let imgCharacterDead;

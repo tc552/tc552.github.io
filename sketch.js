@@ -22,6 +22,7 @@ function keyPressed() {
 }
 
 function preload() {
+  imgButtonPlay = loadImage('images/buttons/play.png');
   imgScenario = loadImage('images/scenario/background.png');
   imgCharacter = loadImage('images/character/stanley.png');
   imgCharacterDead = loadImage('images/character/dead.png');
@@ -106,7 +107,7 @@ function resetGame(scene) {
   let canvasPositionY = (windowHeight - canvasHeight)/2;
 
   if (currentScene === sceneMenu) {
-    startButton = createButton('Start!');
+    startButton = createImg('images/buttons/play.png');
     startButton.addClass('startButton');
   }
 
