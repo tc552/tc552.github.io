@@ -331,6 +331,9 @@ function drawMenu() {
   })
 
   backToMenuButton.mousePressed(() => {
+    sendScoreButton.remove();
+    nameInput.remove();
+    resetButton.remove();
     backToMenuButton.remove();
     resetGame(sceneMenu);
   });
