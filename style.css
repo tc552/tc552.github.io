@@ -52,9 +52,7 @@ button {
   position: absolute;
 }
 
-.startButton {
-  top: calc(((100vh)/2) + 70px);
-  left: calc(((100vw)/2) + 170px);
+.imgButton {
   font-family: 'Comfortaa';
   font-weight: bolder;
   color: white;
@@ -69,6 +67,29 @@ button {
   border-style: outset;
   border-color: rgb(118, 118, 118);
   border-image: initial;
+}
+
+.imgButtonSmall {
+  width: 20px !important;
+  height: 20px !important;
+  padding: 4px 4px;
+}
+
+.startButton {
+  top: calc(((100vh)/2) + 70px);
+  left: calc(((100vw)/2) + 170px);
+}
+
+.pauseButton {
+  top: calc(((100vh)/2) - 175px);
+  left: calc(((100vw)/2) + 282px);
+}
+
+.homeButtonFromScores {
+  /* top: calc(((100vh)/2) + 70px);
+  left: calc(((100vw)/2) + 170px); */
+  top: calc(((100vh)/2) + 70px);
+  left: calc(((100vw)/2) - 150px);
 }
 
 .highScoresButton {

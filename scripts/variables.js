@@ -1,4 +1,10 @@
-let imgButtonPlay;
+const imgButtonPlay = 'images/buttons/play.png';
+const imgButtonPause = 'images/buttons/pause.png';
+const imgButtonHome = 'images/buttons/home.png';
+const imgButtonRestart = 'images/buttons/redo.png';
+const imgButtonPodium = 'images/buttons/podium.png';
+const imgButtonTrophy = 'images/buttons/trophy.png';
+
 let imgScenario;
 let imgCharacter;
 let imgCharacterDead;
@@ -59,6 +65,7 @@ const typeNormal = 'NORMAL';
 const sceneMenu = 'MENU';
 const sceneHighScores = 'HIGHSCORES';
 const sceneGame = 'GAME';
+const scenePause = 'PAUSE';
 const sceneLevelEnd = 'LEVELEND';
 const sceneEnd = 'END';
 
