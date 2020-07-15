@@ -92,57 +92,116 @@ let resetButtonVisible;
 
 const gameMap = [
   {
-    enemies: [
+    levelMap: [
       {
-        enemyId: 0,
-        speed: 8
+        enemies: [
+          {
+            enemyId: 0,
+            speed: 8
+          },
+          // {
+          //   enemyId: 1,
+          //   speed: 12
+          // },
+          // {
+          //   enemyId: 2,
+          //   speed: 15
+          // }
+        ],
+        duration: 100
       },
-      // {
-      //   enemyId: 1,
-      //   speed: 12
-      // },
-      // {
-      //   enemyId: 2,
-      //   speed: 15
-      // }
-    ],
-    duration: 100
+      {
+        enemies: [
+          {
+            enemyId: 0,
+            speed: 8
+          },
+          {
+            enemyId: 1,
+            speed: 12
+          },
+          {
+            enemyId: 2,
+            speed: 15
+          }
+        ],
+        duration: 650
+      },
+      {
+        enemies: [
+          {
+            enemyId: 0,
+            speed: 15
+          },
+          {
+            enemyId: 1,
+            speed: 8
+          },
+          {
+            enemyId: 2,
+            speed: 10
+          }
+        ],
+        duration: 450
+      }
+    ]
   },
   {
-    enemies: [
+    levelMap: [
       {
-        enemyId: 0,
-        speed: 8
+        enemies: [
+          {
+            enemyId: 3,
+            speed: 8
+          },
+          // {
+          //   enemyId: 1,
+          //   speed: 12
+          // },
+          // {
+          //   enemyId: 2,
+          //   speed: 15
+          // }
+        ],
+        duration: 100
       },
       {
-        enemyId: 1,
-        speed: 12
+        enemies: [
+          {
+            enemyId: 3,
+            speed: 8
+          },
+          {
+            enemyId: 4,
+            speed: 12
+          },
+          {
+            enemyId: 5,
+            speed: 15
+          }
+        ],
+        duration: 650
       },
       {
-        enemyId: 2,
-        speed: 15
+        enemies: [
+          {
+            enemyId: 3,
+            speed: 15
+          },
+          {
+            enemyId: 4,
+            speed: 8
+          },
+          {
+            enemyId: 5,
+            speed: 10
+          }
+        ],
+        duration: 450
       }
-    ],
-    duration: 650
-  },
-  {
-    enemies: [
-      {
-        enemyId: 0,
-        speed: 15
-      },
-      {
-        enemyId: 1,
-        speed: 8
-      },
-      {
-        enemyId: 2,
-        speed: 10
-      }
-    ],
-    duration: 450
+    ]
   }
-];
+]
 
 const stanleyWidth = 90;
 const stanleyHeight = 125;

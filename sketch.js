@@ -29,6 +29,9 @@ function preload() {
   imgEnemyDwight = loadImage('images/enemies/dwight.png');
   imgEnemyMichael = loadImage('images/enemies/michael.png');
   imgEnemyFlyingMichael = loadImage('images/enemies/flying_michael.png');
+  imgEnemyJim = loadImage('images/enemies/jim.png');
+  imgEnemyAndy = loadImage('images/enemies/andy.png');
+  imgEnemyCreed = loadImage('images/enemies/creed.png');
   imgFirstAid = loadImage('images/assets/first-aid.png');
   imgFirstAidResponder = loadImage('images/assets/first-aid-responder.png');
   imgPretzel = loadImage('images/assets/pretzel.gif');
@@ -229,10 +232,18 @@ function createEnemies() {
   const enemyDwight = new Enemy(dwightPositionMatrix, imgEnemyDwight, width, 0, dwightWidth, dwightHeight, dwightWidth, dwightHeight, 8, 200);
   const enemyMichael = new Enemy(michaelPositionMatrix, imgEnemyMichael, width * 1.5, 5, michaelWidth, michaelHeight, michaelWidth, michaelHeight, 12, 500);
   const enemyFlyingMichael = new Enemy(flyingMichaelPositionMatrix, imgEnemyFlyingMichael, width * 1.8, 200, flyingMichaelWidth/1.5, flyingMichaelHeight/1.5, flyingMichaelWidth, michaelHeight, 15, 500);
+  
+  const enemyJim = new Enemy(dwightPositionMatrix, imgEnemyJim, width, 0, dwightWidth, dwightHeight, dwightWidth, dwightHeight, 8, 200);
+  const enemyAndy = new Enemy(michaelPositionMatrix, imgEnemyAndy, width * 1.5, 5, michaelWidth, michaelHeight, michaelWidth, michaelHeight, 12, 500);
+  const enemyCreed = new Enemy(flyingMichaelPositionMatrix, imgEnemyCreed, width * 1.8, 200, flyingMichaelWidth/1.5, flyingMichaelHeight/1.5, flyingMichaelWidth, michaelHeight, 15, 500);
 
   enemies.push(enemyDwight);
   enemies.push(enemyMichael);
   enemies.push(enemyFlyingMichael);
+  
+  enemies.push(enemyJim);
+  enemies.push(enemyAndy);
+  enemies.push(enemyCreed);
 }
 
 function draw() {
@@ -577,9 +588,12 @@ function drawGame() {
     character.animate();
     score.increaseScore();
   }
+
+  let levelIndex = (score.scoreDay + gameMap.length - 1) % gameMap.length;
+  let levelMap = gameMap[levelIndex].levelMap;
   
-  let currentGameMap = gameMap[mapIndex];
-  let currentEnemies = currentGameMap.enemies;
+  let currentLevelMap = levelMap[mapIndex];
+  let currentEnemies = currentLevelMap.enemies;
   let currentEnemiesIds = currentEnemies.map(function(item) {return item.enemyId});
 
   enemies.filter(function (item) {
@@ -636,7 +650,7 @@ function drawGame() {
 
   mapTimerCount++;
   
-  if (mapTimerCount >= currentGameMap.duration) {
+  if (mapTimerCount >= currentLevelMap.duration) {
 
     enemies.filter(function (item) {
         return currentEnemiesIds.includes(enemies.indexOf(item));
@@ -663,7 +677,7 @@ function drawGame() {
       mapIndex++;
     }
   
-    if (mapIndex >= gameMap.length) {
+    if (mapIndex >= levelMap.length) {
       mapIndex = 0;
     }
   }
