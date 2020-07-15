@@ -22,7 +22,6 @@ function keyPressed() {
 }
 
 function preload() {
-  imgButtonPlay = loadImage('images/buttons/play.png');
   imgScenario = loadImage('images/scenario/background.png');
   imgCharacter = loadImage('images/character/stanley.png');
   imgCharacterDead = loadImage('images/character/dead.png');
@@ -107,20 +106,29 @@ function resetGame(scene) {
   let canvasPositionY = (windowHeight - canvasHeight)/2;
 
   if (currentScene === sceneMenu) {
-    startButton = createImg('images/buttons/play.png');
-    startButton.addClass('startButton');
+    startButton = createImg(imgButtonPlay);
+    startButton.addClass('imgButton').addClass('startButton');
   }
 
-  highScoresButton = createButton('High Scores');
-  highScoresButton.addClass('highScoresButton');
-  // highScoresButton.hide();
-  
-  resetButton = createButton('Play again!');
-  resetButton.addClass('resetButton');
+  pauseButton = createImg(imgButtonPause);
+  pauseButton.addClass('imgButton').addClass('imgButtonSmall').addClass('pauseButton');
+  pauseButton.hide();
+
+  highScoresButton = createImg(imgButtonTrophy);
+  highScoresButton.addClass('imgButton').addClass('highScoresButton');
+  highScoresButton.hide();
+
+  resumeButton = createImg(imgButtonPlay);
+  resumeButton.addClass('imgButton');
+  resumeButton.hide();
+
+  resetButton = createImg(imgButtonRestart);
+  resetButton.addClass('imgButton');
   resetButton.hide();
 
-  backToMenuButton = createButton('Back to menu');
-  backToMenuButton.hide();
+  homeButton = createImg(imgButtonHome);
+  homeButton.addClass('imgButton').addClass('homeButton');
+  homeButton.hide();
   
   sendScoreButton = createButton('Send score');
   sendScoreButton.addClass('sendScoreButton');
@@ -129,6 +137,49 @@ function resetGame(scene) {
   nameInput = createInput().attribute('maxlength', 10);
   nameInput.addClass('nameInput');
   nameInput.hide();
+
+  highScoresButton.mousePressed(() => {
+    highScoresButton.remove();
+    startButton.remove();
+    homeButton.addClass('homeButtonFromScores');
+    homeButton.show();
+    readHighScores(5, true);
+  })
+
+  resumeButton.mousePressed(() => {
+    resetButton.hide();
+    resumeButton.hide();
+    homeButton.hide();
+
+    currentScene = sceneGame;
+    loop();
+  });
+  
+  resetButton.mousePressed(() => {
+    resetButton.remove();
+    resumeButton.remove();
+    homeButton.remove();
+    pauseButton.remove();
+    highScoresButton.remove();
+    sendScoreButton.remove();
+    nameInput.remove();
+
+    resetGame(sceneGame);
+    loop();
+  });
+
+  homeButton.mousePressed(() => {
+    resetButton.remove();
+    resumeButton.remove();
+    homeButton.remove();
+    pauseButton.remove();
+    highScoresButton.remove();
+    sendScoreButton.remove();
+    nameInput.remove();
+
+    resetGame(sceneMenu);
+    loop();
+  });
 
   readHighScores(5, false);
   let stringScore = localStorage.getItem('currentUserHighScore');
@@ -148,6 +199,14 @@ function readHighScores(qty, displayLeaderboard) {
     highScores = result;
     if (displayLeaderboard) {
       currentScene = sceneHighScores;
+
+      if (isGameOver) {
+        homeButton.removeClass('homeButtonFromPause').addClass('homeButtonFromScores')
+        homeButton.show();
+
+        resetButton.addClass('resetButtonFromScores')
+        resetButton.show();
+      }
     }
   })
 }
@@ -186,6 +245,10 @@ function draw() {
       break;
     case sceneGame:
       drawGame();
+      break;
+    case scenePause:
+      drawGame();
+      drawPauseMenu();
       break;
     case sceneLevelEnd:
       drawGame();
@@ -235,16 +298,6 @@ function stopGame(type) {
     }
     isLevelFinished = true;
   }
-  // else if (type === typeFinish) {
-  //   scenario.stop();
-  //   character.changeState(typeFinish);
-    
-  //   if (!isGameFinished){
-  //     endTheme.play();
-  //   }
-
-  //   isGameFinished = true;
-  // }
 }
 
 function startNewLevel() {
@@ -288,6 +341,26 @@ function isBusinessHours() {
   }
 }
 
+function drawPauseMenu() {
+  drawWhiteBoard(0);
+  
+  let title = "Game paused";
+  
+  P5Style.titleStyle();
+  text(title, width/2, height * 1/6 + 35);
+  
+  homeButton.removeClass('homeButtonFromScores').addClass('homeButtonFromPause');
+  homeButton.show();
+
+  resetButton.addClass('resetButtonFromPause');
+  resetButton.show();
+
+  resumeButton.addClass('resumeButtonFromPause')
+  resumeButton.show();
+
+  noLoop();
+}
+
 function drawMenu() {
   scenario.display();
   
@@ -313,29 +386,22 @@ function drawMenu() {
   previousHeight = newHeight;
   newHeight = previousHeight + 40;
   text("Use ArrowUp or Click/Tap to jump.", 140, newHeight);
+
+  highScoresButton.show();
   
   character.display();
 
   startButton.mousePressed(() => {
     startButton.remove();
+    resetButton.remove();
+    resumeButton.remove();
+    homeButton.remove();
+    pauseButton.remove();
     highScoresButton.remove();
-    currentScene = sceneGame;
-  });
-
-  highScoresButton.mousePressed(() => {
-    highScoresButton.remove();
-    startButton.remove();
-    backToMenuButton.position(20, 150);
-    backToMenuButton.show();
-    readHighScores(5, true);
-  })
-
-  backToMenuButton.mousePressed(() => {
     sendScoreButton.remove();
     nameInput.remove();
-    resetButton.remove();
-    backToMenuButton.remove();
-    resetGame(sceneMenu);
+    
+    resetGame(sceneGame);
   });
 }
 
@@ -415,6 +481,8 @@ function drawEnd() {
     animateScoreBoard();
   }
   else {
+    pauseButton.hide();
+
     if (lastScore == null || lastScore.docId == null) {
       lastScore = new HighScore(
         null,
@@ -440,11 +508,6 @@ function drawEnd() {
   }
 
   character.display();
-
-  resetButton.mousePressed(() => {
-    resetButton.remove();
-    resetGame(sceneGame);
-  });
 }
 
 function drawLevelEnd() {
@@ -476,8 +539,12 @@ function drawGame() {
   scenario.display();
   scenario.move();
 
-  backToMenuButton.position(20, 150);
-  backToMenuButton.show();
+  if (!isGameOver) {
+    pauseButton.show();
+    pauseButton.mousePressed(() => {
+      currentScene = scenePause;
+    });
+  }
     
   powerUps.forEach(powerUp => {
     powerUp.display();
@@ -494,9 +561,6 @@ function drawGame() {
         life.decreaseBpm();
         score.fastForward(crosswordFastForwardMinutes);
       }
-      // else if (powerUp.type === typeFirstAid) {
-      //   life.increaseFirstAid();
-      // }
     }
   });
 
@@ -506,16 +570,7 @@ function drawGame() {
   if (score.scoreHour >= 17) {
     stopGame(typeLevelFinish);
 
-    // if (typeLevelFinish) {
     currentScene = sceneLevelEnd;
-    // }
-    
-    // if (typeFinish) {
-    //   if (gameStoppedTimerCount > 50) {
-    //     resetButton.show();
-    //     currentScene = sceneEnd;
-    //   }
-    // }
   }
 
   if ((life.bpm < life.maxBpm) && !isGameStopped) {
@@ -562,7 +617,6 @@ function drawGame() {
 
     if (isGameOver) {
       if (gameStoppedTimerCount > 50) {
-        // resetButton.show();
         currentScene = sceneEnd;
       }
     }

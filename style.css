@@ -52,9 +52,7 @@ button {
   position: absolute;
 }
 
-.startButton {
-  top: calc(((100vh)/2) + 70px);
-  left: calc(((100vw)/2) + 170px);
+.imgButton {
   font-family: 'Comfortaa';
   font-weight: bolder;
   color: white;
@@ -71,6 +69,34 @@ button {
   border-image: initial;
 }
 
+.imgButtonSmall {
+  width: 20px !important;
+  height: 20px !important;
+  padding: 4px 4px;
+}
+
+.startButton {
+  top: calc(((100vh)/2) + 70px);
+  left: calc(((100vw)/2) + 170px);
+}
+
+.pauseButton {
+  top: calc(((100vh)/2) - 175px);
+  left: calc(((100vw)/2) + 282px);
+}
+
+.homeButtonFromScores {
+  /* top: calc(((100vh)/2) + 70px);
+  left: calc(((100vw)/2) + 170px); */
+  top: calc(((100vh)/2) + 70px);
+  left: calc(((100vw)/2) + 110px);
+}
+
+.homeButtonFromPause {
+  top: calc((100vh)/2 - 15px);
+  left: calc(((100vw)/2) - 140px);
+}
+
 .highScoresButton {
   top: calc(((100vh)/2) + 70px);
   left: calc(((100vw)/2) - 150px);
@@ -79,6 +105,21 @@ button {
 .resetButton {
   top: calc(((100vh)/2) + 50px);
   left: calc(((100vw)/2) - 65px);
+}
+
+.resetButtonFromPause {
+  top: calc((100vh)/2 - 15px);
+  left: calc((100vw)/2 - 27px);
+}
+
+.resetButtonFromScores {
+  top: calc(((100vh)/2) + 70px);
+  left: calc(((100vw)/2) + 170px);
+}
+
+.resumeButtonFromPause {
+  top: calc((100vh)/2 - 15px);
+  left: calc(((100vw)/2) + 85px);
 }
 
 .sendScoreButton {
