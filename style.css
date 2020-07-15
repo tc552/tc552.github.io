@@ -93,8 +93,8 @@ button {
 }
 
 .homeButtonFromPause {
-  top: calc((100vh)/2);
-  left: calc(((100vw)/2) - 150px);
+  top: calc((100vh)/2 - 15px);
+  left: calc(((100vw)/2) - 140px);
 }
 
 .highScoresButton {
@@ -108,8 +108,8 @@ button {
 }
 
 .resetButtonFromPause {
-  top: calc((100vh)/2);
-  left: calc(((100vw)/2) - 65px);
+  top: calc((100vh)/2 - 15px);
+  left: calc((100vw)/2 - 27px);
 }
 
 .resetButtonFromScores {
@@ -118,8 +118,8 @@ button {
 }
 
 .resumeButtonFromPause {
-  top: calc((100vh)/2);
-  left: calc(((100vw)/2) + 35px);
+  top: calc((100vh)/2 - 15px);
+  left: calc(((100vw)/2) + 85px);
 }
 
 .sendScoreButton {
