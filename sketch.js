@@ -521,7 +521,12 @@ function drawEnd() {
       );
     }
 
-    if(currentUserHighScore == null || score.totalScore > currentUserHighScore.totalScore || score.totalScore > highScores[4].totalScore) {
+    let minHighScore = 0;
+    if (highScores[4] != null) {
+      minHighScore = highScores[4].totalScore
+    }
+
+    if(currentUserHighScore == null || score.totalScore > currentUserHighScore.totalScore || score.totalScore > minHighScore) {
       drawWhiteBoard(0);
       drawHighScoreInput(0);  
     }
