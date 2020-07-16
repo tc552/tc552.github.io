@@ -8,7 +8,7 @@
 
     gtag('config', 'G-FSRN45JTYV');
   </script>
-  <title>Stanley Goes To The Office</title>
+  <title>Stanley's Day At The Office</title>
     <link rel="manifest" href="manifest.json">
     <script src="p5.min.js"></script>
     <script src="p5.sound.min.js"></script>
@@ -26,8 +26,10 @@
     <script src="scripts/game/scenario.js?v2"></script>
     <script src="scripts/game/powerUp.js?v2"></script>
     <script src="scripts/game/score.js?v2"></script>
+    <script src="scripts/game/highScore.js?v2"></script>
     <script src="scripts/game/life.js?v2"></script>
     <script src="scripts/variables.js?v2"></script>
+    <script src="scripts/p5style.js?v2"></script>
     <script src="sketch.js?v2"></script>
     
     <div class="donationOuterContainer">
@@ -41,5 +43,98 @@
         </form>
       </div>
     </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyDYQvyWW_Uh_OHMNkd6ik3qLkbCZIuMDGI",
+        authDomain: "savestanley-e5318.firebaseapp.com",
+        databaseURL: "https://savestanley-e5318.firebaseio.com",
+        projectId: "savestanley-e5318",
+        storageBucket: "savestanley-e5318.appspot.com",
+        messagingSenderId: "462705177549",
+        appId: "1:462705177549:web:ccd9837a5accba49cd0a84",
+        measurementId: "G-V6Y7TL5ETF"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      var db = firebase.firestore();
+
+      var addScoreToDb = function (name, score) {
+          var addScoreToDbPromise = new Promise(function(resolve, reject) {
+
+            db.collection("scores").add({
+                name: name,
+                totalScore: score.totalScore,
+                scoreDay: score.scoreDay,
+                scoreHour: score.scoreHour,
+                scoreMinute: score.scoreMinute,
+                totalPretzels: score.totalPretzels,
+                totalCrosswords: score.totalCrosswords,
+                totalDaysAllPretzelsPicked: score.totalDaysAllPretzelsPicked,
+                totalFirstAidOccurrences: score.totalFirstAidOccurrences
+            })
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+                resolve(docRef);
+            });
+          })
+          return addScoreToDbPromise;
+      }
+
+      var readHighScoresFromDb = function(quantity) {
+        var readHighScoresFromDbPromise = new Promise(function(resolve, reject) {
+          
+          let highScoresFromDb = [];
+
+          db.collection("scores")
+          .orderBy("totalScore", "desc")
+          .orderBy("scoreDay", "desc")
+          .orderBy("scoreHour", "desc")
+          .orderBy("scoreMinute", "desc")
+          .orderBy("totalPretzels", "desc")
+          .orderBy("totalCrosswords", "desc")
+          .orderBy("totalDaysAllPretzelsPicked", "desc")
+          .orderBy("totalFirstAidOccurrences")
+          .limit(quantity)
+          .get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                let response = doc.data();
+                let docId = doc.id;
+                let highScore = new HighScore(
+                  response.name,
+                  response.totalScore,
+                  response.scoreDay,
+                  response.scoreHour,
+                  response.scoreMinute,
+                  response.totalPretzels,
+                  response.totalCrosswords,
+                  response.totalDaysAllPretzelsPicked,
+                  response.totalFirstAidOccurrences,
+                  docId
+                );
+                
+                highScoresFromDb.push(highScore);
+            });
+
+            resolve(highScoresFromDb);
+          })
+        })
+          
+        return readHighScoresFromDbPromise;
+      }
+    </script>
+
   </body>
 </html>
