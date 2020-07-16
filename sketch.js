@@ -565,6 +565,7 @@ function drawGame() {
   if (!isGameOver) {
     pauseButton.show();
     pauseButton.mousePressed(() => {
+      clickButtonPressed = true;
       currentScene = scenePause;
     });
   }
