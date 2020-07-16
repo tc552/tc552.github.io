@@ -1,16 +1,24 @@
 let click = true;
+let clickButtonPressed = false;
 
 function touchStarted() {
   click = false;
   event.code = 'Touch';
-  if (currentScene === sceneGame)
+  if (currentScene === sceneGame) {
     character.jump();
+  }
 }
 
 function mousePressed() {
-  if (click) {
-    if (currentScene === sceneGame)
-      character.jump();
+  if (!clickButtonPressed){
+    if (click) {
+      if (currentScene === sceneGame) {
+          character.jump();
+        }
+    } 
+  }
+  else {
+    clickButtonPressed = false;
   }
 }
 
@@ -51,16 +59,16 @@ function preload() {
   deathTheme = loadSound('sounds/death.wav');
   endTheme = loadSound('sounds/end.mp3');
   
-  // jumpTheme.setVolume(0.7);
-  // powerUpTheme.setVolume(0.1);
-  // failTheme.setVolume(0.7);
-  // deathTheme.setVolume(0.5);
-  // endTheme.setVolume(0.5);
-  jumpTheme.setVolume(0);
-  powerUpTheme.setVolume(0);
-  failTheme.setVolume(0);
-  deathTheme.setVolume(0);
-  endTheme.setVolume(0);
+  jumpTheme.setVolume(0.7);
+  powerUpTheme.setVolume(0.1);
+  failTheme.setVolume(0.7);
+  deathTheme.setVolume(0.5);
+  endTheme.setVolume(0.5);
+  // jumpTheme.setVolume(0);
+  // powerUpTheme.setVolume(0);
+  // failTheme.setVolume(0);
+  // deathTheme.setVolume(0);
+  // endTheme.setVolume(0);
 }
 
 function setup() {
@@ -151,6 +159,7 @@ function resetGame(scene) {
   })
 
   resumeButton.mousePressed(() => {
+    clickButtonPressed = true;
     resetButton.hide();
     resumeButton.hide();
     homeButton.hide();
@@ -160,6 +169,7 @@ function resetGame(scene) {
   });
   
   resetButton.mousePressed(() => {
+    clickButtonPressed = true;
     resetButton.remove();
     resumeButton.remove();
     homeButton.remove();
@@ -404,6 +414,7 @@ function drawMenu() {
   character.display();
 
   startButton.mousePressed(() => {
+    clickButtonPressed = true;
     startButton.remove();
     resetButton.remove();
     resumeButton.remove();
