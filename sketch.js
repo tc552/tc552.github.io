@@ -233,9 +233,9 @@ function createEnemies() {
   const enemyMichael = new Enemy(michaelPositionMatrix, imgEnemyMichael, width * 1.5, 5, michaelWidth, michaelHeight, michaelWidth, michaelHeight, 12, 500);
   const enemyFlyingMichael = new Enemy(flyingMichaelPositionMatrix, imgEnemyFlyingMichael, width * 1.8, 200, flyingMichaelWidth/1.5, flyingMichaelHeight/1.5, flyingMichaelWidth, michaelHeight, 15, 500);
   
-  const enemyJim = new Enemy(dwightPositionMatrix, imgEnemyJim, width, 0, dwightWidth, dwightHeight, dwightWidth, dwightHeight, 8, 200);
-  const enemyAndy = new Enemy(michaelPositionMatrix, imgEnemyAndy, width * 1.5, 5, michaelWidth, michaelHeight, michaelWidth, michaelHeight, 12, 500);
-  const enemyCreed = new Enemy(flyingMichaelPositionMatrix, imgEnemyCreed, width * 1.8, 200, flyingMichaelWidth/1.5, flyingMichaelHeight/1.5, flyingMichaelWidth, michaelHeight, 15, 500);
+  const enemyJim = new Enemy(dwightPositionMatrix, imgEnemyJim, width, 0, dwightWidth, dwightHeight, dwightWidth, dwightHeight, 8, 300);
+  const enemyAndy = new Enemy(michaelPositionMatrix, imgEnemyAndy, width * 1.5, 5, michaelWidth, michaelHeight, michaelWidth, michaelHeight, 12, 100);
+  const enemyCreed = new Enemy(flyingMichaelPositionMatrix, imgEnemyCreed, width * 1.8, 200, flyingMichaelWidth/1.5, flyingMichaelHeight/1.5, flyingMichaelWidth, michaelHeight, 15, 50);
 
   enemies.push(enemyDwight);
   enemies.push(enemyMichael);
@@ -591,6 +591,10 @@ function drawGame() {
 
   let levelIndex = (score.scoreDay + gameMap.length - 1) % gameMap.length;
   let levelMap = gameMap[levelIndex].levelMap;
+
+  if (mapIndex >= levelMap.length) {
+    mapIndex = 0;
+  }
   
   let currentLevelMap = levelMap[mapIndex];
   let currentEnemies = currentLevelMap.enemies;
@@ -675,10 +679,6 @@ function drawGame() {
 
       mapTimerCount = 0;
       mapIndex++;
-    }
-  
-    if (mapIndex >= levelMap.length) {
-      mapIndex = 0;
     }
   }
 }

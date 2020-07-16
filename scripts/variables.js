@@ -108,7 +108,41 @@ const gameMap = [
           //   speed: 15
           // }
         ],
-        duration: 100
+        duration: 50
+      },
+      {
+        enemies: [
+          {
+            enemyId: 0,
+            speed: 8
+          },
+          {
+            enemyId: 1,
+            speed: 12
+          },
+          // {
+          //   enemyId: 2,
+          //   speed: 15
+          // }
+        ],
+        duration: 50
+      },
+      {
+        enemies: [
+          {
+            enemyId: 0,
+            speed: 8
+          },
+          // {
+          //   enemyId: 1,
+          //   speed: 12
+          // },
+          {
+            enemyId: 2,
+            speed: 15
+          }
+        ],
+        duration: 50
       },
       {
         enemies: [
@@ -125,24 +159,7 @@ const gameMap = [
             speed: 15
           }
         ],
-        duration: 650
-      },
-      {
-        enemies: [
-          {
-            enemyId: 0,
-            speed: 15
-          },
-          {
-            enemyId: 1,
-            speed: 8
-          },
-          {
-            enemyId: 2,
-            speed: 10
-          }
-        ],
-        duration: 450
+        duration: 900
       }
     ]
   },
@@ -154,50 +171,84 @@ const gameMap = [
             enemyId: 3,
             speed: 8
           },
-          // {
-          //   enemyId: 1,
-          //   speed: 12
-          // },
-          // {
-          //   enemyId: 2,
-          //   speed: 15
-          // }
-        ],
-        duration: 100
-      },
-      {
-        enemies: [
-          {
-            enemyId: 3,
-            speed: 8
-          },
           {
             enemyId: 4,
             speed: 12
           },
-          {
-            enemyId: 5,
-            speed: 15
-          }
+          // {
+          //   enemyId: 5,
+          //   speed: 15
+          // }
         ],
-        duration: 650
+        duration: 50
       },
       {
         enemies: [
           {
             enemyId: 3,
-            speed: 15
+            speed: 7
           },
           {
             enemyId: 4,
-            speed: 8
+            speed: 14
           },
           {
             enemyId: 5,
             speed: 10
           }
         ],
-        duration: 450
+        duration: 250
+      },
+      {
+        enemies: [
+          {
+            enemyId: 3,
+            speed: 8
+          },
+          {
+            enemyId: 4,
+            speed: 15
+          },
+          {
+            enemyId: 5,
+            speed: 10
+          }
+        ],
+        duration: 250
+      },
+      {
+        enemies: [
+          {
+            enemyId: 3,
+            speed: 8
+          },
+          {
+            enemyId: 4,
+            speed: 14
+          },
+          {
+            enemyId: 5,
+            speed: 10
+          }
+        ],
+        duration: 250
+      },
+      {
+        enemies: [
+          {
+            enemyId: 3,
+            speed: 8
+          },
+          {
+            enemyId: 4,
+            speed: 15
+          },
+          {
+            enemyId: 5,
+            speed: 12
+          }
+        ],
+        duration: 250
       }
     ]
   }
