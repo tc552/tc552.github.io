@@ -32,6 +32,7 @@ function preload() {
   imgEnemyJim = loadImage('images/enemies/jim.png');
   imgEnemyAndy = loadImage('images/enemies/andy.png');
   imgEnemyCreed = loadImage('images/enemies/creed.png');
+  imgEnemyFlyingCreed = loadImage('images/enemies/flying_creed.png');
   imgFirstAid = loadImage('images/assets/first-aid.png');
   imgFirstAidResponder = loadImage('images/assets/first-aid-responder.png');
   imgPretzel = loadImage('images/assets/pretzel.gif');
@@ -235,7 +236,7 @@ function createEnemies() {
   
   const enemyJim = new Enemy(dwightPositionMatrix, imgEnemyJim, width, 0, dwightWidth, dwightHeight, dwightWidth, dwightHeight, 8, 300);
   const enemyAndy = new Enemy(michaelPositionMatrix, imgEnemyAndy, width * 1.5, 5, michaelWidth, michaelHeight, michaelWidth, michaelHeight, 12, 100);
-  const enemyCreed = new Enemy(flyingMichaelPositionMatrix, imgEnemyCreed, width * 1.8, 200, flyingMichaelWidth/1.5, flyingMichaelHeight/1.5, flyingMichaelWidth, michaelHeight, 15, 50);
+  const enemyFlyingCreed = new Enemy(flyingMichaelPositionMatrix, imgEnemyFlyingCreed, width * 1.8, 200, flyingMichaelWidth/1.5, flyingMichaelHeight/1.5, flyingMichaelWidth, michaelHeight, 15, 50);
 
   enemies.push(enemyDwight);
   enemies.push(enemyMichael);
@@ -243,7 +244,7 @@ function createEnemies() {
   
   enemies.push(enemyJim);
   enemies.push(enemyAndy);
-  enemies.push(enemyCreed);
+  enemies.push(enemyFlyingCreed);
 }
 
 function draw() {
