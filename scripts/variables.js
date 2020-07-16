@@ -92,57 +92,167 @@ let resetButtonVisible;
 
 const gameMap = [
   {
-    enemies: [
+    levelMap: [
       {
-        enemyId: 0,
-        speed: 8
+        enemies: [
+          {
+            enemyId: 0,
+            speed: 8
+          },
+          // {
+          //   enemyId: 1,
+          //   speed: 12
+          // },
+          // {
+          //   enemyId: 2,
+          //   speed: 15
+          // }
+        ],
+        duration: 50
       },
-      // {
-      //   enemyId: 1,
-      //   speed: 12
-      // },
-      // {
-      //   enemyId: 2,
-      //   speed: 15
-      // }
-    ],
-    duration: 100
+      {
+        enemies: [
+          {
+            enemyId: 0,
+            speed: 8
+          },
+          {
+            enemyId: 1,
+            speed: 12
+          },
+          // {
+          //   enemyId: 2,
+          //   speed: 15
+          // }
+        ],
+        duration: 50
+      },
+      {
+        enemies: [
+          {
+            enemyId: 0,
+            speed: 8
+          },
+          // {
+          //   enemyId: 1,
+          //   speed: 12
+          // },
+          {
+            enemyId: 2,
+            speed: 15
+          }
+        ],
+        duration: 50
+      },
+      {
+        enemies: [
+          {
+            enemyId: 0,
+            speed: 8
+          },
+          {
+            enemyId: 1,
+            speed: 12
+          },
+          {
+            enemyId: 2,
+            speed: 15
+          }
+        ],
+        duration: 900
+      }
+    ]
   },
   {
-    enemies: [
+    levelMap: [
       {
-        enemyId: 0,
-        speed: 8
+        enemies: [
+          {
+            enemyId: 3,
+            speed: 8
+          },
+          {
+            enemyId: 4,
+            speed: 12
+          },
+          // {
+          //   enemyId: 5,
+          //   speed: 15
+          // }
+        ],
+        duration: 50
       },
       {
-        enemyId: 1,
-        speed: 12
+        enemies: [
+          {
+            enemyId: 3,
+            speed: 7
+          },
+          {
+            enemyId: 4,
+            speed: 14
+          },
+          {
+            enemyId: 5,
+            speed: 10
+          }
+        ],
+        duration: 250
       },
       {
-        enemyId: 2,
-        speed: 15
+        enemies: [
+          {
+            enemyId: 3,
+            speed: 8
+          },
+          {
+            enemyId: 4,
+            speed: 15
+          },
+          {
+            enemyId: 5,
+            speed: 10
+          }
+        ],
+        duration: 250
+      },
+      {
+        enemies: [
+          {
+            enemyId: 3,
+            speed: 8
+          },
+          {
+            enemyId: 4,
+            speed: 14
+          },
+          {
+            enemyId: 5,
+            speed: 10
+          }
+        ],
+        duration: 250
+      },
+      {
+        enemies: [
+          {
+            enemyId: 3,
+            speed: 8
+          },
+          {
+            enemyId: 4,
+            speed: 15
+          },
+          {
+            enemyId: 5,
+            speed: 12
+          }
+        ],
+        duration: 250
       }
-    ],
-    duration: 650
-  },
-  {
-    enemies: [
-      {
-        enemyId: 0,
-        speed: 15
-      },
-      {
-        enemyId: 1,
-        speed: 8
-      },
-      {
-        enemyId: 2,
-        speed: 10
-      }
-    ],
-    duration: 450
+    ]
   }
-];
+]
 
 const stanleyWidth = 90;
 const stanleyHeight = 125;
